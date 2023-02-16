@@ -1,0 +1,166 @@
+<head>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+
+    <!-- Google AdSense Using Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+</head>
+
+<!-- End of 'Personal Posts Menu Template For Copy-Paste'. It started from the top of the page from <HEAD> tag. -->
+
+<body>
+    <h3 data-bind="template: {afterRender: initApp}">Select Level:</h3>
+
+    <select data-bind="options: availableLevels, value: selectedLevel"></select>
+    <button data-bind="click: getProblem">Get Problem</button>
+
+    <table class="customTable">
+        <tr>
+            <td></td>
+            <td>&nbsp;</td>
+            <td>
+                <h3 data-bind="text: customNumberOne"></h3>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3 class="customOperator">-</h3>
+            </td>
+            <td>&nbsp;</td>
+            <td>
+                <h3 data-bind="text: customNumberTwo"></h3>
+            </td>
+        </tr>
+    </table>
+
+    <input class="customInCheckAnswer" type="text" data-bind="value: customAnswer" required="" />
+    <button data-bind="click: customCheckAnswer">Check Answer</button>
+    <br>
+
+    <h3 data-bind="text: customMessage"></h3>
+
+</body>
+<script type="text/javascript">
+    var ViewModel = function () {
+        var self = this;
+
+        function getRndInteger(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        self.availableLevels = ko.observableArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        self.selectedLevel = ko.observable(1);
+        self.customNumberOne = ko.observable();
+        self.customNumberTwo = ko.observable();
+        self.customAnswer = ko.observable();
+        self.customMessage = ko.observable();
+        self.clearMessageFlag = ko.observable(true);
+
+        self.getProblem = function () {
+
+            l = self.selectedLevel();
+
+            if (l == 1) {
+                a = getRndInteger(Math.pow(10, l - 1), Math.pow(10, l));
+                b = getRndInteger(Math.pow(10, l - 1), Math.pow(10, l));
+            }
+
+            if (l == 2) {
+                a = getRndInteger(2, 9);
+                b = getRndInteger(Math.pow(10, 1), Math.pow(10, 2));
+            }
+
+            if (l == 3) {
+                a = getRndInteger(10, 20);
+                b = getRndInteger(10, 20);
+            }
+
+            if (l == 4) {
+                a = getRndInteger(20, 99);
+                b = getRndInteger(20, 99);
+            }
+
+            if (l == 5) {
+                a = getRndInteger(20, 99);
+                b = getRndInteger(100, 999);
+            }
+
+            if (l == 6) {
+                a = getRndInteger(100, 999);
+                b = getRndInteger(100, 999);
+            }
+
+            if (l == 7) {
+                a = getRndInteger(100, 999);
+                b = getRndInteger(1000, 9999);
+            }
+
+            if (l == 8) {
+                a = getRndInteger(1000, 9999);
+                b = getRndInteger(1000, 9999);
+            }
+
+            if (l > 8) {
+                a = getRndInteger(Math.pow(10, l - 1), Math.pow(10, l));
+                b = getRndInteger(Math.pow(10, l - 1), Math.pow(10, l));
+            }
+
+            if (a < b) {
+                self.customNumberOne(b);
+                self.customNumberTwo(a);
+            }
+
+            else {
+                self.customNumberOne(a);
+                self.customNumberTwo(b);
+            }
+
+            if(self.clearMessageFlag()){
+                self.customMessage("");
+            } else {
+                self.clearMessageFlag(true);
+            }
+            
+            self.customAnswer("");
+            $(".customInCheckAnswer").val("");
+        }
+
+        self.customCheckAnswer = function () {
+            if (self.customAnswer()) {
+                if (self.customAnswer().trim() == "") {
+                    self.customMessage("Please enter an answer.");
+                    return;
+                }
+            }
+            else {
+                self.customMessage("Please enter an answer.");
+                return;
+            }
+
+
+
+            if (self.customAnswer() == parseInt(self.customNumberOne()) - parseInt(self.customNumberTwo())) {
+                self.customMessage(self.customNumberOne() + " - " + self.customNumberTwo() + " = " + self.customAnswer() + " is correct.");
+                self.clearMessageFlag(false);
+                self.getProblem();
+            } else {
+                self.customMessage(self.customNumberOne() + " - " + self.customNumberTwo() + " = " + self.customAnswer() + " is wrong.");
+            }
+            $(".customInCheckAnswer").val("");
+        }
+
+        self.initApp = function () {
+            self.getProblem();
+        };
+    }
+
+    ko.applyBindings(ViewModel);
+</script>
+<span style="display: none;">Tags: Mathematical Foundations for Data Science,</span>

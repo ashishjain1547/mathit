@@ -1,0 +1,141 @@
+<head>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+
+    <!-- Google AdSense Using Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <style>
+        .customTempCodeHolderForSocialMedia {
+            display: none;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+
+        i.ib {
+            color: blue;
+        }
+
+        i.ig {
+            color: green;
+        }
+
+        .customOl {
+            font-size: 15px;
+        }
+    </style>
+</head>
+<b class="">In Hindi: Number line ko samaantar rekha bolte hain.</b>
+<br>
+<br>
+<h2>Natural Numbers (In Hindi: Prakritik Sankhya)</h2>
+<canvas id="myCanvasNaturalNum" style="border:1px solid #d3d3d3;">
+    Your browser does not support the HTML5 canvas tag.</canvas>
+
+<h2>Whole Numbers</h2>
+<canvas id="myCanvasWholeNum" style="border:1px solid #d3d3d3;">
+    Your browser does not support the HTML5 canvas tag.</canvas>
+
+<h2>Integers</h2>
+<canvas id="myCanvasInteger" style="border:1px solid #d3d3d3;">
+    Your browser does not support the HTML5 canvas tag.</canvas>
+
+<script>
+    var canvas_w = document.getElementById("myCanvasWholeNum");
+    var ctx = canvas_w.getContext("2d");
+    let width = 500;
+    let height = width * 9/16;
+
+    if (screen.width < 500) {
+        width = screen.width;
+        height = width * 9/16;
+    } 
+
+    canvas_w.width = width;
+    canvas_w.height = height;
+    canvas_w.padding = 5;
+
+    ctx.beginPath();
+    ctx.moveTo(canvas_w.padding, canvas_w.height / 2);
+    ctx.lineTo(canvas_w.width - canvas_w.padding, canvas_w.height / 2);
+    ctx.stroke();
+
+    let step = (canvas_w.width - 2 * canvas_w.padding) / 10;
+
+    for (let i = 0; i <= 10; i++) {
+        ctx.moveTo(canvas_w.padding + step * i, (canvas_w.height / 2) - 5);
+        ctx.lineTo(canvas_w.padding + step * i, (canvas_w.height / 2) + 5);
+        ctx.stroke();
+
+        ctx.font = "10px Arial";
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText(i, (canvas_w.padding + step * i), (canvas_w.height / 2) - 10);
+    }
+
+
+    var canvas_n = document.getElementById("myCanvasNaturalNum");
+    var ctx_i = canvas_n.getContext("2d");
+    canvas_n.width = width;
+    canvas_n.height = height;
+    canvas_n.padding = 5;
+
+    ctx_i.beginPath();
+    ctx_i.moveTo(canvas_n.padding, canvas_n.height / 2);
+    ctx_i.lineTo(canvas_n.width - canvas_n.padding, canvas_n.height / 2);
+    ctx_i.stroke();
+
+    step = (canvas_n.width - 2 * canvas_n.padding) / 10;
+
+    for (let i = 0; i <= 10; i++) {
+        ctx_i.moveTo(canvas_n.padding + step * i, (canvas_n.height / 2) - 5);
+        ctx_i.lineTo(canvas_n.padding + step * i, (canvas_n.height / 2) + 5);
+        ctx_i.stroke();
+
+        ctx_i.font = "10px Arial";
+        ctx_i.fillStyle = "black";
+        ctx_i.textAlign = "center";
+        ctx_i.fillText(i + 1, (canvas_n.padding + step * i), (canvas_n.height / 2) - 10);
+    }
+
+    var canvas_i = document.getElementById("myCanvasInteger");
+    var ctx_i = canvas_i.getContext("2d");
+    canvas_i.width = width;
+    canvas_i.height = height;
+    canvas_i.padding = 5;
+
+    ctx_i.beginPath();
+    ctx_i.moveTo(canvas_i.padding, canvas_i.height / 2);
+    ctx_i.lineTo(canvas_i.width - canvas_i.padding, canvas_i.height / 2);
+    ctx_i.stroke();
+
+    step = (canvas_i.width - 2 * canvas_i.padding) / 10;
+
+    for (let i = 0; i <= 10; i++) {
+        ctx_i.moveTo(canvas_i.padding + step * i, (canvas_i.height / 2) - 5);
+        ctx_i.lineTo(canvas_i.padding + step * i, (canvas_i.height / 2) + 5);
+        ctx_i.stroke();
+
+        ctx_i.font = "10px Arial";
+        ctx_i.fillStyle = "black";
+        ctx_i.textAlign = "center";
+        ctx_i.fillText(i - 5, (canvas_i.padding + step * i), (canvas_i.height / 2) - 10);
+    }
+
+
+</script>
+<span style="display: none;">Tags: Mathematical Foundations for Data Science,</span>

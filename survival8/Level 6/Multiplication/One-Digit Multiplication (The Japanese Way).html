@@ -1,0 +1,185 @@
+<head>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+
+    <!-- Google AdSense Using Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <style>
+        .customTempCodeHolderForSocialMedia {
+            display: none;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+
+        i.ib {
+            color: blue;
+        }
+
+        i.ig {
+            color: green;
+        }
+
+        .customOl {
+            font-size: 15px;
+        }
+    </style>
+</head>
+<div class="customMainDiv">
+    <b>First Number:</b>
+    <select data-bind="options: allNums, value: selectedFirstNum, event: { change: showMultiplication }"></select>
+
+    <br><br>
+
+    <b>Second Number:</b>
+    <select data-bind="options: allNums, value: selectedSecondNum, event: { change: showMultiplication }"></select>
+
+    <br><br>
+
+    <b>Answer is: <span data-bind="text: answer"></span></b>
+
+    <br><br>
+
+    <canvas id="multiplyCanvas1" style="border:1px solid #000000;"> </canvas>
+
+    <br><br>
+
+    <canvas id="multiplyCanvas2" style="border:1px solid #000000;"> </canvas>
+
+</div>
+
+<script>
+
+    var GameArea = function () {
+        var self = this;
+
+        this.canvas = {};
+
+        this.start = function () {
+            if (screen.width >= 520) {
+                this.canvas.width = 520;
+                this.canvas.height = this.canvas.width * 9 / 16;
+                this.context = this.canvas.getContext("2d");
+                this.context.lineWidth = "10";
+                this.lineGap = 40;
+            } else {
+                this.canvas.width = 320;
+                this.canvas.height = this.canvas.width * 9 / 16;
+                this.context = this.canvas.getContext("2d");
+                this.context.lineWidth = "2";
+                this.lineGap = 20;
+            }
+        };
+
+        this.clear = function () {
+            this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        };
+    }
+
+    var ViewModel = function () {
+        var self = this;
+        // These are the initial options
+        this.allNums = ko.observableArray([]);
+
+        this.answer = ko.observable();
+
+        for (let i = 1; i <= 9; i++) {
+            this.allNums.push(i);
+        }
+
+
+        this.selectedFirstNum = ko.observable();
+        this.selectedSecondNum = ko.observable();
+
+        this.customNumTable = ko.observableArray([]);
+
+
+        this.myGameArea1 = new GameArea();
+        this.myGameArea1.canvas = document.getElementById("multiplyCanvas1");
+        this.myGameArea2 = new GameArea();
+        this.myGameArea2.canvas = document.getElementById("multiplyCanvas2");
+
+        this.showMultiplication = function () {
+            this.answer(this.selectedFirstNum() * this.selectedSecondNum());
+
+            this.myGameArea1.start();
+
+            this.myGameArea1.context.strokeStyle = "#FF0000";
+            let line_gap = this.myGameArea1.lineGap;
+
+            if (this.selectedFirstNum() % 2 != 0) {
+                this.myGameArea1.context.moveTo(0, 0);
+                this.myGameArea1.context.lineTo(this.myGameArea1.canvas.width, this.myGameArea1.canvas.height);
+                this.myGameArea1.context.stroke();
+            }
+
+            for (let i = 1; i <= Math.floor(this.selectedFirstNum() / 2); i++) {
+                this.myGameArea1.context.moveTo(0, 0 + (i * line_gap));
+                this.myGameArea1.context.lineTo(this.myGameArea1.canvas.width - (i * line_gap), this.myGameArea1.canvas.height);
+                this.myGameArea1.context.stroke();
+
+                this.myGameArea1.context.moveTo(0 + (i * line_gap), 0);
+                this.myGameArea1.context.lineTo(this.myGameArea1.canvas.width, this.myGameArea1.canvas.height - (i * line_gap));
+                this.myGameArea1.context.stroke();
+            }
+
+            this.myGameArea2.start();
+
+            this.myGameArea2.context.beginPath();
+            this.myGameArea2.context.strokeStyle = "#FF0000";
+
+            if (this.selectedFirstNum() % 2 != 0) {
+                this.myGameArea2.context.moveTo(0, 0);
+                this.myGameArea2.context.lineTo(this.myGameArea2.canvas.width, this.myGameArea1.canvas.height);
+                this.myGameArea2.context.stroke();
+            }
+
+            for (let i = 1; i <= Math.floor(this.selectedFirstNum() / 2); i++) {
+                this.myGameArea2.context.moveTo(0, 0 + (i * line_gap));
+                this.myGameArea2.context.lineTo(this.myGameArea2.canvas.width - (i * line_gap), this.myGameArea2.canvas.height);
+                this.myGameArea2.context.stroke();
+
+                this.myGameArea2.context.moveTo(0 + (i * line_gap), 0);
+                this.myGameArea2.context.lineTo(this.myGameArea2.canvas.width, this.myGameArea2.canvas.height - (i * line_gap));
+                this.myGameArea2.context.stroke();
+            }
+
+            this.myGameArea2.context.beginPath();
+            this.myGameArea2.context.strokeStyle = "#0000FF";
+
+            if (this.selectedSecondNum() % 2 != 0) {
+                this.myGameArea2.context.moveTo(this.myGameArea2.canvas.width, 0);
+                this.myGameArea2.context.lineTo(0, this.myGameArea1.canvas.height);
+                this.myGameArea2.context.stroke();
+            }
+
+            for (let i = 1; i <= Math.floor(this.selectedSecondNum() / 2); i++) {
+                this.myGameArea2.context.moveTo(this.myGameArea2.canvas.width - (i * line_gap), 0);
+                this.myGameArea2.context.lineTo(0, this.myGameArea2.canvas.height - (i * line_gap));
+                this.myGameArea2.context.stroke();
+
+                this.myGameArea2.context.moveTo(this.myGameArea2.canvas.width, 0 + (i * line_gap));
+                this.myGameArea2.context.lineTo(0 + (i * line_gap), this.myGameArea2.canvas.height);
+                this.myGameArea2.context.stroke();
+            }
+
+        }
+    };
+
+    ko.applyBindings(ViewModel);
+</script>
+<span style="display: none;">Tags: Mathematical Foundations for Data Science,</span>

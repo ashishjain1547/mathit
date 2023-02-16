@@ -1,0 +1,242 @@
+<head>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+
+    <!-- Google AdSense Using Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <style>
+        .customTempCodeHolderForSocialMedia {
+            display: none;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+
+        i.ib {
+            color: blue;
+        }
+
+        i.ig {
+            color: green;
+        }
+
+        .customOl {
+            font-size: 15px;
+        }
+    </style>
+</head>
+<div class="customMainDiv">
+    <b>Select two numbers:</b>
+    <select data-bind="options: baseNums, value: selectedFirstNum, event: { change: function(){ showMultiplication('select'); } }"></select>
+    &nbsp;&nbsp;
+    <select data-bind="options: baseNums, value: selectedSecondNum, event: { change: function(){ showMultiplication('select'); } }"></select>
+
+    <br><br>
+
+    <b>Or enter two numbers of your choice:</b>
+    <br><br>
+    <input type="text" data-bind="value: inFirstNum" placeholder="Upto 3 Digits" /> &nbsp;&nbsp; 
+    <input type="text" data-bind="value: inSecondNum" placeholder="Upto 3 Digits" /> &nbsp;&nbsp;
+    <button type="text" data-bind="click: function(){ showMultiplication('button'); }">Multiply</button> &nbsp;&nbsp;
+    <b data-bind="text: message"></b>
+    <br><br>
+    <b>Answer is: <span data-bind="text: answer">--</span></b>
+
+    <br><br>
+
+    <div class="customSolutionWrapper" data-bind="foreach: solutionArray">
+        <p data-bind="text: $data"></p>
+    </div>
+</div>
+
+<script>
+    var ViewModel = function () {
+        var self = this;
+        // These are the initial options
+        this.baseNums = ko.observableArray([]);
+
+
+        for (let i = 11; i <= 30; i++) {
+            this.baseNums.push(i);
+        }
+
+        this.selectedFirstNum = ko.observable();
+        this.selectedSecondNum = ko.observable();
+        this.inFirstNum = ko.observable();
+        this.inSecondNum = ko.observable();
+        this.message = ko.observable();
+        this.answer = ko.observable();
+
+        this.solutionArray = ko.observableArray([]);
+
+        this.expandInteger = function (int_) {
+            let pow_ = 0;
+            let rtn = "";
+            for(let x = int_.toString().length - 1; x >= 0; x--) {
+                rtn = int_.toString()[x] * Math.pow(10, pow_) + " + " + rtn;
+                pow_++; 
+
+                if(x == 0) {
+                    rtn = rtn.substring(0, rtn.length - 3);
+                }
+            }
+            return "( " + rtn + " )";
+        }
+
+        this.getFormula = function(a, b) {
+            a_len = a.split(" + ").length;
+            b_len = b.split(" + ").length;
+            
+            a_arr = [];
+            b_arr = [];
+
+            for(let i = 97; i < (97 + a_len); i++) {
+                a_arr.push(String.fromCharCode(i));
+            }
+
+            for(let i = 97 + a_len; i < (97 + a_len + b_len); i++) {
+                b_arr.push(String.fromCharCode(i));
+            }
+
+            let astr = "";
+            for(let i = 0; i < a_arr.length; i++) {
+                astr += a_arr[i] + " + "
+            }
+            astr = astr.substring(0, astr.length - 3);
+            astr = "( " + astr + " )";
+
+            let bstr = "";
+            for(let i = 0; i < b_arr.length; i++) {
+                bstr += b_arr[i] + " + "
+            }
+            bstr = bstr.substring(0, bstr.length - 3);
+            bstr = "( " + bstr + " )";
+
+            let rtn = ['Using the formula:'];
+            rtn.push(astr + " * " + bstr);
+
+            let t = "";
+            for (let i = 0; i < a_arr.length; i++) {
+                for (let j = 0; j < b_arr.length; j++) {
+                    t += (a_arr[i] + " * " + b_arr[j] + " + ")
+                }
+            }
+            t = t.substring(0, t.length - 3);
+            rtn.push(t);
+
+            return rtn;
+        }
+
+
+        this.getExpansion = function(a, b) {
+            a_len = a.split(" + ").length;
+            b_len = b.split(" + ").length;
+            
+            a_arr = a.split(" + ");
+            b_arr = b.split(" + ");
+
+            a_arr[0] = a_arr[0].replace("(", "");
+            a_arr[a_arr.length - 1] = a_arr[a_arr.length - 1].replace(")", ""); 
+
+            b_arr[0] = b_arr[0].replace("(", "");
+            b_arr[b_arr.length - 1] = b_arr[b_arr.length - 1].replace(")", ""); 
+
+            let astr = "";
+            for(let i = 0; i < a_arr.length; i++) {
+                astr += a_arr[i] + " + "
+            }
+            astr = astr.substring(0, astr.length - 3);
+            astr = "( " + astr + " )";
+
+            let bstr = "";
+            for(let i = 0; i < b_arr.length; i++) {
+                bstr += b_arr[i] + " + "
+            }
+            bstr = bstr.substring(0, bstr.length - 3);
+            bstr = "( " + bstr + " )";
+
+            let t = "";
+            for (let i = 0; i < a_arr.length; i++) {
+                for (let j = 0; j < b_arr.length; j++) {
+                    t += (a_arr[i] + " * " + b_arr[j] + " + ")
+                }
+            }
+            t = t.substring(0, t.length - 3);
+            
+            return t;
+        }
+
+        this.showMultiplication = function (source) {
+            let a = 0;
+            let b = 0;
+            this.message("");
+            this.solutionArray([]);
+
+            if(source == 'select') {
+                a = this.selectedFirstNum();
+                b = this.selectedSecondNum();
+            } else {
+                a = this.inFirstNum();
+                b = this.inSecondNum();
+
+                try {
+                    a = parseInt(a);
+                    b = parseInt(b);
+                    if (a > 999 || b > 999) {
+                        this.message("Please enter two numbers smaller than 999!");
+                        return;
+                    }
+                } catch {
+                    this.message("Please enter two valid numbers.");
+                    return;
+                }
+            }
+
+            this.solutionArray.push(a + " * " + b);
+            
+            if(a % 10 == 0 && b % 10 == 0 && source == 'select') {
+                this.solutionArray.push("No expansion needed.");
+            } else if (a % 10 != 0 && b % 10 == 0 && source == 'select') {
+                this.solutionArray.push(this.expandInteger(a) + " * " + b);
+                this.solutionArray(
+                    this.solutionArray().concat(this.getFormula(this.expandInteger(a), b))
+                );
+
+                this.solutionArray.push(this.getExpansion(this.expandInteger(a), b.toString()));
+                
+            } else if (a % 10 == 0 && b % 10 != 0 && source == 'select') {
+                this.solutionArray.push(a + " * " + this.expandInteger(b));
+                this.solutionArray(
+                    this.solutionArray().concat(this.getFormula(a, this.expandInteger(b)))
+                );
+                this.solutionArray.push(this.getExpansion(a.toString(), this.expandInteger(b)));
+            } else {
+                this.solutionArray.push(this.expandInteger(a) + " * " + this.expandInteger(b));
+                this.solutionArray(
+                    this.solutionArray().concat(this.getFormula(this.expandInteger(a), this.expandInteger(b)))
+                );
+                this.solutionArray.push(this.getExpansion(this.expandInteger(a), this.expandInteger(b)));
+            }
+            this.solutionArray.push(a * b);
+        }
+
+    };
+
+    ko.applyBindings(ViewModel);
+
+</script>
+<span style="display: none;">Tags: Mathematical Foundations for Data Science,</span>

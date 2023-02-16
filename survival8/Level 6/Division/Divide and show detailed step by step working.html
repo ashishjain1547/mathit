@@ -1,0 +1,273 @@
+<script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: window.location.protocol + "//" + window.location.hostname + "/p/personal-posts-menu.html",
+            success: function (result) {
+                $("div.customTemporaryCodeHolder").html(result);
+                $("nav.customDynamicNav").html(
+                    $("div.customTemporaryCodeHolder nav.customBitsWilpMenu").html()
+                );
+            }
+        });
+
+        $.ajax({
+            url: window.location.protocol + "//" + window.location.hostname + "/p/follow-us-on-social-media.html",
+
+            success: function (result) {
+                $("span.customTempCodeHolderForSocialMedia").html(result);
+                $("div.customSocialMediaBtnsWrapper").html(
+                    $("span.customTempCodeHolderForSocialMedia div.customSocialMediaWrapper").html()
+                );
+            }
+
+        });
+    }); 
+</script>
+<!-- Google AdSense Using Machine Learning Code -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-3071098372371409",
+        enable_page_level_ads: true
+    });
+</script>
+
+<style>
+    .customTempCodeHolderForSocialMedia {
+        display: none;
+    }
+
+    pre {
+        white-space: pre-wrap;
+        white-space: -moz-pre-wrap;
+        white-space: -pre-wrap;
+        white-space: -o-pre-wrap;
+        word-wrap: break-word;
+    }
+
+    i.ibb {
+        display: block;
+        background-color: black;
+        color: white;
+    }
+
+    i.ibg {
+        display: block;
+        background-color: rgb(50, 50, 50);
+        color: white;
+    }
+
+
+    ul.no-bullets {
+        list-style-type: none;
+        /* Remove bullets */
+        padding: 0;
+        /* Remove padding */
+        margin: 0;
+        /* Remove margins */
+    }
+
+    li.customLi {
+        float: left;
+    }
+
+    li.customLi>span.customSpan {
+        display: block;
+        padding: 8px;
+        background-color: #dddddd;
+    }
+
+    .customOl {
+        font-size: 15px;
+    }
+</style>
+</head>
+<div class="customTemporaryCodeHolder"> </div>
+<span class="customTempCodeHolderForSocialMedia"> </span>
+
+<nav class="customDynamicNav"> </nav> <br />
+<div class="customSocialMediaBtnsWrapper"> </div>
+<!-- End of 'Personal Posts Menu Template For Copy-Paste'. It started from the top of the page from <HEAD> tag. -->
+
+<h3>Enter two numbers to show division:</h3>
+<h4>We would divide the larger of the two by the smaller one.</h4>
+
+<input type="text" data-bind="value: num1" placeholder="number 1" />
+<br><br>
+<input type="text" data-bind="value: num2" placeholder="number 2" />
+
+<button data-bind="click: divide">Divide</button>
+
+<div class="solutionWrapper" style="width: 320px;">
+    <div data-bind="foreach: multiples">
+        <p data-bind="text: $data"></p>
+    </div>
+    <p>--- --- ---</p>
+    <p data-bind="text: quotient" style="text-align: right;"></p>
+    <div data-bind="foreach: divSolution" style="text-align: right;">
+        <pre data-bind="html: $data"></pre>
+    </div>
+</div>
+
+<script>
+    var ViewModel = function () {
+        var self = this;
+
+        this.num1 = ko.observable("");
+        this.num2 = ko.observable("");
+
+        // These are the initial options
+        this.divSolution = ko.observableArray([]);
+        this.multiples = ko.observableArray([]);
+        this.quotient = ko.observable("");
+
+        this.divide = function () {
+            divSolution([]);
+            multiples([]);
+            quotient("");
+
+            let num1 = this.num1();
+            let num2 = this.num2();
+
+            try {
+                num1 = parseInt(num1);
+                num2 = parseInt(num2);
+            }
+            catch {
+                alert("Invalid number entered.");
+                return;
+            }
+
+            if(num1 == 0) {
+                alert("Cannot divide by zero.");
+                return;
+            } else if(num2 == 0){
+                alert("Cannot divide by zero.");
+                return;
+            }
+
+
+            let a, b = 0;
+            if (num1 < num2) {
+                a = num1;
+                b = num2;
+            }
+            else {
+                a = num2;
+                b = num1;
+            }
+
+            let multiples_nums = [];
+            for (let i = 1; i < 11; i++) {
+                let in_ = a + " X " + i + " = " + (a * i);
+
+                multiples.push(in_);
+                multiples_nums.push(a * i);
+            }
+
+            a_len = a.toString().length;
+            prob_len = a.toString().length + b.toString().length + 2;
+
+            divSolution.push((a + ")" + b + "("));
+            
+
+            let b_init = parseInt(b.toString().substring(0, a_len));
+            if (b_init < a) {
+                b_init = parseInt(b.toString().substring(0, a_len + 1));
+            }
+
+            b_cntr = b.toString().length - b_init.toString().length + 1;
+
+            let last_remainder = -1;
+            let b_pulldown_ix = b_init.toString().length;
+
+            let pads = ""
+            for (let i = 0; i < 20; i++) {
+                pads += " "
+            }
+
+            let stepWiseSolution = [];
+
+            for (let j = 0; j < b_cntr; j++) {
+                    
+                let b_val = -1;
+                let quotient = -1;
+                console.log("j:", j);
+
+                padding_len = 1 + b.toString().length;
+                if (j > 0) {
+                    b_init = parseInt(last_remainder.toString() + b.toString().charAt(b_pulldown_ix));
+
+                    padding_len = padding_len - 1;
+
+                    divSolution.push(b_init + pads.substring(0, padding_len - b_pulldown_ix));
+
+                    b_pulldown_ix += 1;
+                }
+
+                let q = -1;
+                for (let i = 0; i < multiples_nums.length; i++) {
+                    if (multiples_nums[i] > b_init) {
+                        break;
+                    }
+                    b_val = multiples_nums[i];
+                    
+                    q = i+1;
+                }
+                
+                if(q == -1) {
+                    q = 0;
+                    b_val = 0;
+                }
+                
+                this.quotient(this.quotient() + q.toString());
+                
+                console.log("b_val:", b_val);
+
+                console.log("b_init_2:", b_init);
+
+                pad_length = padding_len - b_pulldown_ix;
+                if (j > 0) {
+                    pad_length = padding_len - b_pulldown_ix + 1;
+                }
+
+                divSolution.push(b_val + pads.substring(0, pad_length));
+
+                let minus_bar = "";
+                for (let i = 0; i < b_init.toString().length; i++) {
+                    minus_bar += "-";
+                }
+                divSolution.push(minus_bar + pads.substring(0, pad_length));
+
+                last_remainder = b_init - b_val;
+
+                stepWiseSolution.push({
+                    "quotient": this.quotient(),
+                    "partSol": JSON.parse(JSON.stringify(divSolution()))
+                })
+            }
+            divSolution.push(last_remainder + pads.substring(0, 1));
+
+            divSolution.push("<br>");
+
+            for (let i = 0; i < stepWiseSolution.length; i++) {
+                divSolution.push("");
+                divSolution.push("Step:" + (i + 1));
+                divSolution.push(stepWiseSolution[i]['quotient']);
+                for(let j = 0; j < stepWiseSolution[i]['partSol'].length; j++){
+                    divSolution.push(stepWiseSolution[i]['partSol'][j]);
+                }
+            }
+
+        }
+    };
+
+    ko.applyBindings(ViewModel);
+
+</script>
+<span style="display: none;">Tags: Mathematical Foundations for Data Science,</span>

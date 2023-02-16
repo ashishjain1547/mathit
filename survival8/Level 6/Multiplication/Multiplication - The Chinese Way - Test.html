@@ -1,0 +1,142 @@
+<head>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+    <!-- Google AdSense Using Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <style>
+
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+
+        i.ib {
+            color: blue;
+        }
+
+        i.ig {
+            color: green;
+        }
+
+        .customOl {
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<div class="customMainDiv" data-bind="template: {afterRender: showQuestion}">
+    <h3>Level: <span data-bind="text: curr_level"></span></h3>
+    <br>
+    <h3>Question: <span data-bind="text: num1"></span> * <span data-bind="text: num2"></span></h3>
+    <br>
+    <input type="text" data-bind="value: answer" /> &nbsp;&nbsp; <button data-bind="click: checkAnswer">Check Answer</button>
+    <br> <br>
+    <h3 class="" data-bind="text: message"></h3>
+</div>
+
+<script>
+    function getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    var ViewModel = function () {
+        var self = this;
+
+        this.curr_level = ko.observable(1);
+        this.num1 = ko.observable(10);
+        this.num2 = ko.observable(10);
+        this.answer = ko.observable();
+        this.message = ko.observable();
+
+        this.showQuestion = function () {
+
+            if(this.curr_level() == 1) {
+                this.num1(getRndInteger(10, 20));
+                this.num2(getRndInteger(10, 20));
+            } 
+
+            else if (this.curr_level() == 2) {
+                this.num1(getRndInteger(20, 30));
+                this.num2(getRndInteger(20, 30));
+            }
+
+            else if (this.curr_level() == 3) {
+                this.num1(getRndInteger(30, 40));
+                this.num2(getRndInteger(30, 40));
+            }
+
+            else if (this.curr_level() == 4) {
+                this.num1(getRndInteger(40, 99));
+                this.num2(getRndInteger(40, 99));
+            }
+
+            else if (this.curr_level() == 5) {
+                this.num1(getRndInteger(10, 99));
+                this.num2(getRndInteger(100, 200));
+            }
+
+            else if (this.curr_level() == 6) {
+                this.num1(getRndInteger(50, 99));
+                this.num2(getRndInteger(200, 500));
+            }
+
+            else if (this.curr_level() == 7) {
+                this.num1(getRndInteger(100, 500));
+                this.num2(getRndInteger(100, 500));
+            }
+
+            else if (this.curr_level() == 8) {
+                this.num1(getRndInteger(500, 999));
+                this.num2(getRndInteger(500, 999));
+            }
+
+            else if (this.curr_level() == 9) {
+                this.num1(getRndInteger(100, 999));
+                this.num2(getRndInteger(1000, 9999));
+            }
+
+            else if (this.curr_level() >= 10) {
+                start = 1000 * Math.pow(10, this.curr_level() % 10);
+                end = start * 10 - 1;
+                this.num1(getRndInteger(start, end));
+                this.num2(getRndInteger(start, end));
+            }
+        }
+
+        this.checkAnswer = function () {
+            this.message("");
+            if(!parseInt(this.answer())) {
+                this.message("Please enter a valid answer.");
+                return;
+            }
+
+            if (parseInt(this.answer()) == this.num1() * this.num2()) {
+                this.curr_level(this.curr_level() + 1);
+                this.message(this.answer() + " is correct answer.");
+            } else {
+                if(this.curr_level() > 1){
+                    this.curr_level(this.curr_level() - 1);
+                }
+                this.message(this.answer() + " is wrong answer. " + this.num1()  + "*" + this.num2() + " is: " + (this.num1() * this.num2()));
+            }
+            this.answer("");
+            this.showQuestion();
+        }
+    };
+
+    ko.applyBindings(ViewModel);
+
+</script>
+<span style="display: none;">Tags: Mathematical Foundations for Data Science,</span>

@@ -1,0 +1,207 @@
+<head>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+
+    <!-- Google AdSense Using Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <style>
+        .customTempCodeHolderForSocialMedia {
+            display: none;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+
+        i.ib {
+            color: blue;
+        }
+
+        i.ig {
+            color: green;
+        }
+
+        .customOl {
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<div class="customWrapper" data-bind="template: {afterRender: showQuestion}">
+    <h2 data-bind="text: question"></h2>
+    <button data-bind="click: showAnswer">Show Answer</button> &nbsp;&nbsp; <button data-bind="click: showQuestion">Show Another Question</button>
+    <br> <br>
+    <div class="customAnswer" data-bind="visible: answerFlag">
+        <canvas id="customNumberLine" style="border:1px solid #d3d3d3;">
+            Your browser does not support the HTML5 canvas tag.</canvas>
+    </div>
+</div>
+
+<script>
+    function getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    let SET_OF_QUESTIONS = [
+        "Draw the number line showing the numbers from x to y.",
+        "Which is the x(th) number after y? Plot y and your answer on a number line.",
+        "Which is the x(th) number before y? Plot y and your answer on a number line.",
+        "Plot the x multiples of y on a number line, including y.",
+    ]
+
+    let ViewModel = function () {
+        var self = this;
+
+        this.question = ko.observable();
+        this.qno = ko.observable();
+        this.x = ko.observable();
+        this.y = ko.observable();
+        this.answerFlag = ko.observable(false);
+
+        this.showQuestion = function () {
+            this.answerFlag(false);
+            this.qno(getRndInteger(0, SET_OF_QUESTIONS.length - 1));
+            this.question(SET_OF_QUESTIONS[this.qno()]);
+
+            switch (this.qno()) {
+                case 0:
+                    this.x(getRndInteger(0, 10));
+                    this.y(getRndInteger(11, 20));
+                    this.question(this.question().replace(" x ", " " + this.x() + " ").replace(" y", " " + this.y()));
+                    break;
+
+                case 1:
+                    this.x(getRndInteger(1, 10));
+                    this.y(getRndInteger(11, 20));
+                    this.question(this.question()
+                        .replace(" x", " " + this.x())
+                        .replace(" y", " " + this.y())
+                        .replace(" y", " " + this.y()));
+                    break;
+
+                case 2:
+                    this.x(getRndInteger(1, 10));
+                    this.y(getRndInteger(11, 20));
+                    this.question(this.question()
+                        .replace(" x", " " + this.x())
+                        .replace(" y", " " + this.y())
+                        .replace(" y", " " + this.y()));
+                    break;
+
+                case 3:
+                    this.x(getRndInteger(1, 10));
+                    this.y(getRndInteger(2, 4));
+                    this.question(this.question()
+                        .replace(" x", " " + this.x())
+                        .replace(" y", " " + this.y())
+                        .replace(" y", " " + this.y()));
+                    break;
+            }
+        }
+
+        this.showAnswer = function () {
+            this.answerFlag(true);
+
+            var canvas_w = document.getElementById("customNumberLine");
+            var ctx = canvas_w.getContext("2d");
+            let width = 500;
+            let height = width * 9 / 16;
+
+            if (screen.width < 500) {
+                width = screen.width - 5;
+                height = width * 9 / 16;
+            }
+
+            canvas_w.width = width;
+            canvas_w.height = height;
+            canvas_w.padding = 5;
+
+            ctx.beginPath();
+            ctx.moveTo(canvas_w.padding, canvas_w.height / 2);
+            ctx.lineTo(canvas_w.width - canvas_w.padding, canvas_w.height / 2);
+            ctx.stroke();
+
+            /* Font related configuration. */
+            ctx.font = "10px Arial";
+            ctx.fillStyle = "black";
+            ctx.textAlign = "center";
+
+            switch (this.qno()) {
+                case 0:
+                    var step = (canvas_w.width - 2 * canvas_w.padding) / (this.y() - this.x() + 1);
+
+                    for (let i = 0; i < (this.y() - this.x() + 1); i++) {
+                        ctx.moveTo(canvas_w.padding + step * i, (canvas_w.height / 2) - 5);
+                        ctx.lineTo(canvas_w.padding + step * i, (canvas_w.height / 2) + 5);
+                        ctx.stroke();
+
+                        ctx.fillText((this.x() + i), (canvas_w.padding + step * i), (canvas_w.height / 2) - 10);
+                    }
+
+                    break;
+
+                case 1:
+
+                    var step = (canvas_w.width - 2 * canvas_w.padding) / (this.x() + 1);
+
+                    for (let i = 0; i < (this.x() + 1); i++) {
+                        ctx.moveTo(canvas_w.padding + step * i, (canvas_w.height / 2) - 5);
+                        ctx.lineTo(canvas_w.padding + step * i, (canvas_w.height / 2) + 5);
+                        ctx.stroke();
+
+                        ctx.fillText((this.y() + i), (canvas_w.padding + step * i), (canvas_w.height / 2) - 10);
+                    }
+
+                    break;
+
+                case 2:
+
+                    var step = (canvas_w.width - 2 * canvas_w.padding) / (this.x() + 1);
+
+                    for (let i = 0; i <= (this.x() + 1); i++) {
+                        ctx.moveTo(canvas_w.padding + step * i, (canvas_w.height / 2) - 5);
+                        ctx.lineTo(canvas_w.padding + step * i, (canvas_w.height / 2) + 5);
+                        ctx.stroke();
+
+                        ctx.fillText(((this.y() - this.x()) + i), (canvas_w.padding + step * i), (canvas_w.height / 2) - 10);
+                    }
+
+                    break;
+
+                case 3:
+
+                    var step = (canvas_w.width - 2 * canvas_w.padding) / (this.x() + 1);
+
+                    for (let i = 1; i <= (this.x() + 1); i++) {
+                        ctx.moveTo(canvas_w.padding + step * i, (canvas_w.height / 2) - 5);
+                        ctx.lineTo(canvas_w.padding + step * i, (canvas_w.height / 2) + 5);
+                        ctx.stroke();
+
+                        ctx.fillText((this.y() * i), (canvas_w.padding + step * i), (canvas_w.height / 2) - 10);
+                    }
+
+                    break;
+
+            }
+
+
+
+        }
+    }
+    ko.applyBindings(ViewModel);
+
+</script>
+<span style="display: none;">Tags: Mathematical Foundations for Data Science,</span>

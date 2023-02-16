@@ -1,0 +1,120 @@
+<head>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    
+    <!-- Google AdSense Using Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <style>
+        .customTempCodeHolderForSocialMedia {
+            display: none;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+
+        i.ibb {
+            display: block;
+            background-color: black;
+            color: white;
+        }
+
+        i.ibg {
+            display: block;
+            background-color: rgb(50, 50, 50);
+            color: white;
+        }
+
+
+        ul.no-bullets {
+            list-style-type: none;
+            /* Remove bullets */
+            padding: 0;
+            /* Remove padding */
+            margin: 0;
+            /* Remove margins */
+        }
+
+        li.customLi {
+            float: left;
+        }
+
+        li.customLi>span.customSpan {
+            display: block;
+            padding: 8px;
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<!-- End of 'Personal Posts Menu Template For Copy-Paste'. It started from the top of the page from <HEAD> tag. -->
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script>
+    function primeFactors(n) {
+
+        let rtn_val = [];
+
+        // Print the number of 2s that divide n
+        while (n % 2 == 0) {
+            rtn_val.push(2);
+            n = Math.floor(n / 2);
+        }
+
+        // n must be odd at this point. 
+        // So we can skip one element
+        // (Note i = i +2)
+        for (let i = 3;
+            i <= Math.floor(Math.sqrt(n));
+            i = i + 2) {
+
+            // While i divides n, print i
+            // and divide n
+            while (n % i == 0) {
+
+                rtn_val.push(i);
+                n = Math.floor(n / i);
+            }
+        }
+
+        // This condition is to handle the
+        // case when n is a prime number
+        // greater than 2
+        if (n > 2)
+            rtn_val.push(n);
+
+        return rtn_val;
+    }
+
+</script>
+<h3>Enter a number to find it's prime factors. </h3>
+<br>
+<input class="customNumInQues" type="number" />
+
+<button onclick="showAnswer()">Show</button>
+
+<br> <br>
+
+<h3 class="customMessage"></h3>
+<script>
+
+    function showAnswer(){
+        num_in_ques = parseInt($('.customNumInQues').val());
+        gold_pf = primeFactors(num_in_ques);
+        $("h3.customMessage").text("Prime Factors for " + num_in_ques + " are/is: " + JSON.stringify(gold_pf));
+    }
+
+</script>
+<span style="display: none;">Tags: Technology,Mathematical Foundations for Data Science,Web Development,JavaScript,</span>

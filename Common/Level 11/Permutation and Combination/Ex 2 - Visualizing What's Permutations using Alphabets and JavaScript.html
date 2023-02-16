@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Permutation</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google AdSense Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <!-- Bootstrap CSS - Opens -->
+    <!-- With this new updated CSS Glyphicons are not working:
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
+ -->
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> <!-- Bootstrap CSS - Closes -->
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous">
+
+    <!-- CSS/14 - Permutation Animation.css -->
+    <style>
+        .number_of_elements {
+            float: left;
+            font-size: 98px;
+            line-height: 98px;
+        }
+
+        body {
+            padding: 20px;
+        }
+
+        .row {
+            margin-left: 0px;
+            margin-right: 0px;
+        }
+
+        .input.row {
+            text-align: center;
+        }
+
+        .input_div {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            display: inline-block;
+            max-width: 158px;
+            padding: 0 22px 0 5px;
+        }
+
+        allInput {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .glyph-button {
+            display: block;
+            float: right;
+            min-height: 98px;
+            min-width: 17px;
+            padding: 0;
+            position: relative;
+        }
+
+        .glyph-button .glyphicon {
+            cursor: pointer;
+        }
+
+        .glyph-button .glyphicon:hover {
+            color: #8a8a8a;
+        }
+
+        .glyphicon.glyphicon-chevron-up {
+            color: #333333;
+            float: right;
+            font-size: 30px;
+            position: absolute;
+            right: -19px;
+            top: 19px;
+            vertical-align: top;
+        }
+
+        .glyphicon.glyphicon-chevron-down {
+            display: block;
+            float: right;
+            font-size: 30px;
+            position: absolute;
+            right: -17px;
+            top: 53px;
+        }
+
+        .allInput {
+            font-size: 98px;
+            line-height: 1;
+        }
+
+        .permutation {
+            color: #ff3333;
+            font-size: 65px;
+            font-weight: 700;
+            line-height: 1.2;
+            opacity: 1;
+            text-align: center;
+        }
+
+        .customLink {
+            background-color: #4CAF50;
+            border: none;
+            color: white !important;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none !important;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .customLink:hover, .customLink:visited, .customLink:active {
+            text-decoration: none;
+        }
+    </style>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+
+    <!-- Bootstrap -->
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+    <!-- JS/14 - Permutation Animation.js -->
+    <script>
+        var permutations_array = [];
+        var in_chars = {};
+
+        $(function () {
+            $(".glyphicon.glyphicon-chevron-up").on("click", increaseInput);
+            $(".glyphicon.glyphicon-chevron-down").on("click", decreaseInput);
+            initializeInputChars(3);
+        });
+
+        function showIt() {
+            $(".permutation").remove();
+            var node_array_temp = create_permutation_tree(in_chars);
+            showPermutation(node_array_temp);
+        }
+
+        function increaseInput() {
+            var num = parseInt($(".number_of_elements").text());
+            if (num < 7) {
+                num++;
+                initializeInputChars(parseInt(num));
+            }
+        }
+
+        function decreaseInput() {
+            var num = parseInt($(".number_of_elements").text());
+            if (num > 2) {
+                num--;
+                initializeInputChars(parseInt(num));
+            }
+        }
+
+        function initializeInputChars(num) {
+            /* Reset variables*/
+            in_chars = {};
+            $(".factorial").empty();
+            /* Reset - Close */
+            var str_temp = "";
+            for (var key in chars_global) {
+                if (key.charCodeAt(0) < 65 + num) {
+                    str_temp += key;
+                    Object.defineProperty(in_chars, key, {
+                        value: key,
+                        enumerable: true,
+                        writable: true,
+                        configurable: true
+                    });
+                }
+            }
+            $(".number_of_elements").text(num);
+            $(".allInput").text(str_temp);
+            // console.log(JSON.stringify(in_chars));
+
+            var factorial = 1;
+            for (var i = 1; i < num; i++ , factorial *= i);
+            $(".factorial").text(factorial);
+            showIt();
+        }
+
+        var chars_global = {
+            "A": "A", "B": "B", "C": "C", "D": "D",
+            "E": "E", "F": "F", "G": "G", "H": "H",
+            "I": "I", "J": "J", "K": "K", "L": "L",
+            "M": "M", "N": "N", "O": "O", "P": "P",
+            "Q": "Q", "R": "R", "S": "S", "T": "T",
+            "U": "U", "V": "V", "W": "W", "X": "X",
+            "Y": "Y", "Z": "Z"
+        };
+
+        function create_permutation_tree(input_chars) {
+            var node_array = [];
+            if (Object.keys(input_chars).length < 2) {
+                console.log("Not enough keys (less than 2)");
+                return;
+            }
+            else if (Object.keys(input_chars).length === 2) {
+                for (var key in input_chars) {
+
+                    var key_left;
+
+                    for (var k in input_chars) {
+                        if (k === key) continue;
+                        key_left = k;
+                    }
+
+                    // console.log("Key left: " + key_left + ", Key read: " + k);
+                    var obj_temp = {};
+                    Object.defineProperty(obj_temp, key, {
+                        value: key_left,
+                        enumerable: true,
+                        writable: true,
+                        configurable: true
+                    });
+                    node_array.push(obj_temp);
+                } /* FOR CLOSING */
+                // console.log(JSON.stringify(node_array));
+                return node_array;
+            } /* IF input_chars HAS SIZE 2 */
+
+            else {
+                /* ELSE NUMBER OF INPUT MORE THAN 2 */
+                for (key in input_chars) {
+                    var obj_temp = {};
+
+                    Object.defineProperty(obj_temp, key, {
+                        value: null,
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                    });
+
+                    /* CREATE A TEMPORARY OBECT OF ALPHABETS WITH THE CURRENT ALPHABET MISSING */
+                    var input_chars_temp = {};
+                    for (var k in input_chars) {
+                        if (k === key) continue;
+                        Object.defineProperty(input_chars_temp, k, {
+                            value: input_chars.k,
+                            enumerable: true,
+                            writable: true,
+                            configurable: true
+                        });
+                    }
+
+                    var node_arr_temp;
+                    if (Object.keys(input_chars_temp).length > 1) {
+                        node_arr_temp = create_permutation_tree(input_chars_temp);
+                    }
+                    obj_temp[key] = node_arr_temp;
+
+                    node_array.push(obj_temp);
+                }
+                // console.log(JSON.stringify(node_array));
+                return node_array;
+            } /* ELSE NUMBER OF INPUT MORE THAN 2 - CLOSING */
+        }
+
+        var pmt_prefix = "";
+
+        function showPermutation(node_array_inner) {
+            for (var i = 0, len = node_array_inner.length; i < len; i++) {
+                var node_temp = node_array_inner[i];
+                for (var key in node_temp) {
+                    pmt_prefix += key;
+                    // console.log("Prefix: " + pmt_prefix);
+                    if (typeof (node_temp[key]) === "string") {
+                        /* If the value is of string type, then there should be only two objects in this array being read */
+                        var str_temp = pmt_prefix + node_temp[key];
+                        permutations_array.push(str_temp);
+                        $(".permutationContainer").append("<div class='permutation'>" + str_temp + "</div>");
+                    }
+                    else {
+                        showPermutation(node_temp[key]);
+                    }
+                    pmt_prefix = pmt_prefix.substring(0, pmt_prefix.length - 1);
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="input row">
+        <div class="input_div col-sm-4">
+            <span class="number_of_elements">
+                <!-- 4 -->
+            </span>
+            <span class="glyph-button">
+                <span class="glyphicon glyphicon-chevron-up"></span>
+                <span class="glyphicon glyphicon-chevron-down"></span>
+            </span>
+        </div>
+        <div class="allInput col-sm-8">
+            <!-- ABCD -->
+        </div>
+    </div>
+    <h2>Permutation is arrangement of a set things when the order in which they appear is important.</h2>
+    <h3 class="answer">Taken all things at a time, it equals n! which, in this case, is
+        <span class="factorial"></span>
+    </h3>
+    <h3>Check out all the permutations below: </h3>
+    <div class="permutationContainer">
+
+    </div>
+</body>
+
+</html>
+<span style="opacity: 0">Tags: Mathematical Foundations for Data Science,</span>

@@ -1,0 +1,228 @@
+<head>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+
+    <!-- Google AdSense Using Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <style>
+        .customTempCodeHolderForSocialMedia {
+            display: none;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+
+        i.ib {
+            color: blue;
+        }
+
+        i.ig {
+            color: green;
+        }
+
+        .customOl {
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<div class="customQuestionWrapper">
+    Question: How many ones are there in a '10' (ten)?
+    <br><br>
+    How many:
+    <select data-bind="options: baseNums, value: selectedBaseNum, event: {change: clearSolution}"></select> (s)
+    ...Are there in a <select
+        data-bind="options: secondNum, value: selectedSecondNum, event: {change: clearSolution}"></select> ?
+</div>
+<br>
+<button data-bind="click: showSolution">Show Solution</button>
+</div>
+
+<div class="customSolutionWrapper" data-bind="foreach: solution">
+    <p data-bind="text: $data"></p>
+</div>
+
+<script>
+    var ViewModel = function () {
+        var self = this;
+        // These are the initial options
+        this.baseNums = ko.observableArray([]);
+        this.selectedBaseNum = ko.observable();
+
+        this.secondNum = ko.observableArray([]);
+        this.selectedSecondNum = ko.observable();
+
+
+        for (let i = 2; i <= 10; i++) {
+            this.baseNums.push(i);
+        }
+        this.baseNums.push(50);
+        this.baseNums.push(100);
+        this.baseNums.push(1000);
+
+        for (let i = 1000; i <= 10000; i += 1000) {
+            this.secondNum.push(i);
+        }
+        this.secondNum.push(100000);
+        this.secondNum.push(200000);
+
+        this.solution = ko.observableArray([]);
+
+        this.clearSolution = function () {
+            this.solution([]);
+        }
+
+        this.showSolution = function () {
+            this.solution([]);
+            this.solution.push("Do you agree that:");
+
+            if ((this.selectedSecondNum() / this.selectedBaseNum()) == Math.round(this.selectedSecondNum() / this.selectedBaseNum())) {
+                this.solution.push(this.selectedSecondNum() + " when divided by " + this.selectedBaseNum() + " would get you: ");
+                this.solution.push(parseInt(this.selectedSecondNum() / this.selectedBaseNum()));
+            } else {
+                this.solution.push(this.selectedSecondNum() + " when divided by " + this.selectedBaseNum() + " would get you: ");
+                this.solution.push(parseInt(this.selectedSecondNum() / this.selectedBaseNum())
+                    + "." + (this.selectedSecondNum() / this.selectedBaseNum()).toString().split(".")[1].substr(0, 2));
+
+                this.solution.push("Or roughly: " + Math.floor(this.selectedSecondNum() / this.selectedBaseNum()))
+            }
+
+            this.solution.push("And do you agree with this:");
+
+            if ((this.selectedSecondNum() / this.selectedBaseNum()) == Math.round(this.selectedSecondNum() / this.selectedBaseNum())) {
+                this.solution.push(this.selectedSecondNum() + " when divided by " + parseInt(this.selectedSecondNum() / this.selectedBaseNum())
+                    + " would get you: ");
+                this.solution.push(this.selectedBaseNum());
+            } else {
+                this.solution.push(this.selectedSecondNum() + " when divided by " + parseInt(this.selectedSecondNum() / this.selectedBaseNum())
+                    + " would get you: ");
+
+                this.solution.push(
+                    parseInt(this.selectedSecondNum() / parseInt(this.selectedSecondNum() / this.selectedBaseNum()))
+                    + "." +
+                    (this.selectedSecondNum() / parseInt(this.selectedSecondNum() / this.selectedBaseNum())).toString().split(".")[1].substr(0, 2)
+                );
+
+                this.solution.push("Or roughly: " + Math.floor(this.selectedSecondNum() / parseInt(this.selectedSecondNum() / this.selectedBaseNum())));
+            }
+
+
+            this.solution.push("Or, can we say:");
+            this.solution.push("If we add " + this.selectedBaseNum() + " some " + parseInt(this.selectedSecondNum() / this.selectedBaseNum()) + " times, we'd get: ");
+            in_str = "";
+            for (let i = 0; i < parseInt(this.selectedSecondNum() / this.selectedBaseNum()); i++) {
+                if (i == 0) {
+                    in_str = this.selectedBaseNum();
+
+                } else {
+                    in_str += "+ " + this.selectedBaseNum();
+                }
+            }
+
+            this.solution.push(in_str);
+
+            this.solution.push("Basically, we would have to Multiply...");
+            this.solution.push("It would get you: " + this.selectedBaseNum() + " * " + parseInt(this.selectedSecondNum() / this.selectedBaseNum())
+                + ": " + (parseInt(this.selectedSecondNum() / this.selectedBaseNum()) * this.selectedBaseNum()));
+
+            //this.solution(this.solution().concat(this.multiply(this.selectedBaseNum(), parseInt(this.selectedSecondNum() / this.selectedBaseNum()))));
+
+            this.solution.push("Also:")
+
+            this.solution.push("If we add " + parseInt(this.selectedSecondNum() / this.selectedBaseNum()) + " some " + this.selectedBaseNum() + " times, we'd get: ");
+            in_str = "";
+            for (let i = 0; i < this.selectedBaseNum(); i++) {
+                if (i == 0) {
+                    in_str = parseInt(this.selectedSecondNum() / this.selectedBaseNum());
+
+                } else {
+                    in_str += "+ " + parseInt(this.selectedSecondNum() / this.selectedBaseNum());
+                }
+            }
+
+            this.solution.push(in_str);
+
+            this.solution.push("We would have to Multiply again...");
+            this.solution.push("It would get you: " + parseInt(this.selectedSecondNum() / this.selectedBaseNum()) + " * " + this.selectedBaseNum()
+                + ": " + (parseInt(this.selectedSecondNum() / this.selectedBaseNum()) * this.selectedBaseNum()));
+
+            this.solution.push("And, that is your answer: ");
+            this.solution.push("There are " + parseInt(this.selectedSecondNum() / this.selectedBaseNum()) + " : " + this.selectedBaseNum() + "(s) in "
+                + this.selectedSecondNum());
+
+            this.solution.push("There are " + this.selectedBaseNum() + " : " + parseInt(this.selectedSecondNum() / this.selectedBaseNum()) + "(s) in "
+                + this.selectedSecondNum());
+        }
+
+        this.multiply = function (num1, num2) {
+            let r = [];
+
+            try {
+                num1 = parseInt(num1);
+                num2 = parseInt(num2);
+            }
+            catch {
+                alert("Invalid number entered.");
+            }
+
+            let a, b = 0;
+            if (num1 < num2) {
+                a = num1;
+                b = num2;
+            }
+            else {
+                a = num2;
+                b = num1;
+            }
+
+            r.push(b);
+            r.push("X " + a);
+            r.push("-----");
+
+            let a_str = a.toString();
+            let a_nums = [];
+            for (let i = 0; i < a_str.length; i++) {
+                a_nums.push(parseInt(a_str.charAt(i)))
+            }
+
+            let intermediate_products = [];
+            let Xs = "";
+
+            for (let i = a_nums.length - 1; i >= 0; i--) {
+                let p = b * a_nums[i];
+                r.push(p.toString() + Xs);
+                intermediate_products.push(p * Math.pow(10, Xs.length))
+                Xs += "X";
+            }
+
+
+            if (a_str.length > 1) {
+                r.push("-----");
+
+                const sum = intermediate_products.reduce((partial_sum, a) => partial_sum + a, 0);
+                r.push(sum);
+            }
+
+            return r;
+        }
+
+    };
+
+    ko.applyBindings(ViewModel);
+
+</script>
+<span style="display: none;">Tags: Mathematical Foundations for Data Science,</span>

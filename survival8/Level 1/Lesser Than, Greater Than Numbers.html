@@ -1,0 +1,136 @@
+<head>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+
+    <!-- Google AdSense Using Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <style>
+        .customTempCodeHolderForSocialMedia {
+            display: none;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+
+        i.ib {
+            color: blue;
+        }
+
+        i.ig {
+            color: green;
+        }
+
+        .customOl {
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="customWrapper" data-bind='template: { afterRender: init }'>
+        <p>In this exercise, we have identify whether the two numbers are equal, or left one is lesser than right one,
+            or left one is greater than the right one.</p>
+
+        <h3>Select level:</h3>
+        <select data-bind="options: diffLevels, value: selLevel, event: { change: showNumbers }"></select>
+        <br><br>
+
+        <span class="customLargeFont" data-bind="text: firstNum"></span> &nbsp;
+        <select data-bind="options: answerOptions, value: selAnswer"></select> &nbsp;
+        <span class="customLargeFont" data-bind="text: secondNum"></span> &nbsp;
+        <button data-bind="click: checkAnswer">Submit</button>
+        
+        <h2 data-bind="text: message"></h2>
+    </div>
+</body>
+<script>
+    function getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    var ViewModel = function () {
+        var self = this;
+
+        self.diffLevels = ko.observableArray([1, 2, 3, 4]);
+        self.selLevel = ko.observable(1);
+
+        self.firstNum = ko.observable(0);
+        self.secondNum = ko.observable(0);
+
+        self.answerOptions = ko.observableArray([
+            'Lesser Than',
+            'Equal to',
+            'Greater Than'
+        ])
+
+        self.selAnswer = ko.observable();
+        self.message = ko.observable();
+
+        self.showNumbers = function () {
+            switch (self.selLevel()) {
+                case 1:
+                    self.firstNum(getRndInteger(0, 9));
+                    self.secondNum(getRndInteger(0, 9));
+                    break;
+                case 2:
+                    self.firstNum(getRndInteger(10, 99));
+                    self.secondNum(getRndInteger(10, 99));
+                    break;
+                case 3:
+                    self.firstNum(getRndInteger(100, 199));
+                    self.secondNum(getRndInteger(100, 199));
+                    break;
+                case 4:
+                    self.firstNum(getRndInteger(100, 999));
+                    self.secondNum(getRndInteger(100, 999));
+                    break;
+            }
+        }
+
+        self.checkAnswer = function () {
+            var ans = "";
+            if(self.firstNum() == self.secondNum()) {
+                ans = 'Equal to';
+            }
+
+            if (self.firstNum() < self.secondNum()) {
+                ans = 'Lesser Than';
+            }
+
+            if (self.firstNum() > self.secondNum()) {
+                ans = 'Greater Than';
+            }
+            
+            if ( ans == self.selAnswer()) {
+                self.message("Correct Answer! " + self.firstNum() + " is " + ans + " " + self.secondNum());
+                self.showNumbers();
+            } else {
+                self.message("Wrong Answer!");
+            }
+
+            setTimeout(function () {self.message("")}, 4 * 1000);
+        }
+
+        self.init = function () {
+            self.showNumbers();
+        }
+    };
+
+    ko.applyBindings(ViewModel);
+
+</script>
+<span style="display: none;">Tags: Mathematical Foundations for Data Science,</span>

@@ -1,0 +1,339 @@
+<head>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+
+    <!-- Google AdSense Using Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <style>
+        .customTempCodeHolderForSocialMedia {
+            display: none;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+
+        i.ib {
+            color: blue;
+        }
+
+        i.ig {
+            color: green;
+        }
+
+        .customOl {
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<div class="customQuestionWrapper">
+    <h2>Select Level:</h2>
+    <br>
+
+    <select data-bind="options: availableLevels,
+                       value: selectedLevel, event: { change: getProblem }"></select>
+    <br>
+    <h2>Ques: Write the Place Values and Face Values for the following number:</h2>
+    <br>
+    <button data-bind="click: getProblem">Get Problem</button>
+    <br><br>
+    <h2 data-bind="text: customNumber"></h2>
+    <br>
+    <table>
+        <tr>
+            <td>Number</td>
+            <td>Place Value</td>
+            <td>Face Value</td>
+        </tr>
+
+        <tr data-bind="visible: selectedLevel() == 'Thousands'">
+            <td data-bind="text: thousandth"></td>
+            <td>
+                <input type="text" data-bind="value: thousandthPlaceValue" />
+            </td>
+
+            <td>
+                <input type="text" data-bind="value: thousandthFaceValue" />
+            </td>
+        </tr>
+
+        <tr>
+            <td data-bind="text: hundredth"></td>
+            <td>
+                <input type="text" data-bind="value: hundredthPlaceValue" />
+            </td>
+
+            <td>
+                <input type="text" data-bind="value: hundredthFaceValue" />
+            </td>
+        </tr>
+
+        <tr>
+            <td data-bind="text: tenth"></td>
+            <td>
+                <input type="text" data-bind="value: tenthPlaceValue" />
+            </td>
+
+            <td>
+                <input type="text" data-bind="value: tenthFaceValue" />
+            </td>
+        </tr>
+
+        <tr>
+            <td data-bind="text: ones"></td>
+            <td>
+                <input type="text" data-bind="value: onesPlaceValue" />
+            </td>
+
+            <td>
+                <input type="text" data-bind="value: onesFaceValue" />
+            </td>
+        </tr>
+    </table>
+
+    <br>
+    <button data-bind="click: checkAnswer">Check Answer</button>
+
+    <ul data-bind="foreach: messages">
+        <li data-bind="text: $data"></li>
+    </ul>
+</div>
+
+<script>
+
+    function getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    var ViewModel = function () {
+        var self = this;
+        // These are the initial options
+
+        self.availableLevels = ko.observable(['Hundreds', 'Thousands']);
+        self.selectedLevel = ko.observable();
+        self.customNumber = ko.observable();
+
+        self.thousandth = ko.observable();
+        self.hundredth = ko.observable();
+        self.tenth = ko.observable();
+        self.ones = ko.observable();
+
+        self.thousandthPlaceValue = ko.observable();
+        self.hundredthPlaceValue = ko.observable();
+        self.tenthPlaceValue = ko.observable();
+        self.onesPlaceValue = ko.observable();
+
+        self.thousandthFaceValue = ko.observable();
+        self.hundredthFaceValue = ko.observable();
+        self.tenthFaceValue = ko.observable();
+        self.onesFaceValue = ko.observable();
+
+        self.messages = ko.observableArray([]);
+
+
+        self.getProblem = function () {
+            if (self.selectedLevel() == 'Hundreds') {
+                self.customNumber(getRndInteger(100, 999));
+
+                self.hundredth(self.customNumber().toString()[0]);
+                self.tenth(self.customNumber().toString()[1]);
+                self.ones(self.customNumber().toString()[2]);
+
+            }
+            else if (self.selectedLevel() == 'Thousands') {
+                self.customNumber(getRndInteger(1000, 9999));
+
+                self.thousandth(self.customNumber().toString()[0]);
+                self.hundredth(self.customNumber().toString()[1]);
+                self.tenth(self.customNumber().toString()[2]);
+                self.ones(self.customNumber().toString()[3]);
+            }
+
+            self.thousandthPlaceValue("");
+            self.hundredthPlaceValue("");
+            self.tenthPlaceValue("");
+            self.onesPlaceValue("");
+
+            self.thousandthFaceValue("");
+            self.hundredthFaceValue("");
+            self.tenthFaceValue("");
+            self.onesFaceValue("");
+
+        }
+
+        self.checkAnswer = function () {
+
+            self.messages([]);
+
+            if (self.selectedLevel() == 'Thousands') {
+
+                if (self.thousandthFaceValue()) {
+                    if (self.thousandthFaceValue().trim().length == 0) {
+                        self.messages.push("Enter the Thousandth Face Value.")
+                        return;
+                    }
+                }
+                else {
+                    self.messages.push("Enter the Thousandth Face Value.")
+                    return;
+                }
+
+                if (self.thousandthPlaceValue()) {
+                    if (self.thousandthPlaceValue().trim().length == 0) {
+                        self.messages.push("Enter the Thousandth Place Value.")
+                        return;
+                    }
+                }
+                else {
+                    self.messages.push("Enter the Thousandth Place Value.")
+                    return;
+                }
+            }
+
+            if (self.hundredthFaceValue()) {
+                if (self.hundredthFaceValue().trim().length == 0) {
+                    self.messages.push("Enter the Hundredth Face Value.")
+                    return;
+                }
+            }
+            else {
+                self.messages.push("Enter the Hundredth Face Value.")
+                return;
+            }
+
+            if (self.tenthFaceValue()) {
+                if (self.tenthFaceValue().trim().length == 0) {
+                    self.messages.push("Enter the Tenth Face Value.")
+                    return;
+                }
+            }
+            else {
+                self.messages.push("Enter the Tenth Face Value.")
+                return;
+            }
+
+            if (self.onesFaceValue()) {
+                if (self.onesFaceValue().trim().length == 0) {
+                    self.messages.push("Enter the Ones Face Value.")
+                    return;
+                }
+            }
+            else {
+                self.messages.push("Enter the Ones Face Value.")
+                return;
+            }
+
+            if (self.hundredthPlaceValue()) {
+                if (self.hundredthPlaceValue().trim().length == 0) {
+                    self.messages.push("Enter the Hundredth Place Value.")
+                    return;
+                }
+            } else {
+                self.messages.push("Enter the Hundredth Place Value.")
+                return;
+            }
+
+            if (self.tenthPlaceValue()) {
+                if (self.tenthPlaceValue().trim().length == 0) {
+                    self.messages.push("Enter the Tenth Place Value.")
+                    return;
+                }
+            } else {
+                self.messages.push("Enter the Tenth Place Value.")
+                return;
+            }
+
+            if (self.onesPlaceValue()) {
+                if (self.onesPlaceValue().trim().length == 0) {
+                    self.messages.push("Enter the Ones Place Value.")
+                    return;
+                }
+            } else {
+                self.messages.push("Enter the Ones Place Value.")
+                return;
+            }
+
+            // -- Input Validation Done --
+
+            if (self.selectedLevel() == 'Thousands') {
+                if (self.thousandthFaceValue() == self.thousandth()) {
+                    self.messages.push("Thousandth Face Value is correct.")
+                }
+                else {
+                    self.messages.push("Thousandth Face Value is wrong.")
+                }
+            }
+
+            if (self.hundredthFaceValue() == self.hundredth()) {
+                self.messages.push("Hundredth Face Value is correct.")
+            }
+            else {
+                self.messages.push("Hundredth Face Value is wrong.")
+            }
+
+            if (self.tenthFaceValue() == self.tenth()) {
+                self.messages.push("Tenth Face Value is correct.")
+            }
+            else {
+                self.messages.push("Tenth Face Value is wrong.")
+            }
+
+            if (self.onesFaceValue() == self.ones()) {
+                self.messages.push("Ones Face Value is correct.")
+            }
+            else {
+                self.messages.push("Ones Face Value is wrong.")
+            }
+
+            // -- Face Value Check Done == 
+
+            if (self.selectedLevel() == 'Thousands') {
+                if (self.thousandthPlaceValue() == self.thousandth() * 1000) {
+                    self.messages.push("Thousandth Place Value is correct.")
+                }
+                else {
+                    self.messages.push("Thousandth Place Value is wrong.")
+                }
+            }
+
+            if (self.hundredthPlaceValue() == self.hundredth() * 100) {
+                self.messages.push("Hundredth Place Value is correct.")
+            }
+            else {
+                self.messages.push("Hundredth Place Value is wrong.")
+            }
+
+            if (self.tenthPlaceValue() == self.tenth() * 10) {
+                self.messages.push("Tenth Place Value is correct.")
+            }
+            else {
+                self.messages.push("Tenth Place Value is wrong.")
+            }
+
+            if (self.onesPlaceValue() == self.ones()) {
+                self.messages.push("Ones Place Value is correct.")
+            }
+            else {
+                self.messages.push("Ones Place Value is wrong.")
+            }
+        }
+
+    }
+
+    ko.applyBindings(ViewModel);
+</script>
+<span style="display: none">Tags: Mathematical Foundations for Data Science,</span>

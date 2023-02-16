@@ -1,0 +1,217 @@
+<script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: window.location.protocol + "//" + window.location.hostname + "/p/personal-posts-menu.html",
+            success: function (result) {
+                $("div.customTemporaryCodeHolder").html(result);
+                $("nav.customDynamicNav").html(
+                    $("div.customTemporaryCodeHolder nav.customBitsWilpMenu").html()
+                );
+            }
+        });
+
+        $.ajax({
+            url: window.location.protocol + "//" + window.location.hostname + "/p/follow-us-on-social-media.html",
+
+            success: function (result) {
+                $("span.customTempCodeHolderForSocialMedia").html(result);
+                $("div.customSocialMediaBtnsWrapper").html(
+                    $("span.customTempCodeHolderForSocialMedia div.customSocialMediaWrapper").html()
+                );
+            }
+
+        });
+    }); 
+</script>
+<!-- Google AdSense Using Machine Learning Code -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-3071098372371409",
+        enable_page_level_ads: true
+    });
+</script>
+
+<style>
+    .customTempCodeHolderForSocialMedia {
+        display: none;
+    }
+
+    pre {
+        white-space: pre-wrap;
+        white-space: -moz-pre-wrap;
+        white-space: -pre-wrap;
+        white-space: -o-pre-wrap;
+        word-wrap: break-word;
+    }
+
+    i.ibb {
+        display: block;
+        background-color: black;
+        color: white;
+    }
+
+    i.ibg {
+        display: block;
+        background-color: rgb(50, 50, 50);
+        color: white;
+    }
+
+
+    ul.no-bullets {
+        list-style-type: none;
+        /* Remove bullets */
+        padding: 0;
+        /* Remove padding */
+        margin: 0;
+        /* Remove margins */
+    }
+
+    li.customLi {
+        float: left;
+    }
+
+    li.customLi>span.customSpan {
+        display: block;
+        padding: 8px;
+        background-color: #dddddd;
+    }
+
+    .customOl {
+        font-size: 15px;
+    }
+</style>
+</head>
+<div class="customTemporaryCodeHolder"> </div>
+<span class="customTempCodeHolderForSocialMedia"> </span>
+
+<nav class="customDynamicNav"> </nav> <br />
+<div class="customSocialMediaBtnsWrapper"> </div>
+<!-- End of 'Personal Posts Menu Template For Copy-Paste'. It started from the top of the page from <HEAD> tag. -->
+
+<h3>Enter two numbers to show division:</h3>
+<h4>We would divide the larger of the two by the smaller one.</h4>
+<input type="text" name="num1" class="num1" placeholder="number 1" />
+<br><br>
+<input type="text" name="num2" class="num2" placeholder="number 2" />
+
+<button onclick="divide()">Divide</button>
+
+<div class="solutionWrapper"> </div>
+
+<script>
+    $(document).ready(function () { });
+
+    function divide() {
+        $("div.solutionWrapper").empty();
+        let num1 = $('.num1').val();
+        let num2 = $('.num2').val();
+
+        try {
+            num1 = parseInt(num1);
+            num2 = parseInt(num2);
+        }
+        catch {
+            alert("Invalid number entered.");
+        }
+
+        let a, b = 0;
+        if (num1 < num2) {
+            a = num1;
+            b = num2;
+        }
+        else {
+            a = num2;
+            b = num1;
+        }
+
+        let p_open = "<p style='text-align: right; width: 320px; font-family: monospace;'>";
+        let multiples = [];
+        for (let i = 1; i < 11; i++) {
+            let in_ = a + "*" + i + "=" + (a * i);
+            $("div.solutionWrapper").append(p_open + in_ + "</p>");
+            multiples.push(a * i);
+        }
+
+        $("div.solutionWrapper").append(p_open + "----------" + "</p>");
+        $("div.solutionWrapper").append("<br>");
+
+        a_len = a.toString().length;
+        prob_len = a.toString().length + b.toString().length + 2;
+
+        $("div.solutionWrapper").append(p_open + "<span class='custQuotient'></span></p>");
+
+        $("div.solutionWrapper").append(p_open + a + ")" + b + "(</p>");
+
+        let b_init = parseInt(b.toString().substring(0, a_len));
+        if (b_init < a) {
+            b_init = parseInt(b.toString().substring(0, a_len + 1));
+        }
+
+        b_cntr = b.toString().length - b_init.toString().length + 1;
+
+        let last_remainder = -1;
+        let b_pulldown_ix = b_init.toString().length;
+
+        console.log("b_cntr:", b_cntr);
+        console.log("b_init:", b_init);
+
+        let padding_template = "<span style = 'color: white;'>";
+        // padding
+        
+        let pads = ""
+        for (let i = 0; i < 20; i++) {
+            pads += "-"
+        }
+
+        for (let j = 0; j < b_cntr; j++) {
+            let b_val = -1;
+            let quotient = -1;
+            console.log("j:", j);
+            
+            padding_len = 1 + b.toString().length;
+            if (j > 0) {
+                b_init = parseInt(last_remainder.toString() + b.toString().charAt(b_pulldown_ix));
+
+                padding_len = padding_len - 1;
+
+                $("div.solutionWrapper").append(p_open + b_init + padding_template
+                    + pads.substring(0, padding_len - b_pulldown_ix) + "</span></p>");
+
+                b_pulldown_ix += 1;
+            }
+
+            for (let i = 0; i < multiples.length; i++) {
+                if (multiples[i] > b_init) {
+                    break;
+                }
+                b_val = multiples[i];
+                quotient = i + 1;
+            }
+
+            $("span.custQuotient").append(quotient);
+
+            console.log("b_init_2:", b_init);
+            
+            pad_length = padding_len - b_pulldown_ix;
+            if(j > 0) {
+                pad_length = padding_len - b_pulldown_ix + 1;
+            } 
+
+            $("div.solutionWrapper").append(p_open + b_val + padding_template + pads.substring(0, pad_length) + "</span></p>");
+
+            let minus_bar = "";
+            for (let i = 0; i < b_init.toString().length; i++) {
+                minus_bar += "-";
+            }
+            $("div.solutionWrapper").append(p_open + minus_bar + padding_template + pads.substring(0, pad_length) + "</span></p>");
+
+            last_remainder = b_init - b_val;
+        }
+        $("div.solutionWrapper").append(p_open + last_remainder + padding_template + pads.substring(0, 1) + "</span></p>");
+            
+    }
+</script>
+<span style="display: none;">Tags: Mathematical Foundations for Data Science,</span>

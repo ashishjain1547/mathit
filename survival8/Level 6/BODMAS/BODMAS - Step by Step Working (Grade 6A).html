@@ -1,0 +1,527 @@
+<head>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+
+    <!-- Google AdSense Using Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <style>
+        .customTempCodeHolderForSocialMedia {
+            display: none;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+
+        i.ib {
+            color: blue;
+        }
+
+        i.ig {
+            color: green;
+        }
+
+        .customOl {
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<b>BODMAS: Brackets of Division, Multiplication, Addition, Subtraction</b>
+<br>
+<br>
+<div class="customQuestion">
+    Set the difficulty level:
+    <select data-bind="options: diffLevels, value: selectedLevel, event: { change: showQues }"></select>
+    &nbsp;
+    <button data-bind="click: showQues">Repeat</button>
+
+    <div data-bind="text: ques"></div>
+</div>
+<br>
+<button data-bind="click: showSolution">Show Solution</button>
+<br>
+<h3>To solve the problem, we are following the way Google processes our above question, i.e., left to right. <br>
+    Also, to simplify calculations, we are rounding off answer from division part to the lower integer, i.e. floor function.</h3>
+
+<div class="customSolution" data-bind="foreach: solArray, visible: showSolFlag">
+    <p data-bind="text: $data"></p>
+    <br>
+</div>
+
+<script>
+    function getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    class Calc {
+        constructor() { }
+
+        add(a, b) {
+            return a + b;
+        }
+
+        subtract(a, b) {
+            return a - b;
+        }
+
+        multiply(a, b) {
+            return a * b;
+        }
+
+        divide(a, b) {
+            if (b == 0) {
+                return 0;
+            } else {
+                return a / b;
+            }
+        }
+
+        getResult(c, a, b) {
+            switch (c) {
+                case 'd': {
+                    return this.divide(a, b);
+                }
+
+                case 'm': {
+                    return this.multiply(a, b);
+                }
+
+                case 'a': {
+                    return this.add(a, b);
+                }
+
+                case 's': {
+                    return this.subtract(a, b);
+                }
+            }
+        }
+    }
+
+    class Graph {
+        constructor() {
+            this.adjacencyList = {};
+        }
+
+        addVertex(vertex) {
+            if (!this.adjacencyList[vertex]) {
+                this.adjacencyList[vertex] = [];
+            }
+        }
+
+        addEdge(source, destination) {
+            if (!this.adjacencyList[source]) {
+                this.addVertex(source);
+            }
+            if (!this.adjacencyList[destination]) {
+                this.addVertex(destination);
+            }
+            this.adjacencyList[source].push(destination);
+            // this.adjacencyList[destination].push(source); // We are making a tree.
+        }
+
+        removeEdge(source, destination) {
+            this.adjacencyList[source] = this.adjacencyList[source].filter(vertex => vertex !== destination);
+
+            // We are making a tree.
+            // this.adjacencyList[destination] = this.adjacencyList[destination].filter(vertex => vertex !== source);
+        }
+
+        removeVertex(vertex) {
+            while (this.adjacencyList[vertex]) {
+                const adjacentVertex = this.adjacencyList[vertex].pop();
+                this.removeEdge(vertex, adjacentVertex);
+            }
+            delete this.adjacencyList[vertex];
+        }
+
+        findVertex(vertex) {
+            let rv = -1;
+            for (let i in this.adjacencyList) {
+                if (this.adjacencyList[i].indexOf(vertex) > -1) {
+                    rv = i;
+                    break;
+                }
+            }
+            return rv;
+        }
+
+
+        getRoot() {
+            for (let i in this.adjacencyList) {
+                if (i[0] != 'n') {
+                    let f = this.findVertex(i);
+                    if (f == -1) {
+                        return i
+                    }
+                }
+            }
+            return -1
+        }
+
+        getString(vertex, dict) {
+            if (this.adjacencyList[vertex][0][0] != 'n' && this.adjacencyList[vertex][1][0] != 'n') {
+                return this.getString(this.adjacencyList[vertex][0], dict) + " " + dict[vertex] + " " + this.getString(this.adjacencyList[vertex][1], dict)
+            }
+
+            if (this.adjacencyList[vertex][0][0] != 'n' && this.adjacencyList[vertex][1][0] == 'n') {
+                return this.getString(this.adjacencyList[vertex][0], dict) + " " + dict[vertex] + " " + dict[this.adjacencyList[vertex][1]];
+            }
+
+            if (this.adjacencyList[vertex][0][0] == 'n' && this.adjacencyList[vertex][1][0] != 'n') {
+                return dict[this.adjacencyList[vertex][0]] + " " + dict[vertex] + " " + this.getString(this.adjacencyList[vertex][1], dict)
+            }
+
+            if (this.adjacencyList[vertex][0][0] == 'n' && this.adjacencyList[vertex][1][0] == 'n') {
+                return dict[this.adjacencyList[vertex][0]] + " " + dict[vertex] + " " + dict[this.adjacencyList[vertex][1]];
+            }
+        }
+
+        compute(vertex, dict) {
+            let c = new Calc();
+
+            if (this.adjacencyList[vertex][0][0] != 'n' && this.adjacencyList[vertex][1][0] != 'n') {
+                return c.getResult(vertex[0], this.compute(this.adjacencyList[vertex][0], dict), this.compute(this.adjacencyList[vertex][1], dict));
+            }
+
+            if (this.adjacencyList[vertex][0][0] != 'n' && this.adjacencyList[vertex][1][0] == 'n') {
+                return c.getResult(vertex[0], this.compute(this.adjacencyList[vertex][0], dict), dict[this.adjacencyList[vertex][1]]);
+            }
+
+            if (this.adjacencyList[vertex][0][0] == 'n' && this.adjacencyList[vertex][1][0] != 'n') {
+                return c.getResult(vertex[0], dict[this.adjacencyList[vertex][0]], this.compute(this.adjacencyList[vertex][1], dict));
+            }
+
+            if (this.adjacencyList[vertex][0][0] == 'n' && this.adjacencyList[vertex][1][0] == 'n') {
+                return c.getResult(vertex[0], dict[this.adjacencyList[vertex][0]], dict[this.adjacencyList[vertex][1]]);
+            }
+        }
+    }
+
+
+    var ViewModel = function () {
+        var self = this;
+        // These are the initial options
+        this.diffLevels = ko.observableArray([]);
+        this.selectedLevel = ko.observable();
+
+        this.ques = ko.observable();
+        this.solArray = ko.observableArray([]);
+
+        this.showSolFlag = ko.observable(true);
+
+        for (let i = 2; i <= 15; i++) {
+            this.diffLevels.push(i);
+        }
+
+        this.ops_symbols = ['/', '*', '+', '-'];
+
+        this.showQues = function () {
+            this.solArray([]);
+
+            let qFlag = true;
+            while (qFlag) {
+                this.initQues();
+                this.initGraph();
+                this.reorderGraph(this.init_graph);
+                this.ques(this.init_graph.getString(this.init_graph.getRoot(), this.init_ques_dict));
+
+                let t1 = this.init_graph.compute(this.init_graph.getRoot(), this.init_ques_dict);
+                let t2 = this.getAnswer();
+                
+                if (t1 && t1 > 0 && t2 > 0) {
+                    qFlag = false;
+                }
+            }
+        }
+
+        this.init_ques = [];
+        this.init_ques_sym = [];
+        this.init_ques_dict = {};
+
+        this.initQues = function () {
+            let nums = [];
+            let ops = [];
+
+            this.init_ques = [];
+            this.init_ques_sym = [];
+            this.init_ques_dict = {};
+
+
+            for (let i = 0; i < this.selectedLevel(); i++) {
+                nums.push(getRndInteger(0, 100));
+            }
+
+            for (let i = 0; i < this.selectedLevel() - 1; i++) {
+                ops.push(this.ops_symbols[getRndInteger(0, 3)]);
+            }
+
+            for (let i = 0; i < this.selectedLevel(); i++) {
+                if (i == 0) {
+                    this.init_ques.push(nums[i]);
+                    this.init_ques.push(ops[i]);
+
+                } else {
+                    if (i < this.selectedLevel() - 1) {
+                        this.init_ques.push(nums[i]);
+                        this.init_ques.push(ops[i]);
+                    } else {
+                        this.init_ques.push(nums[i]);
+                    }
+                }
+            }
+
+            for (let i = 0; i < this.init_ques.length; i++) {
+                if (Number.isInteger(this.init_ques[i])) {
+                    this.init_ques_sym.push("n" + i);
+                    this.init_ques_dict["n" + i] = this.init_ques[i];
+                }
+                else {
+                    switch (this.init_ques[i]) {
+                        case '/': {
+                            this.init_ques_sym.push("d" + i);
+                            this.init_ques_dict["d" + i] = this.init_ques[i];
+                            break;
+                        }
+                        case '*': {
+                            this.init_ques_sym.push("m" + i);
+                            this.init_ques_dict["m" + i] = this.init_ques[i];
+                            break;
+                        }
+                        case '+': {
+                            this.init_ques_sym.push("a" + i);
+                            this.init_ques_dict["a" + i] = this.init_ques[i];
+                            break;
+                        }
+                        case '-': {
+                            this.init_ques_sym.push("s" + i);
+                            this.init_ques_dict["s" + i] = this.init_ques[i];
+                            break;
+                        }
+                    }
+
+                }
+            }
+        }
+
+        function sortOps(a, b) {
+            if (a[0] == 'd') {
+                return -1;
+            }
+
+            if (a[0] == 's') {
+                return 1;
+            }
+
+            if (a[0] == 'a' && b[0] == 'm') {
+                return 1;
+            }
+
+            if (a[0] == 'm' && b[0] == 'a') {
+                return -1;
+            }
+
+            return -1;
+        }
+
+        let doneNums = [];
+        let doneOps = [];
+
+        this.init_graph = {};
+        this.initGraph = function () {
+            let g = new Graph();
+
+            for (let i = 0; i < this.init_ques_sym.length; i++) {
+                g.addVertex(this.init_ques_sym[i]);
+            }
+
+            let ops = this.init_ques_sym.filter(checkOp);
+
+            function checkOp(elem) {
+                return (elem[0] == 'd' || elem[0] == 'm' || elem[0] == 'a' || elem[0] == 's');
+            }
+
+            // Sort the operators in descending order of priority:
+            ops.sort(sortOps);
+
+            let dmas = ['d', 'm', 'a', 's'];
+            for (let j = 0; j < dmas.length; j++) {
+
+                for (let i = 0; i < this.init_ques_sym.length; i++) {
+
+                    if (this.init_ques_sym[i][0] == dmas[j]) {
+                        let f = g.findVertex(this.init_ques_sym[i - 1]);
+
+                        if (f == -1) {
+                            g.addEdge(this.init_ques_sym[i], this.init_ques_sym[i - 1]);
+                        }
+
+                        else {
+                            findFlag = true;
+                            v = this.init_ques_sym[i - 1];
+                            prev_v = v;
+                            while (findFlag) {
+                                prev_v = v;
+                                v = g.findVertex(v)
+                                if (v == -1) {
+                                    findFlag = false;
+                                }
+                            }
+
+                            g.addEdge(this.init_ques_sym[i], prev_v);
+                        }
+
+                        f = g.findVertex(this.init_ques_sym[i + 1]);
+
+                        if (f == -1) {
+                            g.addEdge(this.init_ques_sym[i], this.init_ques_sym[i + 1]);
+                        }
+
+                        else {
+                            findFlag = true;
+                            v = this.init_ques_sym[i + 1];
+                            prev_v = v;
+                            while (findFlag) {
+                                prev_v = v;
+                                v = g.findVertex(v)
+                                if (v == -1) {
+                                    findFlag = false;
+                                }
+                            }
+
+                            g.addEdge(this.init_ques_sym[i], prev_v);
+                        }
+                    }
+                }
+
+            }
+
+            this.init_graph = g;
+        }
+
+        this.reorderGraph = function (graph) {
+            c0 = 1;
+            c1 = -1;
+            while (c0 != c1 || c1 < 0) {
+                c0 = graph.compute(graph.getRoot(), this.init_ques_dict);
+                for (let i in graph.adjacencyList) {
+                    if (i[0] == 's') {
+                        t1 = graph.compute(i, this.init_ques_dict);
+                        if (t1 < 0) {
+                            t2 = graph.adjacencyList[i][0];
+                            graph.adjacencyList[i][0] = graph.adjacencyList[i][1];
+                            graph.adjacencyList[i][1] = t2;
+                        }
+                    }
+                }
+                c1 = graph.compute(graph.getRoot(), this.init_ques_dict);
+            }
+
+            return;
+
+            // c0 = 1;
+            // c1 = -1;
+            // while (c0 != c1) {
+            //     c0 = graph.compute(graph.getRoot(), this.init_ques_dict);
+            //     for (let i in graph.adjacencyList) {
+            //         if (i[0] == 'd') {
+            //             t1 = graph.compute(i, this.init_ques_dict);
+            //             if (t1 < 1) {
+            //                 t2 = graph.adjacencyList[i][0];
+            //                 graph.adjacencyList[i][0] = graph.adjacencyList[i][1];
+            //                 graph.adjacencyList[i][1] = t2;
+            //             }
+            //         }
+            //     }
+            //     c1 = graph.compute(graph.getRoot(), this.init_ques_dict);
+            // }
+        }
+
+        this.showSolution = function () {
+            this.showSolFlag(true);
+            this.solArray([]);
+
+            ques_str = this.ques();
+
+            if (!ques_str) {
+                return;
+            }
+
+            ques_str_arr = ques_str.split(" ");
+            let new_ques = [];
+
+
+            for (let i = 0; i < this.ops_symbols.length; i++) {
+                ix = ques_str_arr.indexOf(ops_symbols[i]);
+
+                while (ix != -1) {
+                    new_arr = ques_str_arr.slice(0, ix - 1);
+                    new_arr.push("(");
+
+                    new_arr = new_arr.concat(ques_str_arr.slice(ix - 1, ix + 2));
+
+                    new_arr.push(")");
+                    new_arr = new_arr.concat(ques_str_arr.slice(ix + 2));
+
+                    this.solArray.push(new_arr.join(" "));
+
+                    ix_op = new_arr.indexOf(ops_symbols[i]);
+
+                    switch (ops_symbols[i]) {
+                        case '/': {
+                            intermediate_val = Math.floor(parseInt(new_arr[ix_op - 1]) / parseInt(new_arr[ix_op + 1]));
+                            break;
+                        }
+                        case '*': {
+                            intermediate_val = Math.floor(parseInt(new_arr[ix_op - 1]) * parseInt(new_arr[ix_op + 1]));
+                            break;
+                        }
+                        case '+': {
+                            intermediate_val = Math.floor(parseInt(new_arr[ix_op - 1]) + parseInt(new_arr[ix_op + 1]));
+                            break;
+                        }
+                        case '-': {
+                            intermediate_val = Math.floor(parseInt(new_arr[ix_op - 1]) - parseInt(new_arr[ix_op + 1]));
+                            break;
+                        }
+                    }
+
+                    temp = new_arr.slice(0, ix_op - 2);
+                    temp.push(intermediate_val);
+                    temp = temp.concat(new_arr.slice(ix_op + 3));
+
+                    this.solArray.push(temp.join(" "));
+                    ix = temp.indexOf(ops_symbols[i]);
+
+                    ques_str_arr = temp;
+                }
+
+            }
+        }
+
+        this.getAnswer = function () {
+            this.showSolFlag(false);
+            this.showSolution();
+            sol = this.solArray()[this.solArray().length - 1];
+            this.solArray([]);
+            return sol;
+        }
+    };
+
+    ko.applyBindings(ViewModel);
+
+</script>
+<span style="display: none;">Tags: Mathematical Foundations for Data Science,</span>

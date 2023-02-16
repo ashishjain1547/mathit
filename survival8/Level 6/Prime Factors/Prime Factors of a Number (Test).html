@@ -1,0 +1,210 @@
+<head>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    
+    <!-- Google AdSense Using Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <style>
+        .customTempCodeHolderForSocialMedia {
+            display: none;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+
+        i.ibb {
+            display: block;
+            background-color: black;
+            color: white;
+        }
+
+        i.ibg {
+            display: block;
+            background-color: rgb(50, 50, 50);
+            color: white;
+        }
+
+
+        ul.no-bullets {
+            list-style-type: none;
+            /* Remove bullets */
+            padding: 0;
+            /* Remove padding */
+            margin: 0;
+            /* Remove margins */
+        }
+
+        li.customLi {
+            float: left;
+        }
+
+        li.customLi>span.customSpan {
+            display: block;
+            padding: 8px;
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<!-- End of 'Personal Posts Menu Template For Copy-Paste'. It started from the top of the page from <HEAD> tag. -->
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<script>
+    function getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function primeFactors(n) {
+
+        let rtn_val = [];
+
+        // Print the number of 2s that divide n
+        while (n % 2 == 0) {
+            rtn_val.push(2);
+            n = Math.floor(n / 2);
+        }
+
+        // n must be odd at this point. 
+        // So we can skip one element
+        // (Note i = i +2)
+        for (let i = 3;
+            i <= Math.floor(Math.sqrt(n));
+            i = i + 2) {
+
+            // While i divides n, print i
+            // and divide n
+            while (n % i == 0) {
+
+                rtn_val.push(i);
+                n = Math.floor(n / i);
+            }
+        }
+
+        // This condition is to handle the
+        // case when n is a prime number
+        // greater than 2
+        if (n > 2)
+            rtn_val.push(n);
+
+        return rtn_val;
+    }
+
+</script>
+<h3>Following number has <span class="customSpanTotalNum"></span> prime factors. Please list all of them. </h3>
+
+<h3 style="color: red;" class="customNumInQues"></h3>
+
+<div class="customInputWrapper"></div>
+
+<button onclick="checkAnswer()">Submit</button>
+<button onclick="showAnswer()">Show Answer</button>
+
+<h3 class="customMessage"></h3>
+<script>
+    let curr_level = 1;
+
+    function getNumInQues(l) {
+        if (l == 1) {
+            l1_numbers = [4, 6, 8, 9];
+            num_in_ques = l1_numbers[getRndInteger(0, 3)];
+            pf = primeFactors(num_in_ques);
+        }
+
+        else {
+            num_in_ques = getRndInteger(Math.pow(10, l - 1), Math.pow(10, l));
+            pf = primeFactors(num_in_ques);
+
+            while(pf.length == 1){
+                num_in_ques = getRndInteger(Math.pow(10, l - 1), Math.pow(10, l));
+                pf = primeFactors(num_in_ques);
+            }
+        }
+
+        $('h3.customNumInQues').text(num_in_ques);
+        
+        $('.customSpanTotalNum').text(pf.length);
+    }
+
+    function generateInputBoxes(n) {
+        $("div.customInputWrapper").empty();
+        for (let i = 0; i < n; i++) {
+            let in_str = "<input type='text' name='in_" + i + "' /><br><br>";
+            $("div.customInputWrapper").append(in_str);
+        }
+    }
+
+    function checkAnswer() {
+        n = parseInt($(".customSpanTotalNum").text());
+        num_in_ques = parseInt($(".customNumInQues").text());
+
+        $("h3.customMessage").text("");
+        pf = []
+        for (let i = 0; i < n; i++) {
+            let in_str = $("input[name=in_" + i + "]").val().trim();
+            if (in_str.length == 0) {
+                $("h3.customMessage").text("Please fill all the boxes.");
+                return;
+            }
+
+            else {
+                pf.push(parseInt(in_str));
+            }
+        }
+
+        pf.sort();
+
+        gold_pf = primeFactors(num_in_ques);
+
+        // Comparing both arrays using stringify
+        if (JSON.stringify(pf) == JSON.stringify(gold_pf)) {
+            curr_level++;
+            getNumInQues(curr_level);
+            n = parseInt($('.customSpanTotalNum').text());
+            generateInputBoxes(n);
+        }
+            
+        else {
+            if(curr_level > 1) {
+                curr_level--;
+            }
+            
+            getNumInQues(curr_level);
+            n = parseInt($('.customSpanTotalNum').text());
+            generateInputBoxes(n);
+        }
+            
+    }
+
+    function showAnswer(){
+        num_in_ques = parseInt($('h3.customNumInQues').text());
+        gold_pf = primeFactors(num_in_ques);
+        $("h3.customMessage").text("Answer for " + num_in_ques + " is: " + JSON.stringify(gold_pf));
+
+        getNumInQues(curr_level);
+        n = parseInt($('.customSpanTotalNum').text());
+        generateInputBoxes(n);
+    }
+
+    $(document).ready(function () {
+        getNumInQues(1);
+        n = parseInt($('.customSpanTotalNum').text());
+        generateInputBoxes(n);
+    });
+</script>
+<span style="display: none;">Tags: Technology,Mathematical Foundations for Data Science,Web Development,JavaScript,</span>

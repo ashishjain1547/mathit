@@ -1,0 +1,278 @@
+<head>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: window.location.protocol + "//" + window.location.hostname + "/p/personal-posts-menu.html",
+                success: function (result) {
+                    $("div.customTemporaryCodeHolder").html(result);
+                    $("nav.customDynamicNav").html(
+                        $("div.customTemporaryCodeHolder nav.customBitsWilpMenu").html()
+                    );
+                }
+            });
+
+            $.ajax({
+                url: window.location.protocol + "//" + window.location.hostname + "/p/follow-us-on-social-media.html",
+
+                success: function (result) {
+                    $("span.customTempCodeHolderForSocialMedia").html(result);
+                    $("div.customSocialMediaBtnsWrapper").html(
+                        $("span.customTempCodeHolderForSocialMedia div.customSocialMediaWrapper").html()
+                    );
+                }
+
+            });
+        });
+    </script>
+    <!-- Google AdSense Using Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <style>
+        .customTempCodeHolderForSocialMedia {
+            display: none;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+
+        i.ib {
+            color: blue;
+        }
+
+        i.ig {
+            color: green;
+        }
+
+        .customOl {
+            font-size: 15px;
+        }
+    </style>
+</head>
+<div class="customTemporaryCodeHolder"> </div>
+<span class="customTempCodeHolderForSocialMedia"> </span>
+
+<nav class="customDynamicNav"> </nav> <br />
+<div class="customSocialMediaBtnsWrapper"> </div> <br />
+
+<div class="customQuestion" data-bind="template: {afterRender: initApp}">
+    Set the pace of test:
+    <select data-bind="options: paceLevels, value: selectedPace"></select>
+    <br>
+    Score:
+    <br>
+    Right: <span data-bind="text: rightCnt"></span>
+    <br>
+    Wrong: <span data-bind="text: wrongCnt"></span>
+    <br><br>
+    Level: <span data-bind="text: levelCnt"></span>
+    <br>
+    <br>
+    <div data-bind="text: ques"></div>
+    <br>
+    <input type="text" class="customAnswer" data-bind="value: answer" required="" />
+    <button class="customSubmit" data-bind="click: checkAnswer">Submit</button>
+
+    <h3>To solve the problem, follow the way Google processes a BODMAS question, i.e., left to right. <br>
+        Also, to simplify calculations, round off answer from division part to the lower integer.</h3>
+
+    <h3 class="customResult"></h3>
+    <h3 class="customMessage" data-bind="text: message"></h3>
+
+    <div class="customSolution" data-bind="foreach: solArray">
+        <p data-bind="text: $data"></p>
+    </div>
+
+</div>
+<br>
+
+
+<script>
+    function getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    var ViewModel = function () {
+        var self = this;
+        // These are the initial options
+        this.paceLevels = ko.observableArray([]);
+        this.selectedPace = ko.observable();
+
+        for (let i = 1; i <= 4; i++) {
+            this.paceLevels.push(i);
+        }
+
+        this.levelCnt = ko.observable(2);
+        this.rightCnt = ko.observable(0);
+        this.wrongCnt = ko.observable(0);
+
+        this.answer = ko.observable();
+
+        this.ques = ko.observable();
+        this.solArray = ko.observableArray([]);
+
+
+        this.ops_symbols = ['/', '*', '+', '-'];
+
+        this.initApp = function () {
+            this.showQues();
+        }
+
+        this.showQues = function () {
+            this.solArray([]);
+            let nums = [];
+            let ops = [];
+
+            for (let i = 0; i < this.levelCnt(); i++) {
+                nums.push(getRndInteger(0, 100));
+            }
+
+            for (let i = 0; i < this.levelCnt() - 1; i++) {
+                ops.push(getRndInteger(0, 3));
+            }
+
+            let ques_str = "";
+            for (let i = 0; i < this.levelCnt(); i++) {
+                if (i == 0) {
+                    ques_str = nums[i] + " " + ops_symbols[ops[i]] + " ";
+                } else {
+                    if (i < this.levelCnt() - 1) {
+                        ques_str = ques_str + nums[i] + " " + ops_symbols[ops[i]] + " ";
+                    } else {
+                        ques_str = ques_str + nums[i];
+                    }
+
+                }
+            }
+            this.ques(ques_str);
+            this.answer("");
+            this.message("");
+        }
+
+        this.qCounter = ko.observable(1);
+        this.passFlag = ko.observable(0);
+        this.message = ko.observable();
+        this.checkAnswer = function () {
+            try {
+                if (isNaN(parseInt(this.answer()))) {
+                    throw "Please enter a valid number"
+                }
+            }
+
+            catch {
+                this.message("Please enter a valid number!");
+                return;
+            }
+
+            this.qCounter(this.qCounter() + 1);
+
+            this.showSolution();
+            sol = this.solArray()[this.solArray().length - 1];
+
+            if (sol != this.answer()) {
+                this.passFlag(this.passFlag() - 1);
+                this.wrongCnt(this.wrongCnt() + 1);
+            }
+
+            else {
+                this.passFlag(this.passFlag() + 1);
+                this.rightCnt(this.rightCnt() + 1);
+            }
+
+            if (this.qCounter() > this.selectedPace()) {
+                if (this.passFlag() > 0) {
+                    this.levelCnt(this.levelCnt() + 1);
+                }
+                else {
+                    if (this.levelCnt() > 2) {
+                        this.levelCnt(this.levelCnt() - 1);
+                    }
+                }
+                this.qCounter(1);
+                this.passFlag(0);
+            }
+
+            this.showQues();
+        }
+
+        this.showSolution = function () {
+            this.solArray([]);
+
+            ques_str = this.ques();
+
+            if (!ques_str) {
+                return;
+            }
+
+            ques_str_arr = ques_str.split(" ");
+            let new_ques = [];
+
+
+            for (let i = 0; i < this.ops_symbols.length; i++) {
+                ix = ques_str_arr.indexOf(ops_symbols[i]);
+
+                while (ix != -1) {
+                    new_arr = ques_str_arr.slice(0, ix - 1);
+                    new_arr.push("(");
+
+                    new_arr = new_arr.concat(ques_str_arr.slice(ix - 1, ix + 2));
+
+                    new_arr.push(")");
+                    new_arr = new_arr.concat(ques_str_arr.slice(ix + 2));
+
+                    this.solArray.push(new_arr.join(" "));
+
+                    ix_op = new_arr.indexOf(ops_symbols[i]);
+
+                    switch (ops_symbols[i]) {
+                        case '/': {
+                            intermediate_val = Math.floor(parseInt(new_arr[ix_op - 1]) / parseInt(new_arr[ix_op + 1]));
+                            break;
+                        }
+                        case '*': {
+                            intermediate_val = Math.floor(parseInt(new_arr[ix_op - 1]) * parseInt(new_arr[ix_op + 1]));
+                            break;
+                        }
+                        case '+': {
+                            intermediate_val = Math.floor(parseInt(new_arr[ix_op - 1]) + parseInt(new_arr[ix_op + 1]));
+                            break;
+                        }
+                        case '-': {
+                            intermediate_val = Math.floor(parseInt(new_arr[ix_op - 1]) - parseInt(new_arr[ix_op + 1]));
+                            break;
+                        }
+                    }
+
+                    temp = new_arr.slice(0, ix_op - 2);
+                    temp.push(intermediate_val);
+                    temp = temp.concat(new_arr.slice(ix_op + 3));
+
+                    this.solArray.push(temp.join(" "));
+                    ix = temp.indexOf(ops_symbols[i]);
+
+                    ques_str_arr = temp;
+                }
+
+            }
+        }
+    };
+
+    ko.applyBindings(ViewModel);
+
+</script>
+<span style="display: none;">Tags: Mathematical Foundations for Data Science,</span>

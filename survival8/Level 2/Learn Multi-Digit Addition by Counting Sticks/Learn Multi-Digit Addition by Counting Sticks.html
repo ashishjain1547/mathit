@@ -1,0 +1,411 @@
+<head>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+
+    <!-- Google AdSense Using Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <style>
+        .customTempCodeHolderForSocialMedia {
+            display: none;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+
+        i.ib {
+            color: blue;
+        }
+
+        i.ig {
+            color: green;
+        }
+
+        .customOl {
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="customContentWrapper" data-bind='template: { afterRender: init }'>
+
+        <h3>Enter the first number:</h3>
+
+        <input type="text" id="firstNum" name="firstNum" data-bind="value: firstNum" maxlength="7"> &nbsp;&nbsp;
+        <button>Show</button><br><br>
+        <br>
+
+        <canvas id="myFirstCanvas1" width="250" height="107" style="border:1px solid #000000;"
+            data-bind="visible: firstNumDigit1"></canvas>
+        <canvas id="myFirstCanvas2" width="250" height="107" style="border:1px solid #000000;"
+            data-bind="visible: firstNumDigit2"></canvas>
+        <canvas id="myFirstCanvas3" width="250" height="107" style="border:1px solid #000000;"
+            data-bind="visible: firstNumDigit3"></canvas>
+        <canvas id="myFirstCanvas4" width="250" height="107" style="border:1px solid #000000;"
+            data-bind="visible: firstNumDigit4"></canvas>
+        <canvas id="myFirstCanvas5" width="250" height="107" style="border:1px solid #000000;"
+            data-bind="visible: firstNumDigit5"></canvas>
+        <canvas id="myFirstCanvas6" width="250" height="107" style="border:1px solid #000000;"
+            data-bind="visible: firstNumDigit6"></canvas>
+        <canvas id="myFirstCanvas7" width="250" height="107" style="border:1px solid #000000;"
+            data-bind="visible: firstNumDigit7"></canvas>
+
+        <h3>Enter the second number:</h3>
+
+        <input type="text" id="secondNum" name="secondNum" data-bind="value: secondNum" maxlength="7"> &nbsp;&nbsp;
+        <button>Show</button><br><br>
+        <br>
+
+        <canvas id="mySecondCanvas1" width="250" height="107" style="border:1px solid #000000;"
+            data-bind="visible: secondNumDigit1"></canvas>
+        <canvas id="mySecondCanvas2" width="250" height="107" style="border:1px solid #000000;"
+            data-bind="visible: secondNumDigit2"></canvas>
+        <canvas id="mySecondCanvas3" width="250" height="107" style="border:1px solid #000000;"
+            data-bind="visible: secondNumDigit3"></canvas>
+        <canvas id="mySecondCanvas4" width="250" height="107" style="border:1px solid #000000;"
+            data-bind="visible: secondNumDigit4"></canvas>
+        <canvas id="mySecondCanvas5" width="250" height="107" style="border:1px solid #000000;"
+            data-bind="visible: secondNumDigit5"></canvas>
+        <canvas id="mySecondCanvas6" width="250" height="107" style="border:1px solid #000000;"
+            data-bind="visible: secondNumDigit6"></canvas>
+        <canvas id="mySecondCanvas7" width="250" height="107" style="border:1px solid #000000;"
+            data-bind="visible: secondNumDigit7"></canvas>
+
+
+        <br>
+        <br>
+        <button data-bind="click: addThese">Add These!</button>
+        <br>
+        <h2>Answer is: <span data-bind="text: customAnswer"></span></h2>
+        <br>
+
+        <canvas id="myAnswerCanvas1" width="250" height="220" style="border:1px solid #000000;"
+            data-bind="visible: customAnswerDigit1"></canvas>
+        <canvas id="myAnswerCanvas2" width="250" height="220" style="border:1px solid #000000;"
+            data-bind="visible: customAnswerDigit2"></canvas>
+        <canvas id="myAnswerCanvas3" width="250" height="220" style="border:1px solid #000000;"
+            data-bind="visible: customAnswerDigit3"></canvas>
+        <canvas id="myAnswerCanvas4" width="250" height="220" style="border:1px solid #000000;"
+            data-bind="visible: customAnswerDigit4"></canvas>
+        <canvas id="myAnswerCanvas5" width="250" height="220" style="border:1px solid #000000;"
+            data-bind="visible: customAnswerDigit5"></canvas>
+        <canvas id="myAnswerCanvas6" width="250" height="220" style="border:1px solid #000000;"
+            data-bind="visible: customAnswerDigit6"></canvas>
+        <canvas id="myAnswerCanvas7" width="250" height="220" style="border:1px solid #000000;"
+            data-bind="visible: customAnswerDigit7"></canvas>
+        <canvas id="myAnswerCanvas8" width="250" height="220" style="border:1px solid #000000;"
+            data-bind="visible: customAnswerDigit8"></canvas>
+
+    </div>
+</body>
+
+<script>
+    var ViewModel = function () {
+        var self = this;
+
+        self.firstNum = ko.observable("");
+        self.secondNum = ko.observable("");
+
+        self.customAnswer = ko.computed(function () {
+            return parseInt(self.firstNum()) + parseInt(self.secondNum());
+        });
+
+        self.fillCanvas = function (canvasID, fillStyle, inNum) {
+            var canvas = document.getElementById(canvasID);
+            var ctx = canvas.getContext("2d");
+
+            var lineWidth = 10;
+            var lineHeight = 107;
+            var lineGap = 15;
+            ctx.clearRect(0, 0, 500, lineHeight);
+
+            for (var i = 0; i < inNum; i++) {
+                ctx.fillStyle = fillStyle; // color
+                ctx.fillRect(i * (lineWidth + lineGap), 0, lineWidth, lineHeight);
+
+            }
+        }
+
+        self.fillThirdCanvas = function (canvasID, fillStyle, inNum1, carry) {
+            var canvas = document.getElementById(canvasID);
+            var ctx = canvas.getContext("2d");
+
+            ctx.clearRect(0, 0, 500, 220);
+
+            var lineWidth = 10;
+            var lineHeight = 107;
+            var lineGap = 15;
+
+            for (var i = 0; i < carry; i++) {
+                if (carry >= 1) {
+                    ctx.fillStyle = fillStyle;
+                    ctx.fillRect(i * (lineWidth + lineGap), 0, lineWidth, lineHeight);
+                }
+            }
+
+            if (inNum1 && inNum1.toString().length > 0) {
+                for (var i = 0; i < inNum1; i++) {
+                    ctx.fillStyle = fillStyle;
+                    ctx.fillRect(i * (lineWidth + lineGap), 112, lineWidth, lineHeight);
+
+                }
+            }
+
+        }
+
+        self.firstNumDigit1 = ko.computed(
+            function () {
+
+                self.fillCanvas("myFirstCanvas1", "#8F00FF", self.firstNum().toString()[0])
+                // Violet: 56.1% red, 0% green and 100% blue
+
+                return self.firstNum().toString()[0]
+            }, self
+        );
+
+        self.firstNumDigit2 = ko.computed(
+            function () {
+                self.fillCanvas("myFirstCanvas2", "#4B0082", self.firstNum().toString()[1])
+                // Indigo: 29.4% red, 0% green and 51% blue
+
+                return self.firstNum().toString()[1]
+            }, self
+        );
+
+        self.firstNumDigit3 = ko.computed(
+            function () {
+                self.fillCanvas("myFirstCanvas3", "#0000FF", self.firstNum().toString()[2])
+
+                return self.firstNum().toString()[2]
+            }, self
+        );
+
+        self.firstNumDigit4 = ko.computed(
+            function () {
+                self.fillCanvas("myFirstCanvas4", "#00FF00", self.firstNum().toString()[3])
+                return self.firstNum().toString()[3]
+            }, self
+        );
+
+        self.firstNumDigit5 = ko.computed(
+            function () {
+                self.fillCanvas("myFirstCanvas5", "#FFFF00", self.firstNum().toString()[4])
+                return self.firstNum().toString()[4]
+            }, self
+        );
+
+        self.firstNumDigit6 = ko.computed(
+            function () {
+                self.fillCanvas("myFirstCanvas6", "#FFA500", self.firstNum().toString()[5])
+                return self.firstNum().toString()[5]
+            }, self
+        );
+
+        self.firstNumDigit7 = ko.computed(
+            function () {
+                self.fillCanvas("myFirstCanvas7", "#FF0000", self.firstNum().toString()[5])
+                return self.firstNum().toString()[6]
+            }, self
+        );
+
+        // --- --- ---
+
+
+        self.secondNumDigit1 = ko.computed(
+            function () {
+                self.fillCanvas("mySecondCanvas1", "#8F00FF", self.secondNum().toString()[0])
+                // Violet: 56.1% red, 0% green and 100% blue
+
+                return self.secondNum().toString()[0]
+            }, self
+        );
+
+        self.secondNumDigit2 = ko.computed(
+            function () {
+                self.fillCanvas("mySecondCanvas2", "#4B0082", self.secondNum().toString()[1])
+                // Indigo: 29.4% red, 0% green and 51% blue
+
+                return self.secondNum().toString()[1]
+            }, self
+        );
+
+        self.secondNumDigit3 = ko.computed(
+            function () {
+                self.fillCanvas("mySecondCanvas3", "#0000FF", self.secondNum().toString()[2])
+
+                return self.secondNum().toString()[2]
+            }, self
+        );
+
+        self.secondNumDigit4 = ko.computed(
+            function () {
+                self.fillCanvas("mySecondCanvas4", "#00FF00", self.secondNum().toString()[3])
+                return self.secondNum().toString()[3]
+            }, self
+        );
+
+        self.secondNumDigit5 = ko.computed(
+            function () {
+                self.fillCanvas("mySecondCanvas5", "#FFFF00", self.secondNum().toString()[4])
+                return self.secondNum().toString()[4]
+            }, self
+        );
+
+        self.secondNumDigit6 = ko.computed(
+            function () {
+                self.fillCanvas("mySecondCanvas6", "#FFA500", self.secondNum().toString()[5])
+                return self.secondNum().toString()[5]
+            }, self
+        );
+
+        self.secondNumDigit7 = ko.computed(
+            function () {
+                self.fillCanvas("mySecondCanvas7", "#FF0000", self.secondNum().toString()[5])
+                return self.secondNum().toString()[6]
+            }, self
+        );
+
+        // --- --- ---
+
+        self.customAnswerDigit1 = ko.computed(
+            function () {
+                return self.customAnswer().toString()[0]
+            }, self
+        );
+
+        self.customAnswerDigit2 = ko.computed(
+            function () {
+                return self.customAnswer().toString()[1]
+            }, self
+        );
+
+        self.customAnswerDigit3 = ko.computed(
+            function () {
+                return self.customAnswer().toString()[2]
+            }, self
+        );
+
+        self.customAnswerDigit4 = ko.computed(
+            function () {
+                return self.customAnswer().toString()[3]
+            }, self
+        );
+
+        self.customAnswerDigit5 = ko.computed(
+            function () {
+                return self.customAnswer().toString()[4]
+            }, self
+        );
+
+        self.customAnswerDigit6 = ko.computed(
+            function () {
+                return self.customAnswer().toString()[5]
+            }, self
+        );
+
+        self.customAnswerDigit7 = ko.computed(
+            function () {
+                return self.customAnswer().toString()[6]
+            }, self
+        );
+
+        self.customAnswerDigit8 = ko.computed(
+            function () {
+                return false
+            }, self
+        );
+
+
+        self.addThese = function () {
+
+            var larger_num = 0;
+            var smaller_num = 0
+            if (parseInt(self.firstNum()) > parseInt(self.secondNum())) {
+                larger_num = parseInt(self.firstNum())
+                smaller_num = parseInt(self.secondNum())
+            } else {
+                larger_num = parseInt(self.secondNum())
+                smaller_num = parseInt(self.firstNum())
+            }
+
+            
+            var carry_arr = []
+            var digits = []
+            var carryFlag = true;
+            var j = smaller_num.toString().length - 1;
+
+            for (var i = larger_num.toString().length - 1; i >= 0; i--) {
+                
+                var digit = 0;
+                if (j >= 0) {
+                    if(carry_arr.length > 0) {
+                        digit = parseInt(larger_num.toString()[i]) + parseInt(smaller_num.toString()[j]) + carry_arr[0];
+                    } else {
+                        digit = parseInt(larger_num.toString()[i]) + parseInt(smaller_num.toString()[j]);
+                    }
+                    
+                    j--;
+                } else {
+                    if (carryFlag) {
+                        digit = parseInt(larger_num.toString()[i]) + carry_arr[0];
+                        carryFlag = false;
+                    } else {
+                        digit = parseInt(larger_num.toString()[i]);
+                    }
+                }
+
+                digits.unshift(digit.toString()[digit.toString().length - 1]);
+
+                if (digit > 9) {
+                    carry_arr.unshift(1);
+                } else {
+                    carry_arr.unshift(0);
+                }
+            }
+
+            if (digits[0] > 9) {
+                firstDigit = digits[0].toString()[0]
+                digits[0] = digits[0].toString()[1]
+                digits.unshift(firstDigit);
+                carry_arr.push(0);
+            }
+            
+
+            if (parseInt(carry_arr[0]) == 1) {
+                self.fillThirdCanvas("myAnswerCanvas1", "#FF0000", 0, carry_arr[0])
+                for (var i = 0; i < digits.toString().length; i++) {
+                    self.fillThirdCanvas("myAnswerCanvas" + (i + 2), "#FF0000", digits[i], carry_arr[i + 1])
+                }
+            } else {
+                for (var i = 0; i < digits.toString().length; i++) {
+                    self.fillThirdCanvas("myAnswerCanvas" + (i + 1), "#FF0000", digits[i], carry_arr[i + 1])
+                }
+            }
+
+
+
+        }
+        self.init = function () {
+
+        }
+
+    };
+
+    ko.applyBindings(ViewModel);
+
+</script>
+<span style="display: none;">Tags: Mathematical Foundations for Data Science,</span>

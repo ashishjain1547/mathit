@@ -1,0 +1,131 @@
+<script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+<!-- Google AdSense Using Machine Learning Code -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-3071098372371409",
+        enable_page_level_ads: true
+    });
+</script>
+
+<style>
+    .customTempCodeHolderForSocialMedia {
+        display: none;
+    }
+
+    pre {
+        white-space: pre-wrap;
+        white-space: -moz-pre-wrap;
+        white-space: -pre-wrap;
+        white-space: -o-pre-wrap;
+        word-wrap: break-word;
+    }
+
+    i.ibb {
+        display: block;
+        background-color: black;
+        color: white;
+    }
+
+    i.ibg {
+        display: block;
+        background-color: rgb(50, 50, 50);
+        color: white;
+    }
+
+
+    ul.no-bullets {
+        list-style-type: none;
+        /* Remove bullets */
+        padding: 0;
+        /* Remove padding */
+        margin: 0;
+        /* Remove margins */
+    }
+
+    li.customLi {
+        float: left;
+    }
+
+    li.customLi>span.customSpan {
+        display: block;
+        padding: 8px;
+        background-color: #dddddd;
+    }
+
+    .customOl {
+        font-size: 15px;
+    }
+</style>
+</head>
+
+<!-- End of 'Personal Posts Menu Template For Copy-Paste'. It started from the top of the page from <HEAD> tag. -->
+
+<h3>Enter two numbers to multiply:</h3>
+<input type="text" name="num1" class="num1" placeholder="number 1" />
+<br><br>
+<input type="text" name="num2" class="num2" placeholder="number 2" />
+
+<button onclick="multiply()">Multiply</button>
+
+<div class="solutionWrapper"> </div>
+
+<script>
+    $(document).ready(function () { });
+
+    function multiply() {
+        $("div.solutionWrapper").empty();
+        let num1 = $('.num1').val();
+        let num2 = $('.num2').val();
+
+        try {
+            num1 = parseInt(num1);
+            num2 = parseInt(num2);
+        }
+        catch {
+            alert("Invalid number entered.");
+        }
+
+        let a, b = 0;
+        if (num1 < num2) {
+            a = num1;
+            b = num2;
+        }
+        else {
+            a = num2;
+            b = num1;
+        }
+
+        let p_open = "<p style='text-align: right; width: 320px; font-family: monospace;'>";
+        $("div.solutionWrapper").append(p_open + b + "</p>");
+        $("div.solutionWrapper").append(p_open + "X " + a + "</p>");
+        $("div.solutionWrapper").append(p_open + "-----" + "</p>");
+
+        let a_str = a.toString();
+        let a_nums = [];
+        for (let i = 0; i < a_str.length; i++) {
+            a_nums.push(parseInt(a_str.charAt(i)))
+        }
+
+        let intermediate_products = [];
+        let Xs = "";
+
+        for (let i = a_nums.length - 1; i >= 0; i--) {
+            let p = b * a_nums[i];
+            $("div.solutionWrapper").append(p_open + p.toString() + Xs + "</p>");
+            intermediate_products.push(p * Math.pow(10, Xs.length))
+            Xs += "X";
+        }
+
+
+        if(a_str.length > 1) {
+            $("div.solutionWrapper").append(p_open + "-----" + "</p>");
+
+            const sum = intermediate_products.reduce((partial_sum, a) => partial_sum + a, 0);
+            $("div.solutionWrapper").append(p_open + sum + "</p>");
+        }
+    }
+</script>
+<span style="display: none;">Tags: Mathematical Foundations for Data Science,</span>

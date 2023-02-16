@@ -1,0 +1,99 @@
+<head>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+
+    <!-- Google AdSense Using Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <style>
+        .customTempCodeHolderForSocialMedia {
+            display: none;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+
+        i.ib {
+            color: blue;
+        }
+
+        i.ig {
+            color: green;
+        }
+
+        .customOl {
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<div class="customMainDiv">
+    <h3>Base Number:</h3>
+
+    <select data-bind="options: baseNums, value: selectedBaseNum, event: { change: showTable }"></select>
+
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: customNumTable">
+            <tr>
+                <td data-bind="text: base"></td>
+                <td>X</td>
+                <td data-bind="text: multiplier"></td>
+                <td>=</td>
+                <td data-bind="text: multiple"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    var ViewModel = function () {
+        var self = this;
+        // These are the initial options
+        this.baseNums = ko.observableArray([]);
+
+
+        for (let i = 2; i <= 40; i++) {
+            this.baseNums.push(i);
+        }
+
+        this.selectedBaseNum = ko.observable();
+
+        this.customNumTable = ko.observableArray([]);
+
+        this.showTable = function () {
+
+            this.customNumTable([]);
+
+            for (let i = 0; i < 10; i++) {
+                this.customNumTable.push({ base: this.selectedBaseNum, multiplier: i + 1, multiple: parseInt(this.selectedBaseNum()) * (i + 1) });
+            }
+        }
+
+    };
+
+    ko.applyBindings(ViewModel);
+
+</script>
+<span style="display: none;">Tags: Mathematical Foundations for Data Science,</span>

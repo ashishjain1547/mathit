@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Derangement Theorem</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google AdSense Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <!-- Bootstrap CSS - Opens -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- link href="CSS/bootstrap.css" rel="stylesheet" -->
+
+    <!-- Bootstrap CSS - Closes -->
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous" />
+    <!-- link href="CSS/bootstrap-theme.css" rel="stylesheet" -->
+
+    <!-- CSS/18 - Derangement Theorem.css -->
+    <!-- link href="CSS/18 - Derangement Theorem.css" rel="stylesheet" / -->
+    <style>
+        .row {
+            margin-left: 0px;
+            margin-right: 0px;
+        }
+
+        .input.row {
+            text-align: center;
+        }
+
+        .input_div {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            display: inline-block;
+            max-width: 158px;
+            padding: 0 22px 0 5px;
+        }
+
+        .glyph-button {
+            display: block;
+            float: right;
+            min-height: 98px;
+            min-width: 17px;
+            padding: 0;
+            position: relative;
+        }
+
+        .glyph-button .glyphicon {
+            cursor: pointer;
+        }
+
+        .glyph-button .glyphicon:hover {
+            color: #8a8a8a;
+        }
+
+        .glyphicon.glyphicon-chevron-up {
+            color: #333333;
+            float: right;
+            font-size: 30px;
+            position: absolute;
+            right: -19px;
+            top: 19px;
+            vertical-align: top;
+        }
+
+        .glyphicon.glyphicon-chevron-down {
+            display: block;
+            float: right;
+            font-size: 30px;
+            position: absolute;
+            right: -17px;
+            top: 53px;
+        }
+
+        .allInput {
+            font-size: 62px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: auto;
+        }
+
+        .customBorderLess {
+            border: none !important;
+        }
+
+        .permutation {
+            color: #ff3333;
+            font-size: 65px;
+            font-weight: 700;
+            line-height: 1.2;
+            opacity: 1;
+            text-align: center;
+        }
+
+        .customRedHeading {
+            color: red;
+        }
+
+        /* The following CSS is specific to the related HTML page. */
+
+        /*
+        @font-face {
+            font-family: "Glyphicons Halflings";
+            src: url("../FONT/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"),
+            url("../FONT/glyphicons-halflings-regular.woff") format("woff"),
+            url("../FONT/glyphicons-halflings-regular.ttf") format("truetype");
+        }
+*/
+
+        .customInputFont {
+            float: left;
+            font-size: 72px;
+            line-height: 72px;
+            min-width: 82px;
+        }
+
+        .input_div .customInputFont {
+            line-height: 98px;
+        }
+
+        .customLink {
+            background-color: #4CAF50;
+            border: none;
+            color: white !important;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none !important;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .customLink:hover, .customLink:visited, .customLink:active {
+            text-decoration: none !important;
+        }
+
+        .customAnswerArea {
+            display: none;
+        }
+
+        .customAnswerArea>h3 {
+            color: darkslateblue;
+            /* rgb(72,​61,​139) */
+        }
+
+        .customInputFontLikeH3 {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 24px;
+            font-weight: 500;
+            line-height: 94px;
+            float: left;
+        }
+
+        .customFontRed {
+            color: red;
+        }
+
+        .customAllDerangements {
+            display: block;
+            max-width: 550px;
+            max-height: 95px;
+            overflow: scroll;
+            color: #555;
+            padding: 2px;
+            border: 1px solid black;
+            margin: 2px;
+            font-size: 21px;
+        }
+    </style>
+
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <!-- script src="JS/jquery.min.js"></script-->
+    <!-- v1.11.1 -->
+
+
+    <!-- Bootstrap -->
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <!-- script src="JS/bootstrap.js"></script -->
+
+</head>
+
+<body ng-app="myApp">
+    <div class="main-container" ng-controller="myController" ng-init="init()">
+        <div class="question">
+            <h3>Ques: There are four balls of different colors and four boxes of the same colors as of the balls. Find the number
+                of ways in which the balls, one in each of the box, could be placed such that the ball does not go to the
+                box of its own color.</h3>
+        </div>
+        <div class="button-panel">
+            <button id="myButton" class="btn btn-info" ng-click="showAnswer()">Show Help!</button>
+            <button id="myButtonHideAns" class="btn btn-danger btn-lg disabled" style="display: none;">Hide Answer</button>
+        </div>
+        <div class="customAnswerArea">
+            <h3>Ans: This problem comes directly from the 'derangement theorem'.</h3>
+            <h3>In combinatorial mathematics, a derangement is a permutation of the elements of a set, such that no element appears
+                in its original position.</h3>
+            <h3>If A, B, C, D are four balls and a, b, c, d are four boxes then derangements are:</h3>
+
+            <div class="input row">
+                <span class="customInputFontLikeH3"> Let the number of balls be: &nbsp;</span>
+                <div class="input_div col-sm-4">
+                    <span class="customNumberOfBalls customInputFont">
+                        <!-- 4 -->
+                    </span>
+                    <span class="glyph-button">
+                        <span class="glyphicon glyphicon-chevron-up customInputNUp" ng-click="increaseN()">
+                        </span>
+                        <span class="glyphicon glyphicon-chevron-down customInputNDown" ng-click="decreaseN()"></span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="input row">
+                <span class="customInputFontLikeH3"> Then, the balls are: &nbsp;</span>
+                <span class="customInputFont customFontRed allInputBalls"> </span>
+            </div>
+
+            <div class="input row">
+                <span class="customInputFontLikeH3"> And, the boxes are: &nbsp;</span>
+                <span class="customInputFont customFontRed allInputBoxes"> </span>
+            </div>
+
+            <div class="input row">
+                <span class="customInputFontLikeH3 answer">All derangements of the balls are: &nbsp;</span>
+                <span class="customAllDerangements">{{generateDerangements()}}</span>
+            </div>
+
+            <div class="input row">
+                <span class="customInputFontLikeH3 answer">The number of derangements of 'n' balls is equal to: round(n!/e) = {{generateDerangementsCount()}}</span>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="customScriptWrapper">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"> </script>
+        <!-- script src="JS/angular.1.6.9.min.js"></script -->
+
+        <!-- JS/18 - Derangement Theorem.js -->
+        <!-- script src="JS/18 - Derangement Theorem.js"></script -->
+        <script>
+            var chars_global = {
+                "A": "A", "B": "B", "C": "C", "D": "D",
+                "E": "E", "F": "F", "G": "G", "H": "H",
+                "I": "I", "J": "J", "K": "K", "L": "L",
+                "M": "M", "N": "N", "O": "O", "P": "P",
+                "Q": "Q", "R": "R", "S": "S", "T": "T",
+                "U": "U", "V": "V", "W": "W", "X": "X",
+                "Y": "Y", "Z": "Z"
+            };
+
+            function initializeInputChars(num) {
+                in_chars = {}; // Reset the variable
+
+                var str_temp = "";
+                for (var key in chars_global) {
+                    if (key.charCodeAt(0) < 65 + num) {
+                        str_temp += key;
+                        Object.defineProperty(in_chars, key, {
+                            value: key,
+                            enumerable: true,
+                            writable: true,
+                            configurable: true
+                        });
+                    }
+                }
+                $(".customNumberOfBalls").text(num);
+
+                $(".allInputBalls").text(str_temp.split('').join('-'));
+                $(".allInputBoxes").text(str_temp.split('').join('-').toLowerCase());
+            };
+
+            function factorial(num) {
+                var result = 1;
+                for (var i = 1; i < num; i++ , result *= i);
+                return result;
+            }
+
+            var app = angular.module('myApp', []);
+            app.controller('myController', function ($scope) {
+                $scope.init = function () {
+                    $(".customNumberOfBalls").html('4');
+                    initializeInputChars(4);
+                };
+
+                $scope.showAnswer = function () {
+                    $('.customAnswerArea').slideDown();
+                    $('#myButton').hide();
+                };
+
+
+                $scope.increaseN = function () {
+                    var num = parseInt($(".customNumberOfBalls").text());
+                    if (num < 7) {
+                        num++;
+                        initializeInputChars(parseInt(num));
+                    }
+                };
+
+                $scope.decreaseN = function () {
+                    var num = parseInt($(".customNumberOfBalls").text());
+
+                    if (num > 2) {
+                        num--;
+                        initializeInputChars(parseInt(num));
+                    }
+                };
+
+                $scope.generateDerangements = function () {
+                    function getAllPermutations(string) {
+                        var results = [];
+
+                        if (string.length === 1) {
+                            results.push(string);
+                            return results;
+                        }
+
+                        for (var i = 0; i < string.length; i++) {
+                            var firstChar = string[i];
+                            var charsLeft = string.substring(0, i) + string.substring(i + 1);
+                            var innerPermutations = getAllPermutations(charsLeft);
+                            for (var j = 0; j < innerPermutations.length; j++) {
+                                results.push(firstChar + innerPermutations[j]);
+                            }
+                        }
+                        return results;
+                    }
+
+                    var inputBalls = $('.allInputBalls').text().trim().replace(/-/g, '');
+                    var allPermutations = getAllPermutations(inputBalls);
+                    var inputBoxes = $('.allInputBoxes').text().trim().replace(/-/g, '');
+                    var allDerangements = [];
+
+                    var ballBoxMatchFlag = false;
+
+                    for (var i = 0; i < allPermutations.length; i++) {
+                        for (var j = 0; j < inputBoxes.length; j++) {
+                            if (allPermutations[i][j] === inputBoxes[j].toUpperCase()) {
+                                ballBoxMatchFlag = true;
+                                break;
+                            }
+                        }
+                        if (!ballBoxMatchFlag) {
+                            allDerangements.push(allPermutations[i]);
+                        }
+                        ballBoxMatchFlag = false;
+                    }
+
+                    //return allDerangements.join(', ') + ' #:' + allDerangements.length;
+                    return allDerangements.join(', ');
+                };
+
+                $scope.generateDerangementsCount = function () {
+                    var numberOfBalls = parseInt($('.customNumberOfBalls ').text().trim());
+                    return Math.round(factorial(numberOfBalls) / Math.E);
+                };
+            }); // app.controller() Closes
+        </script>
+    </div>
+</body>
+
+</html>
+<span style="display: none;">Tags: Mathematical Foundations for Data Science,</span>

@@ -1,0 +1,373 @@
+<head>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    
+    
+    <!-- Google AdSense Using Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <style>
+        .customTempCodeHolderForSocialMedia {
+            display: none;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+
+        i.ibb {
+            display: block;
+            background-color: black;
+            color: white;
+        }
+
+        i.ibg {
+            display: block;
+            background-color: rgb(50, 50, 50);
+            color: white;
+        }
+
+
+        ul.no-bullets {
+            list-style-type: none;
+            /* Remove bullets */
+            padding: 0;
+            /* Remove padding */
+            margin: 0;
+            /* Remove margins */
+        }
+
+        li.customLi {
+            float: left;
+        }
+
+        li.customLi>span.customSpan {
+            display: block;
+            padding: 8px;
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<!-- End of 'Personal Posts Menu Template For Copy-Paste'. It started from the top of the page from <HEAD> tag. -->
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<div class="container">
+    <ul class="no-bullets">
+        <li class="active customLi">
+            <span class="customSpan" onclick="getAdd(1);curr_level = 1;">Add</span>
+        </li>
+
+        <li class="customLi">
+            <span class="customSpan" onclick="getSubtract(1);curr_level = 1;">Subtract</span>
+        </li>
+
+        <li class="customLi">
+            <span class="customSpan" onclick="getMultiply(1);curr_level = 1;">Multiply</span>
+        </li>
+
+        <li class="customLi">
+            <span class="customSpan" onclick="getDivide(1);curr_level = 1;">Divide</span>
+        </li>
+    </ul>
+</div>
+
+
+<div class="container">
+    <h3 class="customLevel"></h3>
+    <table class="customTable">
+        <tr>
+            <td></td>
+            <td>&nbsp;</td>
+            <td>
+                <h3 class="customNumberOne"></h3>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3 class="customOperator"></h3>
+            </td>
+            <td>&nbsp;</td>
+            <td>
+                <h3 class="customNumberTwo"></h3>
+            </td>
+        </tr>
+    </table>
+
+    <input type="text" class="customAnswer" value="" required="" />
+    <button class="customSubmit">Submit</button>
+
+    <h3 class="customResult"></h3>
+    <h3 class="customMessage"></h3>
+</div>
+
+<script>
+    let curr_level = 1;
+
+    function getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+
+    function getAdd(l) {
+        $(".customLevel").text("Level: " + l);
+
+        if (l == 1) {
+            a = getRndInteger(Math.pow(10, l - 1), Math.pow(10, l));
+            b = getRndInteger(Math.pow(10, l - 1), Math.pow(10, l));
+        }
+
+        if (l == 2) {
+            a = getRndInteger(2, 9);
+            b = getRndInteger(Math.pow(10, 1), Math.pow(10, 2));
+        }
+
+        if (l == 3) {
+            a = getRndInteger(10, 20);
+            b = getRndInteger(10, 20);
+        }
+
+        if (l == 4) {
+            a = getRndInteger(20, 99);
+            b = getRndInteger(20, 99);
+        }
+
+        if (l == 5) {
+            a = getRndInteger(20, 99);
+            b = getRndInteger(100, 999);
+        }
+
+        if (l == 6) {
+            a = getRndInteger(100, 999);
+            b = getRndInteger(100, 999);
+        }
+
+        if(l > 7){
+            a = getRndInteger(Math.pow(10, l - 1), Math.pow(10, l));
+            b = getRndInteger(Math.pow(10, l - 1), Math.pow(10, l));
+        }
+        
+        if (a < b) {
+            $("h3.customNumberOne").text(b);
+            $("h3.customNumberTwo").text(a);
+        }
+
+        else {
+            $("h3.customNumberOne").text(a);
+            $("h3.customNumberTwo").text(b);
+        }
+
+        $("h3.customOperator").text("+");
+        $("h3.customMessage").text("");
+    }
+
+    function getSubtract(l) {
+        $(".customLevel").text("Level: " + l);
+        a = getRndInteger(Math.pow(10, l - 1), Math.pow(10, l));
+        b = getRndInteger(Math.pow(10, l - 1), Math.pow(10, l));
+
+
+        if (a < b) {
+            $("h3.customNumberOne").text(b);
+            $("h3.customNumberTwo").text(a);
+        }
+
+        else {
+            $("h3.customNumberOne").text(a);
+            $("h3.customNumberTwo").text(b);
+        }
+
+        $("h3.customOperator").text("-");
+        $("h3.customMessage").text("");
+    }
+
+    function getMultiply(l) {
+        $(".customLevel").text("Level: " + l);
+        if (l == 1) {
+            a = getRndInteger(Math.pow(10, l - 1), Math.pow(10, l));
+            b = getRndInteger(Math.pow(10, l - 1), Math.pow(10, l));
+        }
+        else {
+            sum_length = l + 1;
+            a_len = Math.floor(sum_length/2);
+            b_len = Math.ceil(sum_length/2);
+ 
+            a = getRndInteger(Math.pow(10, a_len - 1), Math.pow(10, a_len));
+            b = getRndInteger(Math.pow(10, b_len - 1), Math.pow(10, b_len));
+        }
+
+        if (a < b) {
+            $("h3.customNumberOne").text(b);
+            $("h3.customNumberTwo").text(a);
+        }
+
+        else {
+            $("h3.customNumberOne").text(a);
+            $("h3.customNumberTwo").text(b);
+        }
+
+        $("h3.customOperator").text("*");
+        $("h3.customMessage").text("");
+    }
+
+    function getDivide(l) {
+        $(".customLevel").text("Level: " + l);
+        if (l == 1) {
+            a = getRndInteger(2, 9);
+            b = getRndInteger(Math.pow(10, 1), Math.pow(10, 2));
+        }
+
+        if (l == 2) {
+            a = getRndInteger(2, 9);
+            b = getRndInteger(Math.pow(10, 2), Math.pow(10, 3));
+        }
+
+        if (l > 2) {
+            a = getRndInteger(10, 20);
+            b = getRndInteger(Math.pow(10, l-1), Math.pow(10, l));
+        }
+
+        $("h3.customNumberOne").text(b);
+        $("h3.customNumberTwo").text(a);
+
+        $("h3.customOperator").text("/");
+        $("h3.customMessage").text("Give the integer part of your solution as the answer.");
+    }
+
+    $(document).ready(getAdd(curr_level));
+
+    function checkAnswer() {
+        custom_answer = $('.customAnswer').val().trim();
+
+        if (custom_answer.length == 0) {
+            $("h3.customResult").text("Please provide an answer.");
+            return;
+        }
+
+        a = parseInt($('h3.customNumberOne').text());
+        b = parseInt($('h3.customNumberTwo').text());
+        op = $('h3.customOperator').text().trim();
+
+        switch (op) {
+            case '+':
+                c = a + b;
+                user_answer = $('input.customAnswer').val();
+
+                if (c == user_answer) {
+                    $("h3.customResult").text(a + " " + op + " " + b + " = " + $('.customAnswer').val() + " is Right!");
+
+                    curr_level++;
+
+                    getAdd(curr_level);
+                }
+                else {
+                    $("h3.customResult").text(a + " " + op + " " + b + " = " + $('.customAnswer').val() + " is Wrong!");
+                    if (curr_level > 1) {
+                        curr_level--;
+                        getAdd(curr_level);
+                    }
+                    else {
+                        getAdd(curr_level);
+                    }
+                }
+
+                break;
+
+            case '-':
+                c = a - b;
+                user_answer = $('input.customAnswer').val();
+
+                if (c == user_answer) {
+                    $("h3.customResult").text(a + " " + op + " " + b + " = " + $('.customAnswer').val() + " is Right!");
+
+                    curr_level++;
+
+                    getSubtract(curr_level);
+                }
+                else {
+                    $("h3.customResult").text(a + " " + op + " " + b + " = " + $('.customAnswer').val() + " is Wrong!");
+                    if (curr_level > 1) {
+                        curr_level--;
+                        getSubtract(curr_level);
+                    }
+                    else {
+                        getSubtract(curr_level);
+                    }
+                }
+                break;
+
+            case '*':
+                c = a * b;
+                user_answer = $('input.customAnswer').val();
+
+                if (c == user_answer) {
+                    $("h3.customResult").text(a + " " + op + " " + b + " = " + $('.customAnswer').val() + " is Right!");
+
+                    curr_level++;
+
+                    getMultiply(curr_level);
+                }
+                else {
+                    $("h3.customResult").text(a + " " + op + " " + b + " = " + $('.customAnswer').val() + " is Wrong!");
+                    if (curr_level > 1) {
+                        curr_level--;
+                        getMultiply(curr_level);
+                    }
+                    else {
+                        getMultiply(curr_level);
+                    }
+                }
+                break;
+
+            case '/':
+                c = parseInt(a / b);
+                user_answer = $('input.customAnswer').val();
+
+                if (c == user_answer) {
+                    $("h3.customResult").text(a + " " + op + " " + b + " = " + $('.customAnswer').val() + " is Right!");
+
+                    curr_level++;
+
+                    getDivide(curr_level);
+                }
+                else {
+                    $("h3.customResult").text(a + " " + op + " " + b + " = " + $('.customAnswer').val() + " is Wrong!");
+                    if (curr_level > 1) {
+                        curr_level--;
+                        getDivide(curr_level);
+                    }
+                    else {
+                        getDivide(curr_level);
+                    }
+                }
+                break;
+
+            default:
+                // code block
+                break;
+        }
+
+        $('.customAnswer').val("");
+    }
+
+    $("button.customSubmit").click(checkAnswer);
+
+
+
+</script>
+<span style="display: none;">Tags: Technology,JavaScript,Web Development,Mathematical Foundations for Data Science,</span>

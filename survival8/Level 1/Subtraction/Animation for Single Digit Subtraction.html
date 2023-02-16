@@ -1,0 +1,209 @@
+<head>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+
+    <!-- Google AdSense Using Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <style>
+        .customTempCodeHolderForSocialMedia {
+            display: none;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+
+        i.ib {
+            color: blue;
+        }
+
+        i.ig {
+            color: green;
+        }
+
+        .customOl {
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <p>Subtraction is taking out a couple of items from several of those. For example: let us say you have basket with 7
+        apples and you take out 2 apples from it. Now, how many apples are left in the basket? The answer would be when
+        you substract the quantity that you are taking out (i.e., 2) from the quantity that was there (i.e., 7). So the
+        answer is: 7 - 2 = 5. You are left with 5 apples in the basket.</p>
+
+    <h3>Note: We will subtract the smaller number from the larger number.</h3>
+    <br>
+    <h3>Select first number:</h3>
+    <select data-bind="options: baseNums, value: firstNum, event: { change: fillFirstCanvas }"></select>
+    &nbsp;
+    <button data-bind="click: randomFirst">Randomize First Number</button>
+    <br><br>
+    <h3>Select second number:</h3>
+    <select data-bind="options: baseNums, value: secondNum"></select>
+    &nbsp;
+    <button data-bind="click: randomSecond">Randomize Second Number</button>
+    <br><br>
+
+    <p><b>What you are seeing below is as many sticks as the larger of the two numbers:</b></p>
+    <canvas id="myFirstCanvas" width="500" height="107" style="border:1px solid #000000;"></canvas>
+    <br><br>
+
+    <button data-bind="click: showAnimation">Show Subtraction</button>
+    <br><br>
+
+    <canvas id="mySecondCanvas" width="500" height="107" style="border:1px solid #000000;"></canvas>
+
+</body>
+
+<script>
+    function getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function sleep(milliseconds) {
+        const date = Date.now();
+        let currentDate = null;
+        do {
+            currentDate = Date.now();
+        } while (currentDate - date < milliseconds);
+    }
+
+    // console.log("Hello");
+    // sleep(2000);
+    // console.log("World!");
+
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    
+    // sleep(2000).then(() => { console.log("World!"); });
+
+
+    var ViewModel = function () {
+        var self = this;
+
+        // These are the initial options
+        self.baseNums = ko.observableArray([]);
+
+        for (let i = 1; i <= 10; i++) {
+            self.baseNums.push(i);
+        }
+
+        self.firstNum = ko.observable();
+        self.secondNum = ko.observable();
+        self.customAns = ko.observable();
+
+
+        // Canvas Related Properties.
+        self.firstCanvas = document.getElementById("myFirstCanvas");
+        self.firstCtx = self.firstCanvas.getContext("2d");
+
+        self.lineWidth = 10;
+        self.lineHeight = 107;
+        self.lineGap = 15;
+
+        self.fillFirstCanvas = function () {
+            var a = self.firstNum();
+            if (self.secondNum() > self.firstNum()) {
+                a = self.secondNum();
+            }
+
+            self.firstCtx.clearRect(0, 0, 500, lineHeight);
+
+            for (var i = 0; i < a; i++) {
+                self.firstCtx.fillStyle = "#FF0000";
+                self.firstCtx.fillRect(i * (self.lineWidth + self.lineGap), 0, self.lineWidth, self.lineHeight);
+            }
+        }
+
+        self.randomFirst = function () {
+            self.firstNum(getRndInteger(1, 10));
+            self.fillFirstCanvas();
+        }
+
+        self.randomSecond = function () {
+            self.secondNum(getRndInteger(1, 10));
+            self.fillFirstCanvas();
+        }
+
+        self.secondCanvas = document.getElementById("mySecondCanvas");
+        self.secondCtx = self.secondCanvas.getContext("2d");
+
+        self.showAnimation = async function () {
+
+            var a = self.firstNum();
+            var b = self.secondNum();
+            if (self.secondNum() > self.firstNum()) {
+                a = self.secondNum();
+                b = self.firstNum();
+            }
+
+
+            function initSecondCanvas() {
+
+                self.secondCtx.clearRect(0, 0, 500, lineHeight);
+
+                for (var i = 0; i < (a - b); i++) {
+                    self.secondCtx.fillStyle = "#0000FF";
+                    self.secondCtx.fillRect(i * (self.lineWidth + self.lineGap), 0, self.lineWidth, self.lineHeight);
+                }
+            }
+
+            initSecondCanvas();
+
+
+
+            var cntWhiteSticks = 20 - (a - b) - b;
+            var cntr = 1;
+
+            while (cntr <= cntWhiteSticks) {
+                self.secondCtx.clearRect(0, 0, 500, lineHeight);
+
+                for (var i = 0; i < (a - b); i++) {
+                    self.secondCtx.fillStyle = "#0000FF";
+                    self.secondCtx.fillRect(i * (self.lineWidth + self.lineGap), 0, self.lineWidth, self.lineHeight);
+                }
+
+                for (var i = (a - b); i < ((a - b) + cntr); i++) {
+                    self.secondCtx.fillStyle = "#FFFFFF";
+                    self.secondCtx.fillRect(i * (self.lineWidth + self.lineGap), 0, self.lineWidth, self.lineHeight);
+                }
+
+                for (var i = ((a - b) + cntr); i < (a + cntr); i++) {
+                    self.secondCtx.fillStyle = "#0000FF";
+                    self.secondCtx.fillRect(i * (self.lineWidth + self.lineGap), 0, self.lineWidth, self.lineHeight);
+                }
+
+                await sleep(200).then(() => { console.log("-"); });
+
+                cntr++;
+            }
+
+        }
+
+        self.init = function () {
+            self.fillFirstCanvas();
+        }
+
+    };
+
+    ko.applyBindings(ViewModel);
+
+</script>
+<span style="display: none;">Tags: Mathematical Foundations for Data Science,</span>

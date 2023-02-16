@@ -1,0 +1,159 @@
+<head>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+
+    <!-- Google AdSense Using Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <style>
+        .customTempCodeHolderForSocialMedia {
+            display: none;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+
+        i.ib {
+            color: blue;
+        }
+
+        i.ig {
+            color: green;
+        }
+
+        .customOl {
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<div class="customQuestionWrapper">
+    <b>Select Level:</b>
+    <br>
+    <br>
+    <select data-bind="options: availableLevels,
+                       value: selectedLevel, event: { change: getProblem }"></select>
+    <br>
+    <br>
+    <b>Ques: Write the expanded form of following number using the Place Values:</b>
+    <br>
+    <br>
+    <button data-bind="click: getProblem">Get Problem</button>
+    <br><br>
+    <h2 data-bind="text: customNumber"></h2>
+    <br>
+    <b>Enter Place Values Here. Add More Input Boxes if Needed.</b>
+    <br>
+    <button data-bind="click: addInputBox">Add Input Box</button> &nbsp; &nbsp;
+    <button data-bind="click: checkAnswer">Check Answer</button>
+
+    <script type="text/html" id="input-template">
+        <h3> + <input type="text" /></h3>
+    </script>
+
+    <p><input type="text" class="customIn1" data-bind="" /></p>
+
+    <div class="customInputWrapper" data-bind="template: { name: 'input-template', foreach: new Array(boxCounter()) }">
+    </div>
+
+    <h2 data-bind="text: message"></h2>
+</div>
+<script>
+
+    function getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    var ViewModel = function () {
+        var self = this;
+        // These are the initial options
+
+        self.availableLevels = ko.observable(['Hundreds', 'Thousands']);
+        self.selectedLevel = ko.observable();
+        self.customNumber = ko.observable();
+
+        self.boxCounter = ko.observable(0);
+        self.boxValues = ko.observableArray([]);
+        self.message = ko.observable();
+
+        // Clear Input Box
+        $(".customIn1").val("");
+
+        self.getProblem = function () {
+            if (self.selectedLevel() == 'Hundreds') {
+                self.customNumber(getRndInteger(100, 999));
+            }
+            else if (self.selectedLevel() == 'Thousands') {
+                self.customNumber(getRndInteger(1000, 9999));
+            }
+
+            self.boxCounter(0);
+
+            // Clear Input Box
+            $(".customIn1").val("");
+            self.message("");
+        }
+
+        self.addInputBox = function () {
+            self.boxCounter(self.boxCounter() + 1);
+        }
+
+        self.checkAnswer = function () {
+            try {
+
+                if (parseInt($('input.customIn1').val()) == self.customNumber().toString()[0] * Math.pow(10, self.customNumber().toString().length - 1)) {
+                    self.message("");
+                }
+                else {
+                    self.message('Incorrect Answer!');
+                    return;
+                }
+            }
+            catch (err) {
+                console.log(err.message);
+            }
+
+            var base = 10;
+
+            var answerFlag = false;
+
+            $("div.customInputWrapper input").each(function (index) {
+                var ans = self.customNumber().toString()[index + 1] * Math.pow(10, self.customNumber().toString().length - (index + 2));
+                
+                if(parseInt($(this).val()) === parseInt(ans)) {
+                    answerFlag = true;
+                } else {
+                    answerFlag = false;
+                    return false;
+                }
+            });
+            
+            
+
+            if(answerFlag) {
+                self.message("Correct Answer!");
+            } else {
+                self.message("Incorrect Answer!");
+            }
+
+
+
+        }
+    }
+
+    ko.applyBindings(ViewModel);
+</script>
+<span style="display: none">Tags: Mathematical Foundations for Data Science,</span>

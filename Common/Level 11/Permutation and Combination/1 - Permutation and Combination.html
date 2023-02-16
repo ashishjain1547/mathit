@@ -1,0 +1,294 @@
+<head>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    
+    <!-- Google AdSense Using Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <style>
+        .customTempCodeHolderForSocialMedia {
+            display: none;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+
+        i.ibb {
+            display: block;
+            background-color: black;
+            color: white;
+        }
+
+        i.ibg {
+            display: block;
+            background-color: rgb(50, 50, 50);
+            color: white;
+        }
+
+
+        ul.no-bullets {
+            list-style-type: none;
+            /* Remove bullets */
+            padding: 0;
+            /* Remove padding */
+            margin: 0;
+            /* Remove margins */
+        }
+
+        li.customLi {
+            float: left;
+        }
+
+        li.customLi>span.customSpan {
+            display: block;
+            padding: 8px;
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<head>
+    <title>1 - Permutation and Combination</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+    <!-- 1 - Permutation and Combination.js -->
+    <script>
+        var canvas1, canvas2, canvas3;
+        var ctx1, ctx2, ctx3;
+        var x, y, z;
+
+        $(document).ready(function () {
+            $("#myButton").click(draw);
+
+            var canvasWidth = 100;
+            var canvasHeight = 66.6;
+
+            canvas1 = document.getElementById('myCanvas1');
+            canvas1.width = canvasWidth;
+            canvas1.height = canvasHeight;
+
+            canvas2 = document.getElementById('myCanvas2');
+            canvas2.width = canvasWidth;
+            canvas2.height = canvasHeight;
+
+            canvas3 = document.getElementById('myCanvas3');
+            canvas3.width = canvasWidth;
+            canvas3.height = canvasHeight;
+
+            if (canvas1.getContext) {
+                ctx1 = canvas1.getContext('2d');
+                ctx2 = canvas2.getContext('2d');
+                ctx3 = canvas3.getContext('2d');
+            }
+            else {
+                alert("Your browser do not support canvas!");
+            }
+
+            $("#myButtonHideAns").on("click", hide_ans);
+        });
+
+        var flag = true;
+        function changeButtonStyle() {
+            if (flag) {
+                $("#myButton").text("Click again!").removeClass("btn-info").addClass("btn-success");
+                $("#myButton").css({ "position": "absolute", "right": 30, "top": 150 });
+                flag = false;
+            }
+        }
+
+        function draw() {
+            $(this).blur();
+            changeButtonStyle();
+            rewind();
+            $(".answer-area").slideDown();
+            $("#myButtonHideAns").removeClass("disabled");
+
+            x = Math.floor(Math.random() * 6) + 1;
+            draw_balls(x, ctx1);
+            var temp_left = 8 - x;
+
+            y = Math.floor(Math.random() * (temp_left - 1)) + 1;
+            draw_balls(y, ctx2);
+            z = temp_left - y;
+
+            draw_balls(z, ctx3);
+            showStickChart(x, y, z);
+        }
+
+        function rewind() {
+            ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+            ctx2.clearRect(0, 0, canvas1.width, canvas2.height);
+            ctx3.clearRect(0, 0, canvas1.width, canvas3.height);
+        }
+
+        function draw_balls(temp, ctx) {
+            ctx.fillStyle = "#FF0000";
+            for (var i = 1; i <= temp; i++) {
+                ctx.beginPath();
+                var p, q;
+                p = 16.66 * ((1 + i % 3) * 2 - 1);
+                if (i > 3) {
+                    q = 50;
+                }
+                else {
+                    q = 16.66;
+                }
+                /*
+                URL: https://www.w3schools.com/tags/canvas_arc.asp
+                    arc():
+                    context.arc(x,y,r,sAngle,eAngle,counterclockwise);
+                    Parameter 	Description 	Play it
+                x 	The x-coordinate of the center of the circle 	
+                y 	The y-coordinate of the center of the circle 	
+                r 	The radius of the circle 	
+                sAngle 	The starting angle, in radians (0 is at the 3 o'clock position of the arc's circle) 	
+                eAngle 	The ending angle, in radians 	
+                counterclockwise 	Optional. Specifies whether the drawing should be counterclockwise or clockwise. False is default, and indicates clockwise, while true indicates counter-clockwise.
+                */
+
+                ctx.arc(p, q, 13.34, 0, Math.PI * 2, true);
+                ctx.fill();
+            }
+        }
+
+        function hide_ans() {
+            $(".answer-area").slideUp();
+            $(this).addClass("disabled");
+        }
+
+        function showStickChart(a, b, c) {
+            var canvas4 = document.getElementById("myCanvas4");
+            canvas4.width = 266.67;
+            canvas4.height = 66.67;
+            var ctx4 = canvas4.getContext("2d");
+            ctx4.fillStyle = "#ff0000";
+            for (var i = 0; i < 8; i++) {
+                ctx4.beginPath();
+                ctx4.arc((i * 100 + 50) / 3, 33.34, 13.34, 0, Math.PI * 2, true);
+                ctx4.fill();
+            }
+            ctx4.fillStyle = "#0000ff";
+            ctx4.save();
+
+            /* Draw the first stick thrown between the balls */
+            var temp = -20 + Math.floor(Math.random() * 40) + 1;
+
+            /* The translate() method remaps the (0,0) position on the canvas. */
+            ctx4.translate(33.34 * a, 33.34);
+
+            ctx4.rotate(temp * Math.PI / 180);
+            ctx4.translate(-33.34 * a, -33.34);
+            ctx4.fillRect(33.34 * a - 1, 6.67, 1, 53.33); /* x, y, width, height */
+
+            ctx4.restore();
+
+            temp = -20 + Math.floor(Math.random() * 40) + 1;
+            ctx4.translate(33.34 * (a + b), 33.34);
+            ctx4.rotate(temp * Math.PI / 180);
+            ctx4.translate(-33.34 * (a + b), -33.34);
+            ctx4.fillRect(33.34 * (a + b) - 1, 6.67, 1, 53.33);
+        }
+    </script>
+    <!-- 1 - Permutation and Combination.css -->
+    <style>
+        .main-container {
+            padding: 0 10px;
+            position: relative;
+        }
+
+        .myCanvas {
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+
+        h3 {
+            margin: 10px 0;
+        }
+
+        .btn {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .answer-area {
+            display: none;
+        }
+
+        .answer-area>h3 {
+            color: darkslateblue;
+            /* rgb(72,​61,​139) */
+        }
+
+        .customLink {
+            background-color: #4CAF50;
+            border: none;
+            color: white !important;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .customLink:hover {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-container">
+        <div class="question">
+            <h3>Ques: Find the number of ways of distributing 8 identical balls in 3 distinct boxes so that none of the boxes
+                is empty.</h3>
+        </div>
+        <div class="button-panel">
+            <button id="myButton" class="btn btn-info">Show Help!</button>
+            <button id="myButtonHideAns" class="btn btn-danger btn-lg disabled" style="display: none;">Hide Answer</button>
+        </div>
+        <div class="answer-area">
+            <h3>Ans: Let the number of balls in three boxes be X, Y and Z.</h3>
+
+            <canvas id="myCanvas1" class="myCanvas">
+                Browsers that do not support canvas show this message!
+            </canvas>
+            <canvas id="myCanvas2" class="myCanvas"></canvas>
+            <canvas id="myCanvas3" class="myCanvas"></canvas>
+            <h3>We see that X + Y + Z = 8 with X, Y, Z >= 1 and
+                <=6 .</h3>
+                    <canvas id="myCanvas4" class="myCanvas"></canvas>
+                    <h3>And from the above diagram, there are only
+                        <sup>7</sup>C
+                        <sub>2</sub> ways of doing it, that is the number of ways you can put two sticks in any of the seven gaps
+                        between the eight balls.
+                    </h3>
+        </div>
+    </div>
+</body>
+
+<span class="" style="display: none;">Tags: Technology,Mathematical Foundations for Data Science,JavaScript,Web Development,</span>

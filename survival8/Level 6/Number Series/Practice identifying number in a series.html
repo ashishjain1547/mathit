@@ -1,0 +1,268 @@
+<head>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+
+    <!-- Google AdSense Using Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <style>
+        .customTempCodeHolderForSocialMedia {
+            display: none;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+
+        i.ib {
+            color: blue;
+        }
+
+        i.ig {
+            color: green;
+        }
+
+        .customOl {
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<div class="customWrapper">
+    <h3>Notes</h3>
+    <pre>
+<b class="">Arithmetic Progression</b>
+An arithmetic progression or arithmetic sequence is a sequence of numbers such that the difference between the consecutive terms is constant. For instance, the sequence 5, 7, 9, 11, 13, 15... is an arithmetic progression with a common difference of 2.
+
+<b>Geometric Progression</b>
+In mathematics, a geometric progression, also known as a geometric sequence, is a sequence of non-zero numbers where each term after the first is found by multiplying the previous one by a fixed, non-zero number called the common ratio. For example, the sequence 2, 6, 18, 54, ... is a geometric progression with common ratio 3. Similarly 10, 5, 2.5, 1.25, ... is a geometric sequence with common ratio 1/2.
+
+Examples of a geometric sequence are powers rk of a fixed non-zero number r, such as 2k and 3k. The general form of a geometric sequence is:
+
+a, ar, a.r^2, a.r^3, a.r^4,...
+where r ≠ 0 is the common ratio and a ≠ 0 is a scale factor, equal to the sequence's start value.
+
+The distinction between a progression and a series is that a progression is a sequence, whereas a series is a sum. 
+
+    </pre>
+
+    <h3>Select the series type:</h3>
+    <br>
+    <select
+        data-bind="options: seriesTypes, value: selectedSeries, click: function() { showProblemFlag(false); showSolutionFlag(false); }"></select>
+    <br>
+    <br>
+    <button data-bind="click: getProblem">Get Problem</button>
+    &nbsp;&nbsp;
+    <button data-bind="click: function() { showSolutionFlag(true) }">Show Solution</button>
+    <br><br>
+    <b>Identify the series.</b>
+    <br>
+    <br>
+    <div data-bind="if: showProblemFlag">
+        <ul data-bind="foreach: problemSeries">
+            <li>
+                <b data-bind="text: $data"></b>
+            </li>
+        </ul>
+    </div>
+
+    <div class="customSolution" data-bind="if: showSolutionFlag">
+
+        <!-- ko if: selectedSeries() == 'Exponentiation' -->
+        <h3 data-bind="text: 'Exponent is: ' + exponentiation['randExp']"></h3>
+        <!-- /ko -->
+
+        <!-- ko if: selectedSeries() == 'Multiply & Add (Fixed Numbers)' -->
+        <h3>Number multiplied is:
+            <span data-bind="text: multiplyAddFixedNumbers['multiply']"></span>
+            . Number added is: <span data-bind="text: multiplyAddFixedNumbers['add']"></span>
+        </h3>
+        <!-- /ko -->
+
+        <!-- ko if: selectedSeries() == 'Multiply an Arithmetic Progression' -->
+        <h3>Arithmetic progression added is: <br>
+            A1 is: <span data-bind="text: multiplyAP['a1']"></span> <br>
+            Difference is: <span data-bind="text: multiplyAP['difference']"></span>
+        </h3>
+        <!-- /ko -->
+
+        <!-- ko if: selectedSeries() == 'Add Multiples of a Number' -->
+        <h3>The number for creating multiples is: <span data-bind="text: addMultiples['numInQues']"></span> </h3>
+        <!-- /ko -->
+
+        <!-- ko if: selectedSeries() == 'Subtract a Geometric Progression' -->
+        <h3>The Geometric Progression that's subtracted is: <br> 
+            A1 is: <span data-bind="text: subtractGP['numInQues']"></span> <br>
+            Multiplier is: <span data-bind="text: subtractGP['numForGP']"></span> 
+        </h3>
+        <!-- /ko -->
+
+        <!-- ko if: selectedSeries() == 'Add a Geometric Progression' -->
+        <h3>The Geometric Progression that's added is: <br> 
+            A1 is: <span data-bind="text: addGP['numInQues']"></span> <br>
+            Multiplier is: <span data-bind="text: addGP['numForGP']"></span> 
+        </h3>
+        <!-- /ko -->
+    </div>
+</div>
+
+<script>
+    function getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    var ViewModel = function () {
+        var self = this;
+        // These are the initial options
+
+        self.seriesTypes = ko.observableArray([
+            'Exponentiation',
+            'Multiply & Add (Fixed Numbers)',
+            'Multiply an Arithmetic Progression',
+            'Add Multiples of a Number',
+            'Subtract a Geometric Progression',
+            'Add a Geometric Progression'
+        ]);
+
+        self.selectedSeries = ko.observable();
+
+        self.problemSeries = ko.observableArray();
+
+        self.exponentiation = ko.observable();
+        self.multiplyAddFixedNumbers = ko.observable();
+        self.multiplyAP = ko.observable();
+        self.addMultiples = ko.observable();
+        self.subtractGP = ko.observable();
+        self.addGP = ko.observable();
+
+        self.showSolutionFlag = ko.observable(false);
+        self.showProblemFlag = ko.observable(true);
+
+        self.getProblem = function () {
+            self.showSolutionFlag(false);
+            self.showProblemFlag(true);
+
+            switch (self.selectedSeries()) {
+                case 'Exponentiation':
+                    self.exponentiation['firstNum'] = getRndInteger(2, 10);
+                    self.exponentiation['randExp'] = getRndInteger(2, 7);
+
+                    self.problemSeries([]);
+                    self.problemSeries.push(self.exponentiation['firstNum']);
+                    for (var i = 0; i < 3; i++) {
+                        self.problemSeries.push(
+                            Math.pow(
+                                self.problemSeries()[self.problemSeries().length - 1], self.exponentiation['randExp']
+                            )
+                        )
+                    }
+                    break;
+
+                case 'Multiply & Add (Fixed Numbers)':
+                    self.multiplyAddFixedNumbers['firstNum'] = getRndInteger(2, 20);
+                    self.multiplyAddFixedNumbers['multiply'] = getRndInteger(2, 20);
+                    self.multiplyAddFixedNumbers['add'] = getRndInteger(2, 20);
+                    self.problemSeries([]);
+                    self.problemSeries.push(self.multiplyAddFixedNumbers['firstNum']);
+
+                    for (var i = 0; i < 3; i++) {
+                        self.problemSeries.push(
+                            self.problemSeries()[self.problemSeries().length - 1] * self.multiplyAddFixedNumbers['multiply'] + self.multiplyAddFixedNumbers['add']
+                        )
+                    }
+
+                    break;
+
+                case 'Multiply an Arithmetic Progression':
+                    self.multiplyAP['firstNum'] = getRndInteger(2, 20);
+                    self.multiplyAP['a1'] = getRndInteger(2, 20);
+
+                    self.multiplyAP['difference'] = getRndInteger(2, 20);
+
+                    self.problemSeries([]);
+                    self.problemSeries.push(self.multiplyAP['firstNum']);
+
+                    for (var i = 0; i < 3; i++) {
+                        var numToBeMultiplied = self.multiplyAP['a1'] + self.multiplyAP['difference'] * i
+                        self.problemSeries.push(
+                            self.problemSeries()[self.problemSeries().length - 1] * numToBeMultiplied
+                        )
+                    }
+
+                    break;
+
+                case 'Add Multiples of a Number':
+                    self.addMultiples['firstNum'] = getRndInteger(2, 20);
+                    self.addMultiples['numInQues'] = getRndInteger(2, 20);
+
+                    self.problemSeries([]);
+                    self.problemSeries.push(self.addMultiples['firstNum']);
+
+                    for (var i = 0; i < 3; i++) {
+                        self.problemSeries.push(
+                            self.problemSeries()[self.problemSeries().length - 1] + self.addMultiples['numInQues'] * (i+1)
+                        )
+                    }
+
+                    break;
+                
+                case 'Subtract a Geometric Progression':
+                    self.subtractGP['firstNum'] = getRndInteger(10000, 100000);
+                    self.subtractGP['numInQues'] = getRndInteger(2, 20);
+                    self.subtractGP['numForGP'] = getRndInteger(2, 20);
+
+                    self.problemSeries([]);
+                    self.problemSeries.push(self.subtractGP['firstNum']);
+
+                    for (var i = 0; i < 3; i++) {
+                        self.problemSeries.push(
+                            self.problemSeries()[self.problemSeries().length - 1] - self.subtractGP['numInQues'] * Math.pow(self.subtractGP['numForGP'], (i+1))
+                        )
+                    }
+
+                    break;
+
+
+                case 'Add a Geometric Progression':
+                    self.addGP['firstNum'] = getRndInteger(2, 20);
+                    self.addGP['numInQues'] = getRndInteger(2, 20);
+                    self.addGP['numForGP'] = getRndInteger(2, 20);
+
+                    self.problemSeries([]);
+                    self.problemSeries.push(self.addGP['firstNum']);
+
+                    for (var i = 0; i < 3; i++) {
+                        self.problemSeries.push(
+                            self.problemSeries()[self.problemSeries().length - 1] + self.addGP['numInQues'] * Math.pow(self.addGP['numForGP'], (i+1))
+                        )
+                    }
+
+                    break;
+
+                default:
+                    text = "Looking forward to the Weekend";
+            }
+        };
+
+        self.toggleShowSolution = function () {
+            self.showSolutionFlag(!self.showSolutionFlag());
+        }
+
+    };
+
+    ko.applyBindings(ViewModel);
+</script>
+<span style="display: none;">Tags: Mathematical Foundations for Data Science,</span>

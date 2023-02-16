@@ -1,0 +1,281 @@
+<head>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+
+    <!-- Google AdSense Using Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <style>
+        .customTempCodeHolderForSocialMedia {
+            display: none;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+
+        i.ib {
+            color: blue;
+        }
+
+        i.ig {
+            color: green;
+        }
+
+        .customOl {
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="customAppWrapper">
+        <div class="customQuestionWrapper">
+            <h3>Note: We are going to subtract the smaller number from the bigger one. <br>
+                Enter two numbers between 0 to 999.</h3>
+            <br>
+            <b>First Number: </b>
+            <input type="text" data-bind="value: firstNum" maxlength="3" />
+            <br>
+            <br>
+            <b>Second Number: </b>
+            <input type="text" data-bind="value: secondNum" maxlength="3" />
+            <br>
+            <br>
+            <button class="" data-bind="click: showSubtraction">Subtract</button>
+        </div>
+
+        <h2 data-bind="text: message"></h2>
+
+        <div class="customSolutionWrapper">
+            <p class="customCarryLayerB">
+                <span style="opacity: 0">0</span>
+                <span data-bind="text: carryBfHundredth"> </span>
+                <span data-bind="text: carryBfTens"> </span>
+                <span data-bind="text: carryBfOnes"> </span>
+            </p>
+
+            <p class="customCarryLayerA">
+                <span style="opacity: 0">0</span>
+                <span data-bind="text: carryAfHundredth"> </span>
+                <span data-bind="text: carryAfTens"> </span>
+                <span data-bind="text: carryAfOnes"> </span>
+            </p>
+
+            <p class="customTopNum">&nbsp;
+                <!-- ko ifnot: hundredthStrikedFlag -->
+                <span data-bind="text: fHundredth"> </span>
+                <!-- /ko -->
+                <!-- ko if: hundredthStrikedFlag -->
+                <strike><span data-bind="text: fHundredth"> </span></strike>
+                <!-- /ko -->
+
+
+                <!-- ko ifnot: tensStrikedFlag -->
+                <span data-bind="text: fTens"> </span>
+                <!-- /ko -->
+                <!-- ko if: tensStrikedFlag -->
+                <strike><span data-bind="text: fTens"> </span></strike>
+                <!-- /ko -->
+
+                <span data-bind="text: fOnes"> </span>
+            </p>
+
+            <p class="customBottomNum">-
+                <span data-bind="text: sHundredth"> </span>
+                <span data-bind="text: sTens"> </span>
+                <span data-bind="text: sOnes"> </span>
+            </p>
+
+            <p>------------</p>
+
+            <p class="customAnsNum">
+                <span>&nbsp;</span>
+                <span data-bind="text: aHundredth"> </span>
+                <span data-bind="text: aTens"> </span>
+                <span data-bind="text: aOnes"> </span>
+            </p>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    var ViewModel = function () {
+        var self = this;
+
+        self.firstNum = ko.observable();
+        self.secondNum = ko.observable();
+
+        self.f = ko.observable();
+        self.s = ko.observable();
+
+        self.fOnes = ko.observable(" ");
+        self.fTens = ko.observable(" ");
+        self.fHundredth = ko.observable(" ");
+
+
+        self.sOnes = ko.observable(" ");
+        self.sTens = ko.observable(" ");
+        self.sHundredth = ko.observable(" ");
+
+        self.aOnes = ko.observable(" ");
+        self.aTens = ko.observable(" ");
+        self.aHundredth = ko.observable(" ");
+
+        self.carryAfHundredth = ko.observable(0);
+        self.carryBfHundredth = ko.observable(0);
+
+        self.carryAfTens = ko.observable(0);
+        self.carryBfTens = ko.observable(0);
+
+        self.carryAfOnes = ko.observable(0);
+        self.carryBfOnes = ko.observable(0);
+
+        self.tensStrikedFlag = ko.observable(false);
+        self.hundredthStrikedFlag = ko.observable(false);
+        self.message = ko.observable("");
+
+        self.resetVars = function () {
+            self.tensStrikedFlag(false);
+            self.hundredthStrikedFlag(false);
+            self.message("");
+            self.aOnes("");
+            self.aTens("");
+            self.aHundredth("");
+        }
+
+        self.showSubtraction = function () {
+            self.resetVars();
+
+            if ((!self.firstNum()) || (!self.secondNum())) {
+                self.message("Please enter the first number and the second number.");
+                return;
+            }
+
+            if (parseInt(self.firstNum()) > parseInt(self.secondNum())) {
+                self.f(self.firstNum());
+                self.s(self.secondNum());
+            } else {
+                self.f(self.secondNum());
+                self.s(self.firstNum());
+            }
+
+            var fLen = self.f().toString().length;
+            var sLen = self.s().toString().length;
+
+            var f = self.f().toString()
+
+            switch (fLen) {
+
+                case 3:
+
+                    self.fHundredth(f[0]);
+                    self.fTens(f[1]);
+                    self.fOnes(f[2]);
+                    break;
+
+                case 2:
+
+                    self.fHundredth(0);
+                    self.fTens(f[0]);
+                    self.fOnes(f[1]);
+                    break;
+
+                case 1:
+
+                    self.fHundredth(0);
+                    self.fTens(0);
+                    self.fOnes(f[0]);
+                    break;
+            }
+
+            var s = self.s().toString();
+            switch (sLen) {
+
+                case 3:
+
+                    self.sHundredth(s[0]);
+                    self.sTens(s[1]);
+                    self.sOnes(s[2]);
+                    break;
+
+                case 2:
+
+                    self.sHundredth(0);
+                    self.sTens(s[0]);
+                    self.sOnes(s[1]);
+                    break;
+                case 1:
+
+                    self.sHundredth(0);
+                    self.sTens(0);
+                    self.sOnes(s[0]);
+                    break;
+            }
+
+
+            if (self.fOnes() >= self.sOnes()) {
+                self.aOnes(parseInt(self.fOnes()) - self.sOnes());
+            } else {
+                self.aOnes((parseInt(self.fOnes()) + 10) - self.sOnes());
+                self.carryAfOnes(1)
+                self.carryAfTens(self.fTens() - 1);
+                self.tensStrikedFlag(true);
+            }
+
+            if (self.tensStrikedFlag()) {
+                if (self.carryAfTens() >= self.sTens()) {
+                    self.aTens(self.carryAfTens() - self.sTens());
+                } else {
+                    self.aTens((self.carryAfTens() + 10) - self.sTens());
+                    self.carryBfTens(1);
+                    self.carryAfHundredth(self.fHundredth() - 1);
+                    self.hundredthStrikedFlag(true);
+                }
+            } else {
+                if (self.fTens() >= self.sTens()) {
+                    self.aTens(self.fTens() - self.sTens());
+                } else {
+                    self.aTens((self.fTens() + 10) - self.sTens())
+                    self.carryAfTens(1);
+                    self.carryAfHundredth(self.fHundredth() - 1);
+                    self.hundredthStrikedFlag(true);
+                }
+            }
+
+            if (self.hundredthStrikedFlag()) {
+                self.aHundredth(parseInt(self.carryAfHundredth()) - self.sHundredth());
+            } else {
+                self.aHundredth(parseInt(self.fHundredth()) - self.sHundredth());
+            }
+
+
+
+
+
+        }
+
+        self.init = function () {
+
+        }
+
+    };
+
+    ko.applyBindings(ViewModel);
+
+</script>
+<span style="display: none;">Tags: Mathematical Foundations for Data Science,</span>
+<!-- “text-decoration: line-through.” -->

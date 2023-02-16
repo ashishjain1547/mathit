@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Visualizing P formula and C formula</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google AdSense Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <!-- Bootstrap CSS - Opens -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Bootstrap CSS - Closes -->
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous">
+
+    <!-- CSS/17 - Visualizing P formula and C formula.css -->
+    <style>
+        .number_of_elements {
+            float: left;
+            font-size: 98px;
+            line-height: 98px;
+        }
+
+        .customInputFont {
+            float: left;
+            font-size: 98px;
+            line-height: 98px;
+            min-width: 82px;
+        }
+        
+        .row {
+            margin-left: 0px;
+            margin-right: 0px;
+        }
+
+        .input.row {
+            text-align: center;
+        }
+
+        .input_div {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            display: inline-block;
+            max-width: 158px;
+            padding: 0 22px 0 5px;
+        }
+
+        .glyph-button {
+            display: block;
+            float: right;
+            min-height: 98px;
+            min-width: 17px;
+            padding: 0;
+            position: relative;
+        }
+
+        .glyph-button .glyphicon {
+            cursor: pointer;
+        }
+
+        .glyph-button .glyphicon:hover {
+            color: #8a8a8a;
+        }
+
+        .glyphicon.glyphicon-chevron-up {
+            color: #333333;
+            float: right;
+            font-size: 30px;
+            position: absolute;
+            right: -19px;
+            top: 19px;
+            vertical-align: top;
+        }
+
+        .glyphicon.glyphicon-chevron-down {
+            display: block;
+            float: right;
+            font-size: 30px;
+            position: absolute;
+            right: -17px;
+            top: 53px;
+        }
+
+        .allInput {
+            font-size: 62px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: auto;
+        }
+
+        .customBorderLess {
+            border: none !important;
+        }
+
+        .permutation {
+            color: #ff3333;
+            font-size: 65px;
+            font-weight: 700;
+            line-height: 1.2;
+            opacity: 1;
+            text-align: center;
+        }
+
+        .customRedHeading {
+            color: red;
+        }
+
+        .customAllPermutations {
+            display: block;
+            max-width: 550px;
+            max-height: 95px;
+            overflow: scroll;
+            color: #555;
+            padding: 2px;
+            border: 1px solid black;
+            margin: 2px;
+            font-size: 21px;
+        }
+
+        .customLink {
+            background-color: #4CAF50;
+            border: none;
+            color: white !important;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none !important;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .customLink:hover {
+            text-decoration: none !important;
+        }
+    </style>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+
+    <!-- Bootstrap -->
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+</head>
+
+<body ng-app="myApp">
+    <div ng-controller="myController" ng-init="init()">
+        <div class="input row">
+            <span class="customInputFont"> n: </span>
+            <div class="input_div col-sm-4">
+                <span class="number_of_elements">
+                    <!-- 4 -->
+                </span>
+                <span class="glyph-button">
+                    <span class="glyphicon glyphicon-chevron-up customInputNUp" ng-click="increaseN()"></span>
+                    <span class="glyphicon glyphicon-chevron-down customInputNDown" ng-click="decreaseN()"></span>
+                </span>
+            </div>
+            <div class="allInput customBorderLess col-sm-8">
+                <!-- ABCD -->
+            </div>
+        </div>
+        <br/>
+        <div class="input row">
+            <span class="customInputFont"> r: </span>
+            <div class="input_div col-sm-4">
+                <span class="itemsToPick customInputFont">
+                    <!-- 4 -->
+                </span>
+                <span class="glyph-button">
+                    <span class="glyphicon glyphicon-chevron-up customInputRUp" ng-click="increaseR()">
+                    </span>
+                    <span class="glyphicon glyphicon-chevron-down customInputRDown" ng-click="decreaseR()"></span>
+                </span>
+            </div>
+        </div>
+        <h2 class="customRedHeading">Permutation</h2>
+        <h3>Permutation is arrangement of a set things when the order in which they appear is important.</h3>
+        <h3 class="answer">Taken 'r' things out of 'n' things at a time, it equals n! / (n - r)! which, in this case, is
+            <span class="customPermutation">{{calculateP()}}</span>
+        </h3>
+        <h3 class="answer">All permutations are:
+            <span class="customAllPermutations">{{generatePermutations()}}</span>
+        </h3>
+
+        <h2 class="customRedHeading">Combination</h2>
+        <h3>Combination is a set things where the order in which they appear is not important.</h3>
+        <h3 class="answer">Taken 'r' things out of 'n' things at a time, it equals n! / (r! * (n - r)!) which, in this case, is
+            <span class="customPermutation">{{calculateC()}}</span>
+        </h3>
+        <h3 class="answer">All combinations are:
+            <span class="customAllPermutations">{{generateCombinations()}}</span>
+        </h3>
+    </div>
+
+    <div class="customScriptWrapper">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"> </script>
+
+        <!-- JS/17 - Visualizing P formula and C formula.js -->
+        <script>
+            var chars_global = {
+                "A": "A", "B": "B", "C": "C", "D": "D",
+                "E": "E", "F": "F", "G": "G", "H": "H",
+                "I": "I", "J": "J", "K": "K", "L": "L",
+                "M": "M", "N": "N", "O": "O", "P": "P",
+                "Q": "Q", "R": "R", "S": "S", "T": "T",
+                "U": "U", "V": "V", "W": "W", "X": "X",
+                "Y": "Y", "Z": "Z"
+            };
+
+            function combinations(string) {
+                var result = [];
+
+                var loop = function (start, depth, prefix) {
+                    for (var i = start; i < string.length; i++) {
+                        var next = prefix + string[i];
+                        if (depth > 0)
+                            loop(i + 1, depth - 1, next);
+                        else
+                            result.push(next);
+                    }
+                };
+
+                for (var i = 0; i < string.length; i++) {
+                    loop(0, i, '');
+                }
+
+                return result;
+            };
+
+            function initializeInputChars(num) {
+                /* Reset variables*/
+                in_chars = {};
+                $(".factorial").empty();
+                /* Reset - Close */
+                var str_temp = "";
+                for (var key in chars_global) {
+                    if (key.charCodeAt(0) < 65 + num) {
+                        str_temp += key;
+                        Object.defineProperty(in_chars, key, {
+                            value: key,
+                            enumerable: true,
+                            writable: true,
+                            configurable: true
+                        });
+                    }
+                }
+                $(".number_of_elements").text(num);
+                $(".allInput").text(str_temp);
+            };
+
+            function initializeInputR(num) {
+                $(".itemsToPick").text(num);
+            }
+
+            function factorial(num) {
+                var result = 1;
+                for (var i = 1; i < num; i++ , result *= i);
+                return result;
+            }
+
+            var app = angular.module('myApp', []);
+            app.controller('myController', function ($scope) {
+                $scope.init = function () {
+                    initializeInputChars(3);
+                    initializeInputR(1);
+                };
+
+                $scope.calculateP = function () {
+                    var n = parseInt($(".number_of_elements").text());
+                    var r = parseInt($(".itemsToPick").text());
+                    return factorial(n) / factorial(n - r);
+                };
+
+                $scope.calculateC = function () {
+                    var n = parseInt($(".number_of_elements").text());
+                    var r = parseInt($(".itemsToPick").text());
+                    return factorial(n) / (factorial(r) * factorial(n - r));
+                };
+
+                $scope.increaseN = function () {
+                    var num = parseInt($(".number_of_elements").text());
+                    if (num < 7) {
+                        num++;
+                        initializeInputChars(parseInt(num));
+                    }
+                };
+
+                $scope.decreaseN = function () {
+                    var n = parseInt($(".number_of_elements").text());
+                    var r = parseInt($(".itemsToPick").text());
+
+                    if (n > 2) {
+                        if (n === r) { r--; }
+                        n--;
+
+                        $(".itemsToPick").text(r);
+                        initializeInputChars(parseInt(n));
+
+                    }
+                };
+
+                $scope.increaseR = function () {
+                    var r = parseInt($(".itemsToPick").text());
+                    var n = parseInt($(".number_of_elements").text());
+                    if (r < 7 && r < n) {
+                        r++;
+                        $(".itemsToPick").text(r);
+                    }
+                };
+
+                $scope.decreaseR = function () {
+                    var num = parseInt($(".itemsToPick").text());
+                    if (num > 1) {
+                        num--;
+                        $(".itemsToPick").text(num);
+                    }
+                };
+
+                $scope.generatePermutations = function () {
+                    function getAllPermutations(string) {
+                        var results = [];
+
+                        if (string.length === 1) {
+                            results.push(string);
+                            return results;
+                        }
+
+                        for (var i = 0; i < string.length; i++) {
+                            var firstChar = string[i];
+                            var charsLeft = string.substring(0, i) + string.substring(i + 1);
+                            var innerPermutations = getAllPermutations(charsLeft);
+                            for (var j = 0; j < innerPermutations.length; j++) {
+                                results.push(firstChar + innerPermutations[j]);
+                            }
+                        }
+                        return results;
+                    }
+
+                    var inputAlphabets = $('.allInput').text().trim();
+
+                    var allCombinations = combinations(inputAlphabets);
+
+                    var myResult = new Array();
+                    var r = parseInt($(".itemsToPick").text());
+                    for (var i = 0; i < allCombinations.length; i++) {
+                        if (allCombinations[i].length === r) {
+                            var temp = getAllPermutations(allCombinations[i]);
+                            myResult = myResult.concat(temp);
+                        }
+                    }
+
+                    return myResult.join(', ');
+                };
+
+                $scope.generateCombinations = function () {
+
+                    var inputAlphabets = $('.allInput').text().trim();
+
+                    var allCombinations = combinations(inputAlphabets);
+
+                    var myResult = new Array();
+                    var r = parseInt($(".itemsToPick").text());
+                    for (var i = 0; i < allCombinations.length; i++) {
+                        if (allCombinations[i].length === r) {
+                            myResult.push(allCombinations[i]);
+                        }
+                    }
+
+                    return myResult.join(', ');
+                };
+            });
+        </script>
+    </div>
+</body>
+</html>
+<span style="display: none;">Tags: Mathematical Foundations for Data Science,</span>
