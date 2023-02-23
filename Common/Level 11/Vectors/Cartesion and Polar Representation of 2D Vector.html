@@ -1,0 +1,226 @@
+<head>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+
+    <!-- Google AdSense Using Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <style>
+        .customTempCodeHolderForSocialMedia {
+            display: none;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+
+        i.ib {
+            color: blue;
+        }
+
+        i.ig {
+            color: green;
+        }
+
+        .customOl {
+            font-size: 15px;
+        }
+    </style>
+</head>
+<div class="customMainDiv">
+    <h2>Simple Cartesian Representation of Vector</h2>
+    
+    x-component: <input type="range" data-bind="value: selX, event: { change: showCartesianVector }" min="-10" max="10" step="1">
+
+    &nbsp;&nbsp;
+
+    y-component: <input type="range" data-bind="value: selY, event: { change: showCartesianVector }" min="-10" max="10" step="1">
+    
+    <br><br>
+
+    <canvas id="vectorCanvas1" style="border:1px solid #000000;"> </canvas>
+    <br> <br>
+    <b>Vector is: <span data-bind="text: cartesianVector"></span></b>
+    
+    <h2>Simple Polar Representation of Vector</h2>
+    
+    Angle: <input type="range" data-bind="value: selAngle, event: { change: showPolarVector }" min="0" max="360" step="15">
+    &nbsp;&nbsp;
+    Magnitude: <input type="range" data-bind="value: selMagnitude, event: { change: showPolarVector }" min="0" max="10" step="1">
+    <br><br>
+    <canvas id="vectorCanvas2" style="border:1px solid #000000;"> </canvas>
+
+    <br> <br>
+    <b>Vector is: <span data-bind="text: polarVector"></span></b>
+    
+</div>
+
+<script>
+
+    var GameArea = function () {
+        var self = this;
+
+        this.canvas = {};
+
+        this.start = function () {
+            if(screen.width >= 510) {
+                this.canvas.width = 510;
+                this.canvas.height = 510;
+            } else {
+                this.canvas.width = 320;
+                this.canvas.height = 320;
+            }
+
+            this.context = this.canvas.getContext("2d");
+            this.padding = 15;
+
+            this.numLines = 21
+            this.lineGap = (this.canvas.height - (2 * this.padding) - this.numLines) / (this.numLines - 1);
+            
+            this.context.lineWidth = "1";
+
+            this.x0 = this.padding + (this.lineGap + this.context.lineWidth) * 10;
+            this.y0 = this.padding + (this.lineGap + this.context.lineWidth) * 10;
+        };
+
+        this.clear = function () {
+            this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        };
+
+        
+        this.drawGraphLines = function() {
+            
+            this.context.strokeStyle = "#00FFFF";
+            
+            for (let i = 0; i <= this.numLines + 1; i++) {
+                this.context.moveTo(this.padding, this.padding + (i * (this.lineGap + this.context.lineWidth)));
+                this.context.lineTo(this.canvas.height - this.padding, this.padding + (i * (this.lineGap + this.context.lineWidth)));
+                this.context.stroke();
+            }
+
+            for (let i = 0; i <= this.numLines + 1; i++) {
+                this.context.moveTo(this.padding + (i * (this.lineGap + this.context.lineWidth)), this.padding);
+                this.context.lineTo(this.padding + (i * (this.lineGap + this.context.lineWidth)), this.canvas.height - this.padding);
+                this.context.stroke();
+            }
+        }
+    }
+
+    var ViewModel = function () {
+        var self = this;
+        // These are the initial options
+        this.allCartesianNums = ko.observableArray([]);
+
+        this.answer = ko.observable();
+
+        for (let i = -10; i <= 10; i++) {
+            this.allCartesianNums.push(i);
+        }
+
+
+        this.selX = ko.observable(0);
+        this.selY = ko.observable(0);
+
+        this.selAngle = ko.observable(0);
+        this.selMagnitude = ko.observable(0);
+
+        this.drawVector = function(gameArea, x, y) {
+            gameArea.start();
+            gameArea.drawGraphLines();
+
+            gameArea.context.beginPath();
+            gameArea.context.strokeStyle = '#FF0000';
+
+            gameArea.context.moveTo(gameArea.x0, gameArea.y0);
+
+            gameArea.context.lineTo(gameArea.x0 + x * (gameArea.lineGap + gameArea.context.lineWidth),
+                gameArea.y0 - y * (gameArea.lineGap + gameArea.context.lineWidth));
+            
+            
+            gameArea.context.stroke();
+
+            // Drawing green dot
+            
+            gameArea.context.beginPath();
+
+            var targetX = gameArea.x0 + x * (gameArea.lineGap + gameArea.context.lineWidth)
+            var targetY = gameArea.y0 - y * (gameArea.lineGap + gameArea.context.lineWidth)
+            gameArea.context.moveTo(targetX, targetY);
+                        
+            gameArea.context.arc(targetX, targetY, 3, 0, 2 * Math.PI);
+            
+            gameArea.context.fill();
+        };
+
+        this.cartesianVector = ko.computed(function() {
+            return this.selX() + "i " 
+                + ( parseInt(this.selY()) < 0 ? "-" : "+")
+                + " " + Math.abs(this.selY()) + "j";
+        }, this);
+
+        this.myGameArea1 = new GameArea();
+        this.myGameArea1.canvas = document.getElementById("vectorCanvas1");
+
+        this.myGameArea2 = new GameArea();
+        this.myGameArea2.canvas = document.getElementById("vectorCanvas2");
+
+        this.showCartesianVector = function() {
+            this.myGameArea1.start();
+            this.myGameArea1.drawGraphLines();
+
+            this.myGameArea1.context.beginPath();
+            this.myGameArea1.context.strokeStyle = '#FF0000';
+
+            this.myGameArea1.context.moveTo(this.myGameArea1.x0, this.myGameArea1.y0);
+
+            this.myGameArea1.context.lineTo(this.myGameArea1.x0 + this.selX() * (this.myGameArea1.lineGap + this.myGameArea1.context.lineWidth),
+                this.myGameArea1.y0 - this.selY() * (this.myGameArea1.lineGap + this.myGameArea1.context.lineWidth));
+            
+            
+            this.myGameArea1.context.stroke();
+
+            // Drawing green dot
+            
+            this.myGameArea1.context.beginPath();
+
+            var targetX = this.myGameArea1.x0 + this.selX() * (this.myGameArea1.lineGap + this.myGameArea1.context.lineWidth)
+            var targetY = this.myGameArea1.y0 - this.selY() * (this.myGameArea1.lineGap + this.myGameArea1.context.lineWidth)
+            this.myGameArea1.context.moveTo(targetX, targetY);
+                        
+            this.myGameArea1.context.arc(targetX, targetY, 3, 0, 2 * Math.PI);
+            
+            this.myGameArea1.context.fill();
+        }
+
+        this.polarVector = ko.computed(function() {
+            return this.selMagnitude() + ".cos(" + this.selAngle() + ") i + " 
+                + this.selMagnitude() + ".sin(" + this.selAngle() + ") j";
+        }, this);
+
+        this.showPolarVector = function(){
+            function toRadians (angle) {
+               return angle * (Math.PI / 180);
+            }
+
+            this.drawVector(this.myGameArea2, 
+                this.selMagnitude() * Math.cos(toRadians(this.selAngle())), 
+                this.selMagnitude() * Math.sin(toRadians(this.selAngle())) 
+            )
+        }
+    };
+
+    ko.applyBindings(ViewModel);
+</script>
+<span style="display: none;">Tags: Mathematical Foundations for Data Science,</span>
