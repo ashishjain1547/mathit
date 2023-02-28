@@ -1,0 +1,78 @@
+<head>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+
+    <!-- Google AdSense Using Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <style>
+        .customTempCodeHolderForSocialMedia {
+            display: none;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+
+        i.ib {
+            color: blue;
+        }
+
+        i.ig {
+            color: green;
+        }
+
+        .customOl {
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<pre>From the book: Ian Goodfellow, Yoshua Bengio, Aaron Courville - Deep Learning - The MIT Press (2016)
+
+<div class="separator" style="clear: both;"><a
+    href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiHX9fTD0V5q0PIIcNdTMNbNVZdiRBHWph9AXKs18hxvk1JVuLq1LqaDSHsS65Mytzb3bzHjGNAmsz2nGZ5HuBnNWOo7CVO8K7IhGJLC4f8IILtvYc7j-rEDZOM8duGXu0CScIn5krF1GlXoMa95fwSfeITGumKhzNAVAxuLZGdLNtcNMdovwD-aCMpBQ/s1076/img0.png"
+    style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600"
+        data-original-height="660" data-original-width="1076"
+        src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiHX9fTD0V5q0PIIcNdTMNbNVZdiRBHWph9AXKs18hxvk1JVuLq1LqaDSHsS65Mytzb3bzHjGNAmsz2nGZ5HuBnNWOo7CVO8K7IhGJLC4f8IILtvYc7j-rEDZOM8duGXu0CScIn5krF1GlXoMa95fwSfeITGumKhzNAVAxuLZGdLNtcNMdovwD-aCMpBQ/s600/img0.png" /></a>
+</div>
+<div class="separator" style="clear: both;"><a
+    href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhN79TZflP5fNT59SDb4v7CAIf18fzfzxI4-4vUW3derEX8FKcPNrm9LY_NGAeAoHdpBQRHgZIVHftNcopuNecENTYrmq1WUI0dT1jDMN43Yi9JAIP1yvc9MCmedYIEL18XWFZy8ndI0Z7kmWMuCu1Pvj6qiBtpbJYryiasKGoIECWIfIy9o_stcXTtlQ/s1091/img1.png"
+    style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600"
+        data-original-height="693" data-original-width="1091"
+        src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhN79TZflP5fNT59SDb4v7CAIf18fzfzxI4-4vUW3derEX8FKcPNrm9LY_NGAeAoHdpBQRHgZIVHftNcopuNecENTYrmq1WUI0dT1jDMN43Yi9JAIP1yvc9MCmedYIEL18XWFZy8ndI0Z7kmWMuCu1Pvj6qiBtpbJYryiasKGoIECWIfIy9o_stcXTtlQ/s600/img1.png" /></a>
+</div>
+
+Normal distributions are a sensible choice for many applications. In the absence of prior knowledge about what form a distribution over the real numbers should take, the normal distribution is a good default choice for two major reasons.
+
+First, many distributions we wish to model are truly close to being normal distributions. The central limit theorem shows that the sum of many independent random variables is approximately normally distributed. This means that in practice, many complicated systems can be modeled successfully as normally distributed noise, even if the system can be decomposed into parts with more structured behavior.
+
+Second, out of all possible probability distributions with the same variance, the normal distribution encodes the maximum amount of uncertainty over the real numbers. We can thus think of the normal distribution as being the one that inserts the least amount of prior knowledge into a model. Fully developing and justifying this idea requires more mathematical tools and is postponed to section 19.4.2.
+
+<div class="separator" style="clear: both;"><a
+    href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiyQydZCp4wHO1enbfiJV0SY6anqmsFmFYvvqWbrn_RxE7J2MKCophzc_nYF_GcJeeNwoe3iOHcdXGQtxkW0cB2Pck1MHsA6oZNnbvgy7-W9girdUmHARJedOpvWRFLM8wTAr66UBJYDKmKwRXOnhhMYRQCGCYkC5HKZmon1NYwZMEdLZWb5LD9QOGclw/s1071/img2.png"
+    style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600"
+        data-original-height="250" data-original-width="1071"
+        src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiyQydZCp4wHO1enbfiJV0SY6anqmsFmFYvvqWbrn_RxE7J2MKCophzc_nYF_GcJeeNwoe3iOHcdXGQtxkW0cB2Pck1MHsA6oZNnbvgy7-W9girdUmHARJedOpvWRFLM8wTAr66UBJYDKmKwRXOnhhMYRQCGCYkC5HKZmon1NYwZMEdLZWb5LD9QOGclw/s600/img2.png" /></a>
+</div>
+
+<div class="separator" style="clear: both;"><a
+    href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjeyhBhpDNfa2JNvtJY40XZUQaYD2fypUgPeB3lIlSfKtbGb_R1m2ioBsXEk8Oq7YDsUhoXIaB2Mo59EAncvXRgfEtcWicS_feQqcQJfbVWzQpSkPGAbNFasQ4fd1BQhCDbAu_wGtX9v4kKP4TTNydRQxjH1MW20vAvus6HK_ism_c5NueTbf0zhDpPlg/s1076/img3.png"
+    style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600"
+        data-original-height="501" data-original-width="1076"
+        src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjeyhBhpDNfa2JNvtJY40XZUQaYD2fypUgPeB3lIlSfKtbGb_R1m2ioBsXEk8Oq7YDsUhoXIaB2Mo59EAncvXRgfEtcWicS_feQqcQJfbVWzQpSkPGAbNFasQ4fd1BQhCDbAu_wGtX9v4kKP4TTNydRQxjH1MW20vAvus6HK_ism_c5NueTbf0zhDpPlg/s600/img3.png" /></a>
+</div>
+</pre>
+<span style="display: none;">Tags: Mathematical Foundations for Data Science,</span>
