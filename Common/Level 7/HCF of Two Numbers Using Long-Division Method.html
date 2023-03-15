@@ -1,0 +1,127 @@
+<head>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+
+    <!-- Google AdSense Using Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <style>
+        .customTempCodeHolderForSocialMedia {
+            display: none;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+
+        i.ib {
+            color: blue;
+        }
+
+        i.ig {
+            color: green;
+        }
+
+        .customOl {
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+<pre>
+Step 1: Divide the largest number by the smallest number. 
+Step 2: Take divisor as new dividend and remainder as the new divisor, i.e. divide the first divisor by the first remainder. 
+Step 3: Proceed till the remainder is zero and the last divisor will be the HCF of the given numbers.
+</pre>
+
+    <p>Enter numbers:</p>
+    <p>Number A:</p>
+    <input type="text" data-bind="value: customA">
+    <p>Number B:</p>
+    <input type="text" data-bind="value: customB">
+
+    <br>
+    <br>
+    <button id="customButton" data-bind="click: hcf">Get HCF</button>
+    <br><br>
+    <h1>Steps</h1>
+    
+    <table>
+        <thead>
+            <tr><th>Divisor</th><th>Dividend</th><th>Remainder</th></tr>
+        </thead>
+
+        <tbody data-bind="foreach: hcf_solution">
+            <tr>
+                <td data-bind="text: curr_divisor"></td>
+                <td data-bind="text: curr_dividend"></td>
+                <td data-bind="text: modulo"></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h2>The HCF is: <span data-bind="text: customAnswer"></span></h2>
+</body>
+
+<script type="text/javascript">
+
+    var viewModel = {
+        
+        customA: ko.observable(""),
+        customB: ko.observable(""),
+
+        customAnswer: ko.observable(),
+
+        hcf_solution: ko.observableArray([]), // Columns: factor, firstno, secondno
+
+        hcf: function () {
+            this.hcf_solution([])
+
+            sorted_arr = [this.customA(), this.customB(),]
+            sorted_arr.sort(function (a, b) { return a - b });
+            console.log(sorted_arr)
+            let modulo = -1
+            let prev_divisor = -1
+
+            let curr_divisor = sorted_arr[0]
+            let curr_dividend = sorted_arr[1]
+
+            while (modulo != 0 && modulo != 1) {
+                modulo = curr_dividend % curr_divisor
+
+                this.hcf_solution.push({
+                    "curr_divisor": curr_divisor,
+                    "curr_dividend": curr_dividend,
+                    "modulo": modulo
+                })
+
+                prev_divisor = curr_divisor
+                curr_divisor = modulo
+                curr_dividend = prev_divisor
+            }
+
+            if (modulo == 0) {
+                console.log("HCF is:", prev_divisor)
+                this.customAnswer(prev_divisor)
+            }
+            else if (modulo == 1) {
+                console.log("HCF is: 1")
+                this.customAnswer(1)
+            }
+        }
+    };
+
+    ko.applyBindings(viewModel);
+</script>
