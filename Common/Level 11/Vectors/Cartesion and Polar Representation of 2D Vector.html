@@ -41,7 +41,7 @@
 </head>
 <div class="customMainDiv">
     <h2>Simple Cartesian Representation of Vector</h2>
-    
+    <h3>A vector in  Cartesian plane representation has two components x and y.</h3>
     x-component: <input type="range" data-bind="value: selX, event: { change: showCartesianVector }" min="-10" max="10" step="1">
 
     &nbsp;&nbsp;
@@ -52,10 +52,10 @@
 
     <canvas id="vectorCanvas1" style="border:1px solid #000000;"> </canvas>
     <br> <br>
-    <b>Vector is: <span data-bind="text: cartesianVector"></span></b>
+    <h3>Vector is: <span data-bind="text: cartesianVector"></span></h3>
     
     <h2>Simple Polar Representation of Vector</h2>
-    
+    <h3>A 2d vector in Polar representation has components angle and magnitude.</h3>
     Angle: <input type="range" data-bind="value: selAngle, event: { change: showPolarVector }" min="0" max="360" step="15">
     &nbsp;&nbsp;
     Magnitude: <input type="range" data-bind="value: selMagnitude, event: { change: showPolarVector }" min="0" max="10" step="1">
@@ -63,7 +63,7 @@
     <canvas id="vectorCanvas2" style="border:1px solid #000000;"> </canvas>
 
     <br> <br>
-    <b>Vector is: <span data-bind="text: polarVector"></span></b>
+    <h3>Vector is: <span data-bind="text: polarVector"></span></h3>
     
 </div>
 
