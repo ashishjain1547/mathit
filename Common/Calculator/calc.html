@@ -1,0 +1,246 @@
+<script src="https://knockoutjs.com/downloads/knockout-3.5.1.js"> </script>
+
+<style>
+    button {
+        margin: 2px;
+    }
+
+    input {
+        max-width: 100px;
+        margin: 2px;
+    }
+
+    pre {
+        white-space: pre-wrap;
+        white-space: -moz-pre-wrap;
+        white-space: -pre-wrap;
+        white-space: -o-pre-wrap;
+        word-wrap: break-word;
+    }
+</style>
+
+<body>
+    <h2>Binary Arithematic Operations</h2>
+    A: <input type="text" data-bind="value: customA">
+    B: <input type="text" data-bind="value: customB">
+    <br> <br>
+    <button data-bind="click: customAdd">Add</button>
+    &nbsp; <button data-bind="click: customSubtract">Subtract</button>
+    &nbsp; <button data-bind="click: customMultiply">Multiply</button>
+    &nbsp; <button data-bind="click: customDivide">Divide</button>
+    &nbsp; <button data-bind="click: customPower">Power</button>
+    &nbsp; <button data-bind="click: customClear">Clear</button>
+
+    <p>Answer: <span data-bind="text: customAnswerBinary"></span></p>
+
+    <hr>
+
+    <h2>Unary Operations</h2>
+
+    Input: <input type="text" data-bind="value: customInput">
+
+    <br><br>
+
+    <button data-bind="click: customAbsValue">Absolute Value</button>
+    &nbsp; <button data-bind="click: customTrunc">Integer Part</button>
+    &nbsp; <button data-bind="click: customSqRoot">Square Root</button>
+    &nbsp; <button data-bind="click: customCubicRoot">Cubic Root</button>
+    &nbsp; <button data-bind="click: customExponential">Exponential</button>
+    &nbsp; <button data-bind="click: customNaturalLogarithm">Natural Logarithm</button>
+    &nbsp; <button data-bind="click: customBase2Logarithm">Base-2 Logarithm</button>
+    &nbsp; <button data-bind="click: customBase10Logarithm">Base-10 Logarithm</button>
+    &nbsp; <button data-bind="click: customClear">Clear</button>
+
+    <p>Answer: <span data-bind="text: customAnswerUnary"></span></p>
+
+    <hr>
+
+    <h2>Trigonometric Operations</h2>
+    <pre>Note: Unit of Math.PI is Radians. By default, Math.cos(x): accepts radians.
+
+Math.cos(Math.PI/4) = 0.7071
+Math.cos(45 * Math.PI/180) = 0.7071
+Math.SQRT1_2 = 0.7071</pre>
+
+    <img alt="" width="600" data-original-height="468" data-original-width="691"
+        src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjSQ3ZzfXckIwTRe632Ikj_Zieb5GjiKjhgLygiXMA27l7cP9XDc-ZRf9YM_R5UUsB1wkiT9vBX_31LRNEgjHBfmYZdaoG1OaiLltWvAJTjlLuiSeP07cBEtviSnBdWYGEphSggDorzYC8doovalE-5z126JcpoFtHBFYs1tpYixBzj6J5b7Gl8hg9A6A/s600/Trigonometric-Table.png" />
+
+    <br><br>
+    Input for Degrees: <input type="text" data-bind="value: customTriInput">
+
+    <br><br>
+
+    <button data-bind="click: customSin">Sin</button>
+    &nbsp; <button data-bind="click: customCos">Cos</button>
+    &nbsp; <button data-bind="click: customTan">Tan</button>
+    &nbsp; <button data-bind="click: customCot">Cot</button>
+    &nbsp; <button data-bind="click: customCosec">Cosec</button>
+    &nbsp; <button data-bind="click: customSec">Sec</button>
+    &nbsp; <button data-bind="click: customClear">Clear</button>
+
+    <p>Answer: <span data-bind="text: customAnswerTrigo"></span></p>
+
+
+</body>
+
+<script>
+    var viewModel = {
+        customA: ko.observable(""),
+        customB: ko.observable(""),
+        customAnswerBinary: ko.observable(""),
+        customAnswerUnary: ko.observable(""),
+        customTriInput: ko.observable(""),
+        customAnswerTrigo: ko.observable(""),
+        customInput: ko.observable(""),
+        customAnswer: ko.observable(""),
+
+
+        customClear: function () {
+            this.customA("");
+            this.customB("");
+            this.customInput("");
+            this.customAnswerBinary("");
+            this.customAnswerTrigo("");
+            this.customAnswer("");
+        },
+
+        // customAdd, customSubtract, so on are your methods of the viewModel class.
+        customAdd: function () {
+            let rtn_val = parseFloat(this.customA()) + parseFloat(this.customB());
+            this.customAnswerBinary(rtn_val); // Setting the value of observable "customAnswerBinary"
+        },
+
+        customSubtract: function () {
+            let rtn_val = parseFloat(this.customA()) - parseFloat(this.customB());
+            this.customAnswerBinary(rtn_val);
+        },
+
+        customMultiply: function () {
+            let rtn_val = parseFloat(this.customA()) * parseFloat(this.customB());
+            this.customAnswerBinary(rtn_val);
+        },
+
+        customDivide: function () {
+
+            // Division would happen over here
+            if (parseFloat(this.customB()) == 0) {
+                this.customAnswerBinary("Cannot divide by Zero.");
+            }
+            else {
+                let rtn_val = parseFloat(this.customA()) / parseFloat(this.customB());
+                this.customAnswerBinary(rtn_val);
+            }
+        },
+
+        customPower: function () {
+            let x = Math.pow(parseInt(this.customA()), parseInt(this.customB()));
+            this.customAnswerBinary(x);
+        },
+
+        customAbsValue: function () {
+            let x = Math.abs(parseInt(this.customInput()));
+            this.customAnswerUnary(x);
+        },
+
+        customTrunc: function () {
+            let x = Math.trunc(parseFloat(this.customInput()));
+            this.customAnswerUnary(x);
+        },
+
+        customSqRoot: function () {
+            let x = Math.sqrt(parseInt(this.customInput()));
+            this.customAnswerUnary(x);
+        },
+
+        customCubicRoot: function () {
+            let x = Math.cbrt(parseInt(this.customInput()));
+            this.customAnswerUnary(x);
+        },
+
+        customExponential: function () {
+            let x = Math.exp(parseInt(this.customInput()));
+            this.customAnswerUnary(x);
+        },
+
+
+        customNaturalLogarithm: function () {
+            let x = Math.log(parseInt(this.customInput()));
+            this.customAnswerUnary(x);
+
+        },
+
+        customBase2Logarithm: function () {
+            let x = Math.log2(parseInt(this.customInput()));
+            this.customAnswerUnary(x);
+        },
+
+        customBase10Logarithm: function () {
+            let x = Math.log10(parseInt(this.customInput()));
+            this.customAnswerUnary(x);
+        },
+
+        customSin: function () {
+            let x = Math.sin(parseFloat(this.customTriInput()) * Math.PI / 180);
+            x = parseFloat(x.toFixed(2));
+            this.customAnswerTrigo(x);
+        },
+
+        customCos: function () {
+            let in_number = parseFloat(this.customTriInput())
+
+            let cosOut = Math.cos(in_number * Math.PI / 180);
+
+            if (cosOut > -0.01 && cosOut < 0.01) {
+                cosOut = Math.round(cosOut)
+            }
+
+            cosOut = parseFloat(cosOut.toFixed(2));
+            this.customAnswerTrigo(cosOut);
+
+        },
+
+        customTan: function () {
+            let x = Math.tan(parseFloat(this.customTriInput()) * Math.PI / 180);
+            x = parseFloat(x.toFixed(2));
+
+            if (x == 16331239353195370) {
+                x = "Not defined"
+            }
+
+            this.customAnswerTrigo(x);
+        },
+        customCosec: function () {
+            let x = 1 / (Math.sin(parseFloat(this.customTriInput()) * Math.PI / 180));
+            x = parseFloat(x.toFixed(2));
+
+            if (x == 8165619676597685) {
+                x = "Not defined"
+            }
+
+            this.customAnswerTrigo(x);
+        },
+
+        customSec: function () {
+            let x = 1 / (Math.cos(parseFloat(this.customTriInput()) * Math.PI / 180));
+            x = parseFloat(x.toFixed(2));
+            if (x == 16331239353195370) {
+                x = "Not defined"
+            }
+
+            this.customAnswerTrigo(x);
+        },
+        customCot: function () {
+            let x = 1 / (Math.tan(parseFloat(this.customTriInput()) * Math.PI / 180));
+            x = parseFloat(x.toFixed(2));
+
+            if (x == -8165619676597685) {
+                x = "Not defined"
+            }
+
+            this.customAnswerTrigo(x);
+        }
+
+    };
+
+    ko.applyBindings(viewModel);
+</script>
