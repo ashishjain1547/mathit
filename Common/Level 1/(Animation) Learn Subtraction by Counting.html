@@ -1,0 +1,171 @@
+<head>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+
+    <!-- Google AdSense Using Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <style>
+        .customTempCodeHolderForSocialMedia {
+            display: none;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+
+        i.ib {
+            color: blue;
+        }
+
+        i.ig {
+            color: green;
+        }
+
+        .customOl {
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="customContentWrapper" data-bind='template: { afterRender: init }'>
+
+        <h3>Select first number:</h3>
+        <select data-bind="options: baseNums, value: firstNum, event: { change: fillFirstCanvas }"></select>
+        <br>
+        <br>
+        <canvas id="myFirstCanvas" width="250" height="107" style="border:1px solid #000000;"></canvas>
+
+        <h3>Select second number:</h3>
+        <select data-bind="options: baseNums, value: secondNum, event: { change: fillSecondCanvas }"></select>
+        <br>
+        <br>
+        <canvas id="mySecondCanvas" width="250" height="107" style="border:1px solid #000000;"></canvas>
+
+        <br>
+        <br>
+        <button data-bind="click: fillThirdCanvas">Add These!</button>
+        <br>
+        <br>
+        <h2>Next, we would count the red and blue sticks together to get the answer.</h2>
+        <h2>Answer is: <span data-bind="text: customAns"></span></h2>
+        <br>
+
+        <canvas id="myThirdCanvas" width="500" height="107" style="border:1px solid #000000;"></canvas>
+
+    </div>
+</body>
+
+<script>
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    var ViewModel = function () {
+        var self = this;
+
+        // These are the initial options
+        self.baseNums = ko.observableArray([]);
+
+        for (let i = 1; i <= 10; i++) {
+            self.baseNums.push(i);
+        }
+
+        self.firstNum = ko.observable();
+        self.secondNum = ko.observable();
+        self.customAns = ko.observable();
+
+        self.fillFirstCanvas = function () {
+            var canvas = document.getElementById("myFirstCanvas");
+            var ctx = canvas.getContext("2d");
+
+            var lineWidth = 10;
+            var lineHeight = 107;
+            var lineGap = 15;
+            ctx.clearRect(0, 0, 500, lineHeight);
+
+            for (var i = 0; i < self.firstNum(); i++) {
+                ctx.fillStyle = "#FF0000";
+                ctx.fillRect(i * (lineWidth + lineGap), 0, lineWidth, lineHeight);
+
+            }
+        }
+
+        self.fillSecondCanvas = function () {
+            var canvas = document.getElementById("mySecondCanvas");
+            var ctx = canvas.getContext("2d");
+
+            var lineWidth = 10;
+            var lineHeight = 107;
+            var lineGap = 15;
+
+            ctx.clearRect(0, 0, 500, 107);
+
+            for (var i = 0; i < self.secondNum(); i++) {
+                ctx.fillStyle = "#0000FF";
+                ctx.fillRect(i * (lineWidth + lineGap), 0, lineWidth, lineHeight);
+
+            }
+        }
+
+        self.fillThirdCanvas = async function () {
+            var canvas = document.getElementById("myThirdCanvas");
+            var ctx = canvas.getContext("2d");
+            var lineWidth = 10;
+            var lineHeight = 107;
+            var lineGap = 15;
+
+            ctx.clearRect(0, 0, 500, 107);
+
+            function initThirdCanvas() {
+                for (var i = 0; i < self.firstNum(); i++) {
+                    ctx.fillStyle = "#FF0000";
+                    ctx.fillRect(i * (lineWidth + lineGap), 0, lineWidth, lineHeight);
+                }
+            }
+
+            initThirdCanvas()
+            
+            var cntr = self.firstNum() + self.secondNum();
+
+            for (let i = self.firstNum(); i < cntr; i++) {
+                ctx.clearRect(0, 0, 500, 107);
+                initThirdCanvas()
+
+                for (let j = i; j < cntr; j++){
+                    ctx.fillStyle = "#0000FF";
+                    ctx.fillRect(j * (lineWidth + lineGap), 0, lineWidth, lineHeight);
+                }
+                await sleep(1000).then(() => { console.log("-"); });
+            }
+            
+
+
+            self.customAns(self.firstNum() + self.secondNum());
+        }
+
+        self.init = function () {
+            self.fillFirstCanvas();
+            self.fillSecondCanvas();
+            self.fillThirdCanvas();
+        }
+
+    };
+
+    ko.applyBindings(ViewModel);
+
+</script>
+<span style="display: none;">Tags: Mathematical Foundations for Data Science,</span>
