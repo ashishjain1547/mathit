@@ -4,20 +4,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
 
-    <!-- Google AdSense Using Machine Learning Code -->
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({
-            google_ad_client: "ca-pub-3071098372371409",
-            enable_page_level_ads: true
-        });
-    </script>
 
     <style>
-        .customTempCodeHolderForSocialMedia {
-            display: none;
-        }
-
         pre {
             white-space: pre-wrap;
             white-space: -moz-pre-wrap;
@@ -36,6 +24,18 @@
 
         .customOl {
             font-size: 15px;
+        }
+
+        div.customSolutionWrapper {
+            font-size: 32px;
+            display: inline-block;
+        }
+
+        div.customExplanationWrapper {
+            font-size: 32px;
+            display: inline-block;
+            padding: 0 20px;
+            max-width: 75%;
         }
     </style>
 </head>
@@ -62,16 +62,44 @@
         <div class="customSolutionWrapper">
             <p class="customCarryLayerB">
                 <span style="opacity: 0">0</span>
-                <span data-bind="text: carryBfHundredth"> </span>
-                <span data-bind="text: carryBfTens"> </span>
-                <span data-bind="text: carryBfOnes"> </span>
+
+                <!-- ko if: carryBfHundredth() == 0 --> <span>&nbsp;&nbsp;</span> <!-- /ko -->
+                <!-- ko if: carryBfHundredth() != 0 --> <span
+                    data-bind="text: carryBfHundredth, css: { customBolden: isB100Borrowed }"> </span> <!-- /ko -->
+
+
+                <!-- ko if: carryBfTens() == 0 --> <span>&nbsp;&nbsp;</span> <!-- /ko -->
+                <!-- ko if: carryBfTens() != 0 --> <span
+                    data-bind="text: carryBfTens, css: { customBolden: isB10Borrowed }"> </span> <!-- /ko -->
+
+
+                <!-- ko if: carryBfOnes() == 0 --> <span>&nbsp;&nbsp;</span> <!-- /ko -->
+                <!-- ko if: carryBfOnes() != 0 --> <span
+                    data-bind="text: carryBfOnes, css: { customBolden: isB1Borrowed }"> </span> <!-- /ko -->
+
+
             </p>
 
             <p class="customCarryLayerA">
                 <span style="opacity: 0">0</span>
-                <span data-bind="text: carryAfHundredth"> </span>
-                <span data-bind="text: carryAfTens"> </span>
-                <span data-bind="text: carryAfOnes"> </span>
+
+
+                <!-- ko if: carryAfHundredth() == 0 && A100Type() != 'LeftOver' --> <span>&nbsp;&nbsp;</span> <!-- /ko -->
+                <!-- ko if: carryAfHundredth() == 0 && A100Type() == 'LeftOver' --> <span>0</span> <!-- /ko -->
+                <!-- ko if: carryAfHundredth() != 0 --> <span data-bind="text: carryAfHundredth"> </span> <!-- /ko -->
+
+
+                <!-- ko if: carryAfTens() == 0 && A10Type() != 'LeftOver' --> <span>&nbsp;&nbsp;</span> <!-- /ko -->
+                <!-- ko if: carryAfTens() == 0 && A10Type() == 'LeftOver' --> <span>0</span> <!-- /ko -->
+                <!-- ko if: carryAfTens() != 0 --> <span data-bind="text: carryAfTens"> </span> <!-- /ko -->
+
+
+                <!-- ko if: carryAfOnes() == 0 && A1Type() != 'LeftOver' --> <span>&nbsp;&nbsp;</span> <!-- /ko -->
+                <!-- ko if: carryAfOnes() == 0 && A1Type() == 'LeftOver' --> <span>0</span> <!-- /ko -->
+                <!-- ko if: carryAfOnes() != 0 --> <span data-bind="text: carryAfOnes"> </span>
+                <!-- /ko -->
+
+
             </p>
 
             <p class="customTopNum">&nbsp;
@@ -107,6 +135,15 @@
                 <span data-bind="text: aTens"> </span>
                 <span data-bind="text: aOnes"> </span>
             </p>
+        </div>
+
+        <div class="customExplanationWrapper">
+            <p data-bind="text: explanationLine1"></p>
+            <p data-bind="text: explanationLine2"></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
         </div>
     </div>
 
@@ -148,6 +185,19 @@
         self.hundredthStrikedFlag = ko.observable(false);
         self.message = ko.observable("");
 
+
+        self.isB1Borrowed = ko.observable();
+        self.isB10Borrowed = ko.observable();
+        self.isB100Borrowed = ko.observable();
+
+        
+        self.A1Type = ko.observable("Borrowed");
+        self.A10Type = ko.observable("Borrowed");
+        self.A100Type = ko.observable("Borrowed");
+
+        self.explanationLine1 = ko.observable();
+        self.explanationLine2 = ko.observable("");
+
         self.resetVars = function () {
             self.tensStrikedFlag(false);
             self.hundredthStrikedFlag(false);
@@ -155,6 +205,8 @@
             self.aOnes("");
             self.aTens("");
             self.aHundredth("");
+            self.explanationLine1("");
+            self.explanationLine2("");
         }
 
         self.showSubtraction = function () {
@@ -229,11 +281,20 @@
 
             if (self.fOnes() >= self.sOnes()) {
                 self.aOnes(parseInt(self.fOnes()) - self.sOnes());
+
+                self.explanationLine1("Since " + self.fOnes() + " is greater than (or equal to) " + self.sOnes() + ", we do not need to borrow one from the left number.")
+
             } else {
                 self.aOnes((parseInt(self.fOnes()) + 10) - self.sOnes());
                 self.carryAfOnes(1)
+
                 self.carryAfTens(self.fTens() - 1);
+                self.carryAfTens() == 0 ? self.A10Type("LeftOver") : self.A10Type("Borrowed");
                 self.tensStrikedFlag(true);
+
+                self.explanationLine1("Since " + self.fOnes() + " is smaller than " + self.sOnes() + ", we need to borrow one from the number left of " + self.fOnes() + ".")
+
+                self.explanationLine2("After borrowing, the numbers at the top 1 and " + self.fOnes() + " become 1" + self.fOnes() + ".")
             }
 
             if (self.tensStrikedFlag()) {
@@ -243,6 +304,8 @@
                     self.aTens((self.carryAfTens() + 10) - self.sTens());
                     self.carryBfTens(1);
                     self.carryAfHundredth(self.fHundredth() - 1);
+                    self.carryAfHundredth() == 0 ? self.A100Type("LeftOver") : self.A100Type("Borrowed");
+
                     self.hundredthStrikedFlag(true);
                 }
             } else {
@@ -252,6 +315,8 @@
                     self.aTens((self.fTens() + 10) - self.sTens())
                     self.carryAfTens(1);
                     self.carryAfHundredth(self.fHundredth() - 1);
+                    self.carryAfHundredth() == 0 ? self.A100Type("LeftOver") : self.A100Type("Borrowed");
+
                     self.hundredthStrikedFlag(true);
                 }
             }
@@ -277,5 +342,3 @@
     ko.applyBindings(ViewModel);
 
 </script>
-<span style="display: none;">Tags: Mathematical Foundations for Data Science,</span>
-<!-- “text-decoration: line-through.” -->
