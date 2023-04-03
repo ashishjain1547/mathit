@@ -32,10 +32,10 @@
         }
 
         div.customExplanationWrapper {
-            font-size: 32px;
+            font-size: 22px;
             display: inline-block;
             padding: 0 20px;
-            max-width: 75%;
+            max-width: 68%;
         }
     </style>
 </head>
@@ -84,7 +84,8 @@
                 <span style="opacity: 0">0</span>
 
 
-                <!-- ko if: carryAfHundredth() == 0 && A100Type() != 'LeftOver' --> <span>&nbsp;&nbsp;</span> <!-- /ko -->
+                <!-- ko if: carryAfHundredth() == 0 && A100Type() != 'LeftOver' --> <span>&nbsp;&nbsp;</span>
+                <!-- /ko -->
                 <!-- ko if: carryAfHundredth() == 0 && A100Type() == 'LeftOver' --> <span>0</span> <!-- /ko -->
                 <!-- ko if: carryAfHundredth() != 0 --> <span data-bind="text: carryAfHundredth"> </span> <!-- /ko -->
 
@@ -140,7 +141,7 @@
         <div class="customExplanationWrapper">
             <p data-bind="text: explanationLine1"></p>
             <p data-bind="text: explanationLine2"></p>
-            <p></p>
+            <p data-bind="text: explanationLine3"></p>
             <p></p>
             <p></p>
             <p></p>
@@ -190,13 +191,14 @@
         self.isB10Borrowed = ko.observable();
         self.isB100Borrowed = ko.observable();
 
-        
+
         self.A1Type = ko.observable("Borrowed");
         self.A10Type = ko.observable("Borrowed");
         self.A100Type = ko.observable("Borrowed");
 
         self.explanationLine1 = ko.observable();
         self.explanationLine2 = ko.observable("");
+        self.explanationLine3 = ko.observable("");
 
         self.resetVars = function () {
             self.tensStrikedFlag(false);
@@ -205,8 +207,20 @@
             self.aOnes("");
             self.aTens("");
             self.aHundredth("");
+
+            self.carryAfHundredth(0);
+            self.carryBfHundredth(0);
+
+            self.carryAfTens(0);
+            self.carryBfTens(0);
+
+            self.carryAfOnes(0);
+            self.carryBfOnes(0);
+
+
             self.explanationLine1("");
             self.explanationLine2("");
+            self.explanationLine3("");
         }
 
         self.showSubtraction = function () {
@@ -295,6 +309,10 @@
                 self.explanationLine1("Since " + self.fOnes() + " is smaller than " + self.sOnes() + ", we need to borrow one from the number left of " + self.fOnes() + ".")
 
                 self.explanationLine2("After borrowing, the numbers at the top 1 and " + self.fOnes() + " become 1" + self.fOnes() + ".")
+
+                if (self.carryAfTens() == -1) {
+                    self.explanationLine3("Since we need to borrow 1 and number on left of " + self.fOnes() + " is zero. We just mark that we need to borrow from this number as -1. Then we continue to borrow from the number on the left of 0. And, now 1 and 0 become 10 and then a -1 makes it 9.")
+                }
             }
 
             if (self.tensStrikedFlag()) {
