@@ -1,0 +1,427 @@
+<head>
+
+    <!-- Google AdSense Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+
+    <style>
+        div.customBody {
+            text-align: center;
+            background-color: white;
+        }
+
+        table.customTable {
+            width: auto;
+            margin: 0 auto;
+        }
+
+        table.customTable td {
+            padding: 7px;
+        }
+
+        table.customTable td:nth-child(1) {
+            background-color: #7f7fff;
+        }
+
+        table.customTable td:nth-child(2) {
+            background-color: #bf3f7f;
+        }
+
+
+        table.customTable td:nth-child(3) {
+            background-color: #ff7f7f;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word !important;
+            word-break: normal;
+        }
+    </style>
+</head>
+
+
+<pre>
+<h1>What are sets?</h1>
+
+<b>Definition 1 (from NCERT)</b>
+
+A set is a well-defined collection of objects.
+
+The following points may be noted :
+(i) Objects, elements and members of a set are synonymous terms.
+(ii) Sets are usually denoted by capital letters A, B, C, X, Y, Z, etc.
+(iii) The elements of a set are represented by small letters a, b, c, x, y, z, etc.
+
+Some examples of sets:
+(i) Odd natural numbers less than 10, i.e., 1, 3, 5, 7, 9
+(ii) The rivers of India
+(iii) The vowels in the English alphabet, namely, a, e, i, o, u
+(iv) Various kinds of triangles
+(v) Prime factors of 210, namely, 2,3,5 and 7
+(vi) The solution of the equation: x2 – 5x + 6 = 0, viz, 2 and 3.
+
+We give below a few more examples of sets used particularly in mathematics, viz.
+N : the set of all natural numbers
+Z : the set of all integers
+Q : the set of all rational numbers
+R : the set of real numbers
+Z+ : the set of positive integers
+Q + : the set of positive rational numbers, and
+R + : the set of positive real numbers.
+
+<b>Definition 2</b>
+
+Sets: grouping of elements and each element in the group is unique.
+
+<h2>Two basic types of sets: Overlapping sets and Non-overlapping sets.</h2>
+
+<h3>Overlapping Sets</h3>
+
+If there is one or more element present in both sets, the sets are called to be overlapping.
+
+<h3>Example of Overlapping Sets</h3>
+
+Set1: First six natural numbers.
+
+<div id="firstSixNatNums"></div>
+
+Set2: First three natural numbers and first three alphabets.
+
+<div id="firstThreeNatNumsAndFirstThreeAlphas"></div>
+
+<b>Now two sets together in a Venn Diagram.</b>
+
+<div id="customOverlappingSets"></div>
+
+<!--ko using: vennDesc1 -->
+<table class="customTable">
+    <tr>
+        <td data-bind="if: sizeDiff1 != 0">set1 - set2</td>
+        <td data-bind="if: sizeIntersect != 0">Intersection</td>
+        <td>set2 - set1</td>
+    </tr>
+
+    <tr>
+        <td data-bind="if: sizeDiff1 != 0"><span data-bind="text: difference1"></span></td>
+        <td data-bind="if: sizeIntersect != 0"><span data-bind="text: intersection_"></span></td>
+        <td data-bind="text: difference2"></td>
+    </tr>
+
+    <tr>
+        <td data-bind="if: sizeDiff1 != 0">
+            Set1 Size: <span data-bind="text: size1"></span> <br>
+            Diff Size: <span data-bind="text: sizeDiff1"></span>
+        </td>
+        <td data-bind="if: sizeIntersect != 0">Intersection Size: <span data-bind="text: sizeIntersect"></span></td>
+        <td>
+            Set2 Size: <span data-bind="text: size2"></span> <br>
+            Diff Size: <span data-bind="text: sizeDiff2"></span>
+        </td>
+    </tr>
+</table>
+<!-- /ko -->
+
+<h3>Example of Non-Overlapping Sets</h3>
+
+<h4>Non-overlapping sets are better known as Disjoint Sets.</h4>
+
+Set1: First six natural numbers.
+
+<div id="f6NatNums"></div>
+
+Set2: First six alphabets.
+
+<div id="firstSixAlphas"></div>
+
+<b>Now two sets together in a Venn Diagram.</b>
+
+<div id="customDisjointSets"></div>
+
+<!--ko using: vennDesc2 -->
+<table class="customTable">
+    <tr>
+        <td data-bind="if: sizeDiff1 != 0">set1 - set2</td>
+        <td data-bind="if: sizeIntersect != 0">Intersection</td>
+        <td>set2 - set1</td>
+    </tr>
+
+    <tr>
+        <td data-bind="if: sizeDiff1 != 0"><span data-bind="text: difference1"></span></td>
+        <td data-bind="if: sizeIntersect != 0"><span data-bind="text: intersection_"></span></td>
+        <td data-bind="text: difference2"></td>
+    </tr>
+
+    <tr>
+        <td data-bind="if: sizeDiff1 != 0">
+            Set1 Size: <span data-bind="text: size1"></span> <br>
+            Diff Size: <span data-bind="text: sizeDiff1"></span>
+        </td>
+        <td data-bind="if: sizeIntersect != 0">Intersection Size: <span data-bind="text: sizeIntersect"></span></td>
+        <td>
+            Set2 Size: <span data-bind="text: size2"></span> <br>
+            Diff Size: <span data-bind="text: sizeDiff2"></span>
+        </td>
+    </tr>
+</table>
+<!-- /ko -->
+
+
+</pre>
+
+
+
+<script>
+    let firstSixNatNums = [1, 2, 3, 4, 5, 6];
+    let firstThreeNatNumsAndFirstThreeAlphas = [1, 2, 3, 'A', 'B', 'C'];
+    let firstSixAlphas = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+    drawSingleSet(firstSixNatNums, "firstSixNatNums", "blue");
+    drawSingleSet(firstThreeNatNumsAndFirstThreeAlphas, "firstThreeNatNumsAndFirstThreeAlphas", "red");
+
+    drawVennDiagram(320, new Set(firstSixNatNums), new Set(firstThreeNatNumsAndFirstThreeAlphas), "customOverlappingSets");
+
+    drawSingleSet(firstSixNatNums, "f6NatNums", "blue");
+    drawSingleSet(firstSixAlphas, "firstSixAlphas", "red");
+
+    drawVennDiagram(320, new Set(firstSixNatNums), new Set(firstSixAlphas), "customDisjointSets");
+
+    function drawSingleSet(set1, divID, colorStr) {
+        // Compute the size of each set and intersection
+        var size1 = set1.length;
+
+        // Draw the Venn diagram
+        var svg = d3.select("#" + divID)
+            .append("svg")
+            .attr("width", 300)
+            .attr("height", 200);
+
+        svg.append("circle")
+            .attr("cx", 100)
+            .attr("cy", 100)
+            .attr("r", 80)
+            .attr("fill", colorStr)
+            .attr("opacity", 0.5);
+
+
+        svg.append("text")
+            .attr("x", 60)
+            .attr("y", 100)
+            .text(set1.join(", "));
+
+
+        svg.append("text")
+            .attr("x", 70)
+            .attr("y", 160)
+            .text("Size: " + size1);
+
+    }
+
+    function isSuperset(set, subset) {
+        for (const elem of subset) {
+            if (!set.has(elem)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function union(setA, setB) {
+        const _union = new Set(setA);
+        for (const elem of setB) {
+            _union.add(elem);
+        }
+        return _union;
+    }
+
+    function intersection(setA, setB) {
+        const _intersection = new Set();
+        for (const elem of setB) {
+            if (setA.has(elem)) {
+                _intersection.add(elem);
+            }
+        }
+        return _intersection;
+    }
+
+    function symmetricDifference(setA, setB) {
+        const _difference = new Set(setA);
+        for (const elem of setB) {
+            if (_difference.has(elem)) {
+                _difference.delete(elem);
+            } else {
+                _difference.add(elem);
+            }
+        }
+        return _difference;
+    }
+
+    function difference(setA, setB) {
+        const _difference = new Set(setA);
+        for (const elem of setB) {
+            _difference.delete(elem);
+        }
+        return _difference;
+    }
+
+    function drawVennDiagram(vennWidth, set1, set2, divID) {
+        // Compute the intersection and difference sets
+        var intersection_ = intersection(set1, set2);
+        var diff1 = difference(set1, set2);
+        var diff2 = difference(set2, set1);
+
+        // Compute the size of each set and intersection
+        var size1 = diff1.size + intersection_.size;
+        var size2 = diff2.size + intersection_.size;
+        var sizeIntersect = intersection_.size;
+
+        // Draw the Venn diagram
+        var svg = d3.select("#" + divID)
+            .append("svg")
+            .attr("width", vennWidth)
+            .attr("height", vennWidth * 0.75);
+
+        let radius1;
+        let radius2;
+
+        if (sizeIntersect > 0) {
+            radius1 = vennWidth / 3 - 20;
+            radius2 = vennWidth / 3 - 20;
+        } else {
+            radius1 = vennWidth / 5;
+            radius2 = vennWidth / 5;
+        }
+
+        if (size1 > size2) {
+            radius2 = radius2 * (size2 / size1)
+        } else {
+            radius1 = radius1 * (size1 / size2)
+        }
+
+        let superSetRelation = isSuperset(set1, set2) || isSuperset(set2, set1);
+
+
+        let cx1 = vennWidth / 3;
+        let cy1 = vennWidth / 3;
+        let cx2 = (vennWidth / 3) * 2;
+        let cy2 = vennWidth / 3;
+
+        if (sizeIntersect == 0) {
+            cx1 = (vennWidth / 2) - radius1 - 10;
+            cx2 = (vennWidth / 2) + radius2 + 10;
+        } else if (superSetRelation) {
+            cx1 = (vennWidth / 2);
+            cx2 = (vennWidth / 2);
+        }
+
+        svg.append("circle")
+            .attr("cx", cx1)
+            .attr("cy", cy1)
+            .attr("r", radius1)
+            .attr("fill", "blue")
+            .attr("opacity", 0.5);
+
+        svg.append("circle")
+            .attr("cx", cx2)
+            .attr("cy", cy2)
+            .attr("r", radius2)
+            .attr("fill", "red")
+            .attr("opacity", 0.5);
+    }
+
+    let ViewModel = function () {
+
+
+
+        this.vennDesc1 = new function () {
+            self = this;
+            this.set1 = new Set(firstSixNatNums);
+            this.set2 = new Set(firstThreeNatNumsAndFirstThreeAlphas);
+
+
+            let intersection_ = intersection(this.set1, this.set2);
+            let diff1 = difference(this.set1, this.set2);
+            let diff2 = difference(this.set2, this.set1);
+
+            // Compute the size of each set and intersection
+            var size1 = diff1.size + intersection_.size;
+            var size2 = diff2.size + intersection_.size;
+            var sizeIntersect = intersection_.size;
+
+
+            this.title = "Overlapping Sets";
+            this.desc = "'First Six Natural Numbers' And 'First Three Natural Numbers and First Three Alphabets'";
+            this.divID = "customOverlappingSets";
+            this.intersection_ = [...intersection_].toString();
+
+            this.difference1 = [...diff1].toString();
+            this.difference2 = [...diff2].toString();
+            this.size1 = size1;
+            this.size2 = size2;
+            this.sizeDiff1 = diff1.size;
+            this.sizeDiff2 = diff2.size;
+            this.sizeIntersect = sizeIntersect;
+        };
+
+        this.vennDesc2 = new function () {
+            self = this;
+            this.set1 = new Set(firstSixNatNums);
+            this.set2 = new Set(firstSixAlphas);
+
+
+            let intersection_ = intersection(this.set1, this.set2);
+            let diff1 = difference(this.set1, this.set2);
+            let diff2 = difference(this.set2, this.set1);
+
+            // Compute the size of each set and intersection
+            var size1 = diff1.size + intersection_.size;
+            var size2 = diff2.size + intersection_.size;
+            var sizeIntersect = intersection_.size;
+
+
+            this.title = "Non-Overlapping Sets (or Disjoint Sets)";
+            this.desc = "'First Six Natural Numbers' And 'First Six Alphabets'";
+            this.divID = "customDisjointSets";
+            this.intersection_ = [...intersection_].toString();
+
+            this.difference1 = [...diff1].toString();
+            this.difference2 = [...diff2].toString();
+            this.size1 = size1;
+            this.size2 = size2;
+            this.sizeDiff1 = diff1.size;
+            this.sizeDiff2 = diff2.size;
+            this.sizeIntersect = sizeIntersect;
+        }
+
+    };
+
+
+    ko.applyBindings(ViewModel)
+</script>
+</body>
+
+</html>
+
+<span style="display: none;">Tags: Mathematical Foundations for Data Science,JavaScript,Technology,</span>

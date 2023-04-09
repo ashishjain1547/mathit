@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Venn Diagram Example</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+<body>
+    <div id="venn"></div>
+
+    <script>
+        var set1 = ["A", "B", "C"];
+
+        // Compute the size of each set and intersection
+        var size1 = set1.length;
+
+        // Draw the Venn diagram
+        var svg = d3.select("#venn")
+            .append("svg")
+            .attr("width", 300)
+            .attr("height", 300);
+
+        svg.append("circle")
+            .attr("cx", 100)
+            .attr("cy", 100)
+            .attr("r", 80)
+            .attr("fill", "blue")
+            .attr("opacity", 0.5);
+
+
+        svg.append("text")
+            .attr("x", 60)
+            .attr("y", 100)
+            .text(set1.join(", "));
+
+
+        svg.append("text")
+            .attr("x", 70)
+            .attr("y", 160)
+            .text("Size: " + size1);
+
+
+    </script>
+</body>
+</html>
