@@ -1,0 +1,165 @@
+<head>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <!-- Google AdSense Using Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <style>
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+
+        i.ibb {
+            display: block;
+            background-color: black;
+            color: white;
+        }
+
+        i.ibg {
+            display: block;
+            background-color: rgb(50, 50, 50);
+            color: white;
+        }
+
+
+        ul.no-bullets {
+            list-style-type: none;
+            /* Remove bullets */
+            padding: 0;
+            /* Remove padding */
+            margin: 0;
+            /* Remove margins */
+        }
+
+        ol.customOl li a {
+            display: block;
+            padding: 5px 0px;
+        }
+
+        li.customLi {
+            float: left;
+        }
+
+        li.customLi>span.customSpan {
+            display: block;
+            padding: 8px;
+            background-color: #dddddd;
+        }
+
+        .customOl {
+            font-size: 15px;
+        }
+
+        .customLink {
+            background-color: #4CAF50;
+            border: none;
+            color: white !important;
+            padding: 8px 13px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .customLink:hover {
+            text-decoration: none;
+        }
+
+        .arrow {
+            border: solid black;
+            border-width: 0 3px 3px 0;
+            display: inline-block;
+            padding: 3px;
+        }
+
+        .right {
+            transform: rotate(-45deg);
+            -webkit-transform: rotate(-45deg);
+        }
+
+        .left {
+            transform: rotate(135deg);
+            -webkit-transform: rotate(135deg);
+        }
+
+        .up {
+            transform: rotate(-135deg);
+            -webkit-transform: rotate(-135deg);
+        }
+
+        .down {
+            transform: rotate(45deg);
+            -webkit-transform: rotate(45deg);
+        }
+    </style>
+</head>
+<!-- End of 'Personal Posts Menu Template For Copy-Paste'. It started from the top of the page from <HEAD> tag. -->
+<span class="customLink toggleBtn">Toggle All Sections</span>
+
+<br>
+
+<h3 class="customAIHeader"><span class="arrow up"></span> Artificial Intelligence</h3>
+<div id="customAI">
+    <ol class="customOl">
+        <li>
+            <a href="https://math-eight.blogspot.com/2023/05/distinguishing-between-artificial.html" target="_blank">
+                Distinguishing Between Artificial Intelligence and Data Science Using Images
+            </a>
+        </li>
+    </ol>
+</div>
+
+<h3 class="customStatisticsHeader"><span class="arrow up"></span> Data Mining</h3>
+<div id="customStatistics">
+    <ol class="customOl">
+        <li>
+            <a href="https://math-eight.blogspot.com/2023/05/python-math-module-statistics-module.html" target="_blank">
+                Python 'math' Module, 'statistics' Module and Descriptive statistics using Pandas, NumPy, SciPy and StatsModels
+            </a>
+        </li>
+
+        <li>
+            <a href="https://math-eight.blogspot.com/2023/05/descriptive-statistics-and-linear.html" target="_blank">
+                Descriptive Statistics and Linear Regression Using 'statistics' module and 'statsmodels' module 
+            </a>
+        </li>
+
+        <li>
+            <a href="https://math-eight.blogspot.com/2023/05/scatterplot-and-boxplot-using-matplotlib.html" target="_blank">
+                Scatterplot and boxplot using matplotlib
+            </a>
+        </li>
+    </ol>
+</div>
+
+
+<script>
+    $('h3.customAIHeader').click(function () {
+        $("div#customAI").fadeToggle();
+        $("h3.customAIHeader > .arrow").toggleClass('up').toggleClass('down');
+    });
+
+    $('h3.customStatisticsHeader').click(function () {
+        $("div#customStatistics").fadeToggle();
+        $("h3.customStatisticsHeader > .arrow").toggleClass('up').toggleClass('down');
+    });
+
+    $(".customLink.toggleBtn").click(function () {
+        $("h3[class$='Header']").click();
+    });
+
+</script>
+<span style="display: none;">Tags: Technology,Data Mining,Index</span>
