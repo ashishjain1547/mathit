@@ -1,0 +1,243 @@
+<head>
+    <script crossorigin="anonymous" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <!-- Google AdSense Using Machine Learning Code -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3071098372371409",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <style>
+        pre {
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<pre>
+<h3>Ex 12.2.A - Type I vs Type II error</h3>
+
+A.1
+
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgxDNTBSa87y_mPQMf8J1UTzOv8CdYVPuYXybS5caP6YQdOuv4wqA_8onj_iiEn3mbnhN7OkbE5PBCgQ4LoBfL90ikECLssMzjh6Vuaz9yg-EP5UyAFp0wOOTEoRXCQyDAgsgAxfnp3UYCu7DewV8JTzIY0Wg9rHlq9OajBADctACufhIqoAyQBcJE0WtYI/s481/1q.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600"
+            data-original-height="341" data-original-width="481"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgxDNTBSa87y_mPQMf8J1UTzOv8CdYVPuYXybS5caP6YQdOuv4wqA_8onj_iiEn3mbnhN7OkbE5PBCgQ4LoBfL90ikECLssMzjh6Vuaz9yg-EP5UyAFp0wOOTEoRXCQyDAgsgAxfnp3UYCu7DewV8JTzIY0Wg9rHlq9OajBADctACufhIqoAyQBcJE0WtYI/s600/1q.png" /></a>
+</div>
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhJ8skGdJYVA0K6eVsfHGSjbx4sWB384iwq7HbI6Nc1PM-znBUOnABh0oFBAyywiXo3GfCDkOnDzItpfTbQuNJ3symsGZr3Zu4HpVzXDYejfKdiWP2uy0ZXsID7fiAI4ZrZA53FUG3ERbe5Gd8XBplTyBrzMYmPi8zAc_UcNBLHlg6EJLbAG1q8syf6ldBb/s488/1s.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600"
+            data-original-height="450" data-original-width="488"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhJ8skGdJYVA0K6eVsfHGSjbx4sWB384iwq7HbI6Nc1PM-znBUOnABh0oFBAyywiXo3GfCDkOnDzItpfTbQuNJ3symsGZr3Zu4HpVzXDYejfKdiWP2uy0ZXsID7fiAI4ZrZA53FUG3ERbe5Gd8XBplTyBrzMYmPi8zAc_UcNBLHlg6EJLbAG1q8syf6ldBb/s600/1s.png" /></a>
+</div>
+
+A.2 
+
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiSgkd9GxqFCkUeUMjuHhcSfoyj7IkNTyk5WggRwKoT7vD_NcJqxqBu5c4gXMCZjYL0D21iUVSCRb_es3gjhTq8haRX2f-xOk0K38ppKaExUhLxvEvuV6wU8wOPb_e_9aNV4pxzBhqwwvawoCIoHMf3XIanCW3xYTGXTHMN6nXsw4VP9FQVk0-ZEwe27PZm/s575/2q.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" height="600"
+            data-original-height="575" data-original-width="500"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiSgkd9GxqFCkUeUMjuHhcSfoyj7IkNTyk5WggRwKoT7vD_NcJqxqBu5c4gXMCZjYL0D21iUVSCRb_es3gjhTq8haRX2f-xOk0K38ppKaExUhLxvEvuV6wU8wOPb_e_9aNV4pxzBhqwwvawoCIoHMf3XIanCW3xYTGXTHMN6nXsw4VP9FQVk0-ZEwe27PZm/s600/2q.png" /></a>
+</div>
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiFh63D6AIN5u5vff19lZKpIxvJIE1RjzdKA9hBLogWW1dpLgIWAvKMVfybay_Qix-fQoFLM4trFORpHh_rvX6skc35IUgGiCzrTtASCIYZdjf6AJtLkUMdMhvVcTSbjpJXDykK_4uKzgWktHPtKTll_y9Ve4MuvFStPT5g53xQUQ9K0x5Q3ybheVCIdYaA/s575/3q.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" height="600"
+            data-original-height="575" data-original-width="500"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiFh63D6AIN5u5vff19lZKpIxvJIE1RjzdKA9hBLogWW1dpLgIWAvKMVfybay_Qix-fQoFLM4trFORpHh_rvX6skc35IUgGiCzrTtASCIYZdjf6AJtLkUMdMhvVcTSbjpJXDykK_4uKzgWktHPtKTll_y9Ve4MuvFStPT5g53xQUQ9K0x5Q3ybheVCIdYaA/s600/3q.png" /></a>
+</div>
+
+A.3 
+
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEijg2I16fyVFf-Mlm7SrjwGFvw15kd5IrkmHwn6tF2NlyEmYkRAtf5brjPU5eDmhlSANhnSgPnBWUDeEPVf-B8ZfQeqh_2KJm8Ac4jOyHTsXu36-hi856n7nNvNbR5Gh0kcqV8h0whz89ebQ0ImG_WPLVChbkSxpgtTWdqz-y1BE2Or8yxUq62R1HmKN9f_/s545/3s.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" height="600"
+            data-original-height="545" data-original-width="501"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEijg2I16fyVFf-Mlm7SrjwGFvw15kd5IrkmHwn6tF2NlyEmYkRAtf5brjPU5eDmhlSANhnSgPnBWUDeEPVf-B8ZfQeqh_2KJm8Ac4jOyHTsXu36-hi856n7nNvNbR5Gh0kcqV8h0whz89ebQ0ImG_WPLVChbkSxpgtTWdqz-y1BE2Or8yxUq62R1HmKN9f_/s600/3s.png" /></a>
+</div>
+
+A.4 
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjouzTouwGGpXqHYlG-e7CrLEqnRKpsddA6gtgRVaFCD5hXeAHcDt2zpCFovq3_lrhf5F54ZjvWI5O319ENlJtyXMWVERQvNqGS5R6NiK_BIdEXTtZAot7Pw4SRDmgnIDbPpZy4GiGQlN_qEdCOd1Sd7QXA1p6xeS321lY5W3pKMr6UWqgOslPQmT7uyUP6/s494/4q.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600"
+            data-original-height="487" data-original-width="494"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjouzTouwGGpXqHYlG-e7CrLEqnRKpsddA6gtgRVaFCD5hXeAHcDt2zpCFovq3_lrhf5F54ZjvWI5O319ENlJtyXMWVERQvNqGS5R6NiK_BIdEXTtZAot7Pw4SRDmgnIDbPpZy4GiGQlN_qEdCOd1Sd7QXA1p6xeS321lY5W3pKMr6UWqgOslPQmT7uyUP6/s600/4q.png" /></a>
+</div>
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiBDpe-NiuyTyk1YP6jGLWvOHdJBMnWHH4bEebceIjyasFRGFDPPLqrxKST7g8Dst2hjoc3o1rEBqT_6lUs-BIlh3sc_wUxKuqyKFTEIdDA3-Xd2RXXuwoxu0b8kpZGD8sk7LHv_bEm_1rzaScqslzQcgybvFnDmQxKVP89WXCawNZ5MioqqTo3dTMZr7cS/s494/4s.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600"
+            data-original-height="487" data-original-width="494"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiBDpe-NiuyTyk1YP6jGLWvOHdJBMnWHH4bEebceIjyasFRGFDPPLqrxKST7g8Dst2hjoc3o1rEBqT_6lUs-BIlh3sc_wUxKuqyKFTEIdDA3-Xd2RXXuwoxu0b8kpZGD8sk7LHv_bEm_1rzaScqslzQcgybvFnDmQxKVP89WXCawNZ5MioqqTo3dTMZr7cS/s600/4s.png" /></a>
+</div>
+
+<h3>Ex 12.2.B - Error probabilities and power</h3>
+
+B.1 
+
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgVb-EyDNAfqpG6lNrOvj3nx5BfMUqEYoXpescdpwqjwtyz_ZoprgA8EndDb_lNU-sHlG6lf2zp6IYYNPUZ8bdAYgY3OhSkqnniznsqVQTbs-m01hGbbNAzLERZ8-fNeiugsphNgMmpqrC-E53NsFkxYGQzthhQNjPMQr2HJ74la0cXKsMMXyBfkmXKggno/s487/1q.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600"
+            data-original-height="323" data-original-width="487"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgVb-EyDNAfqpG6lNrOvj3nx5BfMUqEYoXpescdpwqjwtyz_ZoprgA8EndDb_lNU-sHlG6lf2zp6IYYNPUZ8bdAYgY3OhSkqnniznsqVQTbs-m01hGbbNAzLERZ8-fNeiugsphNgMmpqrC-E53NsFkxYGQzthhQNjPMQr2HJ74la0cXKsMMXyBfkmXKggno/s600/1q.png" /></a>
+</div>
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgRc0IUgzCs3z_1EhBdTWi7tzAUvpwNAfmdcFgJ4hoNSZNNquWVYaUbKhafwzBT5zm0zR0K_NC7foyiKzKofujR7pIdgA3DYEDsYQxGvz5iOSmDhmie0YlP7c9RF4TdQWhyphenhyphendtHPiB3XdslKKFhq18RQzmmW7P580WqKOyTOFXyAij4FJfCDnp_dmnL1qeSI/s487/1s.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600"
+            data-original-height="293" data-original-width="487"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgRc0IUgzCs3z_1EhBdTWi7tzAUvpwNAfmdcFgJ4hoNSZNNquWVYaUbKhafwzBT5zm0zR0K_NC7foyiKzKofujR7pIdgA3DYEDsYQxGvz5iOSmDhmie0YlP7c9RF4TdQWhyphenhyphendtHPiB3XdslKKFhq18RQzmmW7P580WqKOyTOFXyAij4FJfCDnp_dmnL1qeSI/s600/1s.png" /></a>
+</div>
+
+B.2 
+
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh7f8qaVahxZ6jmuCdtLDnI1tluO1N-yDNOLzxhl4zXToHWBU_gsOAZuK46HRU2EyTQT0tO7H7kgiQvjJAXOtiBteW5sB1vaCR1ujq2YpYcqioxVh2_h0YG64uYEKoTOT0hzzcqot2R89FZm4llojjYoSR9TXNk74Y2wxEtvTUw5vd42hpqtQmzxucQWhJK/s508/2q.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600"
+            data-original-height="340" data-original-width="508"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh7f8qaVahxZ6jmuCdtLDnI1tluO1N-yDNOLzxhl4zXToHWBU_gsOAZuK46HRU2EyTQT0tO7H7kgiQvjJAXOtiBteW5sB1vaCR1ujq2YpYcqioxVh2_h0YG64uYEKoTOT0hzzcqot2R89FZm4llojjYoSR9TXNk74Y2wxEtvTUw5vd42hpqtQmzxucQWhJK/s600/2q.png" /></a>
+</div>
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEikPL2uxllLIRe1RLJtokV2VRJJLYmKbP_8tAWFFZjpRX7g6vQDlU7BH5jZjHL3btsA62jUeNBnYLObYsEuAIbNdTy0563mhP0gcvSmI9vnHwCro2fJubzod19v3S20KAGrHpLl2P_xJdyH-zyTJ-IlekPkuIHsH68hyTWOQQ68KAL9rxkd-JHhqtmSFSuS/s498/2s.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" height="600"
+            data-original-height="498" data-original-width="495"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEikPL2uxllLIRe1RLJtokV2VRJJLYmKbP_8tAWFFZjpRX7g6vQDlU7BH5jZjHL3btsA62jUeNBnYLObYsEuAIbNdTy0563mhP0gcvSmI9vnHwCro2fJubzod19v3S20KAGrHpLl2P_xJdyH-zyTJ-IlekPkuIHsH68hyTWOQQ68KAL9rxkd-JHhqtmSFSuS/s600/2s.png" /></a>
+</div>
+
+B.3
+
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj8kuEumF2YYcNYyozr7Ji8Q2sPRSF7Owm9zIgH4KQtc6jViICltFwYY4JDqEjHDITiqHhoV5qLgEGEWRIVsRvWog7AStKMyKgeMv2bjutZ8SQwdf5477ja7z4Nf7imBIG1d6IlO6Kc0T5eni1Frild6AjuU3aLyoa0Ln17Z-iVX5uDKZa5iRYk2Qcn6TC0/s498/3q.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" height="600"
+            data-original-height="498" data-original-width="495"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj8kuEumF2YYcNYyozr7Ji8Q2sPRSF7Owm9zIgH4KQtc6jViICltFwYY4JDqEjHDITiqHhoV5qLgEGEWRIVsRvWog7AStKMyKgeMv2bjutZ8SQwdf5477ja7z4Nf7imBIG1d6IlO6Kc0T5eni1Frild6AjuU3aLyoa0Ln17Z-iVX5uDKZa5iRYk2Qcn6TC0/s600/3q.png" /></a>
+</div>
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjDKi1ROU9mf34u30QQ_g_KauR32SnJYodfsi04yvZjOaykrJLK9NVvShLi0FZzDpImnH7nNZGW1QW3GS_tZVkYe9yEvJY7NFgdDzJEVohKYoKRUn6hAdunaqHcBqgFAuKzwsH6KUhTrjP2Qo4IJctyugDi8k9k9oOxYwCmN90VGX08WOTErKA9y7IqNqVT/s498/3s.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" height="600"
+            data-original-height="498" data-original-width="495"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjDKi1ROU9mf34u30QQ_g_KauR32SnJYodfsi04yvZjOaykrJLK9NVvShLi0FZzDpImnH7nNZGW1QW3GS_tZVkYe9yEvJY7NFgdDzJEVohKYoKRUn6hAdunaqHcBqgFAuKzwsH6KUhTrjP2Qo4IJctyugDi8k9k9oOxYwCmN90VGX08WOTErKA9y7IqNqVT/s600/3s.png" /></a>
+</div>
+
+B.4 
+
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjrLI5gcBs1b4MPNR77o6NMpnFQx-42ofH_jqJ5R_wvfE_jQYGE8cWtcKuqdrvmfpm48tMR9C09Y4JUVH3SbH4HQ4ZfIzz28lhsqQasDtCep4sPfM_VsoGz4yD5THNaEFYYicvSlPYARgUCEhI57hTTAdCTwTndVXBAhyj4f-FM6vDzsXdTjSOgkzMTlGJv/s498/4q.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600"
+            data-original-height="325" data-original-width="498"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjrLI5gcBs1b4MPNR77o6NMpnFQx-42ofH_jqJ5R_wvfE_jQYGE8cWtcKuqdrvmfpm48tMR9C09Y4JUVH3SbH4HQ4ZfIzz28lhsqQasDtCep4sPfM_VsoGz4yD5THNaEFYYicvSlPYARgUCEhI57hTTAdCTwTndVXBAhyj4f-FM6vDzsXdTjSOgkzMTlGJv/s600/4q.png" /></a>
+</div>
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgTapLs7oLYEIGeCFkDYWZXT1it1HVhNNzdqk5tif1WIUZ_3-9mMM2tngVixNGtpXKt8SWLSaebXXe219Ycj2w1mYLDXZ6_M49B9lUapRr3YYJlMUtzR3YbPfK6TJHV56d8QKLbA-DM0_PCa2mkjbSJ9StDGGhBJ81c94eOzV_5FY_SCPV0r_WyMEAXBkuO/s489/4s.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600"
+            data-original-height="417" data-original-width="489"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgTapLs7oLYEIGeCFkDYWZXT1it1HVhNNzdqk5tif1WIUZ_3-9mMM2tngVixNGtpXKt8SWLSaebXXe219Ycj2w1mYLDXZ6_M49B9lUapRr3YYJlMUtzR3YbPfK6TJHV56d8QKLbA-DM0_PCa2mkjbSJ9StDGGhBJ81c94eOzV_5FY_SCPV0r_WyMEAXBkuO/s600/4s.png" /></a>
+</div>
+
+<h3>Ex 12.2.C - Consequences of errors and significance</h3>
+
+C.1
+
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEil0ncyc5qEy623h7SA7PG5JYO9pu0L8DWplLez4MMD1dWfEe4Dxf_cjHWenQTNNM-0Bw1ygHFSNSbxwT3lHf4KyIljOVKJOSbUnyu9FZF20KtivktInq689mwRKI2I2c0j4l9d0EAUQReE6eGk0NdGqFHqzW-6Aluo0pNoVj3-eluA2uqFhaQkt0SoRnmq/s565/1q.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600"
+            data-original-height="404" data-original-width="565"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEil0ncyc5qEy623h7SA7PG5JYO9pu0L8DWplLez4MMD1dWfEe4Dxf_cjHWenQTNNM-0Bw1ygHFSNSbxwT3lHf4KyIljOVKJOSbUnyu9FZF20KtivktInq689mwRKI2I2c0j4l9d0EAUQReE6eGk0NdGqFHqzW-6Aluo0pNoVj3-eluA2uqFhaQkt0SoRnmq/s600/1q.png" /></a>
+</div>
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhaWY01AVNKvXp-Lkzf7N9CAg2wfIrc9mq4XILgZpyqx3rYk8zjCMamM-emsq_HrXzBuzi9S6eLY5T3_V9J0HdrcSBv40DOsYCh0cuPvMgElJDVDlWXRZuFBDw_52FDvbMwrg-N4cwoDyTCaT4mcVRQ8uecKBV7hPbPJNJ_Jvf5rx7n_5Rk7XrUPqsHAnnT/s570/1s.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600"
+            data-original-height="442" data-original-width="570"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhaWY01AVNKvXp-Lkzf7N9CAg2wfIrc9mq4XILgZpyqx3rYk8zjCMamM-emsq_HrXzBuzi9S6eLY5T3_V9J0HdrcSBv40DOsYCh0cuPvMgElJDVDlWXRZuFBDw_52FDvbMwrg-N4cwoDyTCaT4mcVRQ8uecKBV7hPbPJNJ_Jvf5rx7n_5Rk7XrUPqsHAnnT/s600/1s.png" /></a>
+</div>
+
+C.2 
+
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEifpZS0queZZ4BBhYvCv1GwTe9vZzgVwdnpISdmY7jMQ73DmRQEpWYxAl_PypTqs-CJXIuPTGMqKvtK0f0q6aqjgfQ51arT6V59fM_8WPl3nkyhlWSGYxPxXIVugbcB4pvyCXvHVaO9kWLBGshClUEkKAIhS0Hrl81IUWjS-Mtu2fTlF7j-5NZVwC8qpQTo/s488/2q.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600"
+            data-original-height="386" data-original-width="488"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEifpZS0queZZ4BBhYvCv1GwTe9vZzgVwdnpISdmY7jMQ73DmRQEpWYxAl_PypTqs-CJXIuPTGMqKvtK0f0q6aqjgfQ51arT6V59fM_8WPl3nkyhlWSGYxPxXIVugbcB4pvyCXvHVaO9kWLBGshClUEkKAIhS0Hrl81IUWjS-Mtu2fTlF7j-5NZVwC8qpQTo/s600/2q.png" /></a>
+</div>
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjLUCdhcjMuYk_s9_XlJguQob_vn0xIrzjW5F1shnMlYlaSmW-TbXdn3lhFnpX7P9tM-l2V3s_tx0uLCSacq7DJB4G462E7rv4w_atMgjyM9YIa68_i8W5kqPNE5UPgH_7D0EJ342cksMey4TGsFUoFnClV-zGM6qTMA-Nkss7AkPAd_fmiE4iHaRAYVySV/s468/2s.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600"
+            data-original-height="207" data-original-width="468"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjLUCdhcjMuYk_s9_XlJguQob_vn0xIrzjW5F1shnMlYlaSmW-TbXdn3lhFnpX7P9tM-l2V3s_tx0uLCSacq7DJB4G462E7rv4w_atMgjyM9YIa68_i8W5kqPNE5UPgH_7D0EJ342cksMey4TGsFUoFnClV-zGM6qTMA-Nkss7AkPAd_fmiE4iHaRAYVySV/s600/2s.png" /></a>
+</div>
+
+C.3
+
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhkauFqNvFf5wsz9-xPa62PgF02-vt3LdPwI8g52tyzbRXWc1xz14awWNRqVifW-SW77FUUBvqiFMbQVH-v2QnHu_L8JpGjvPumOaf2Lt3jqJXDC8RRDLTR1PY1ftQ3UAsJk_fE2X8NUofYEzhlpUKVkslD1IFU5fa14KYLofAcJP4J39Ir_cSTf67HmVoC/s491/3q.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600"
+            data-original-height="193" data-original-width="491"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhkauFqNvFf5wsz9-xPa62PgF02-vt3LdPwI8g52tyzbRXWc1xz14awWNRqVifW-SW77FUUBvqiFMbQVH-v2QnHu_L8JpGjvPumOaf2Lt3jqJXDC8RRDLTR1PY1ftQ3UAsJk_fE2X8NUofYEzhlpUKVkslD1IFU5fa14KYLofAcJP4J39Ir_cSTf67HmVoC/s600/3q.png" /></a>
+</div>
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh8DM0OLuAKQGYJuJrvNOcERjkSWa_u_z_XjmcCVxc7FC9LPBdupNMHG0o82meq8HoSQqqi_tgLG3rpnoQ-9aEtaZxWcsLJolDYRVMuHfAu8ZstFDDewkbShRHYwN-PCB4WJg8snA1GPtoDYoNW6taOjLkNjiGl2S3rcaxosr7FeR1rSNRROuB9TeVAeBvE/s488/3s.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600"
+            data-original-height="359" data-original-width="488"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh8DM0OLuAKQGYJuJrvNOcERjkSWa_u_z_XjmcCVxc7FC9LPBdupNMHG0o82meq8HoSQqqi_tgLG3rpnoQ-9aEtaZxWcsLJolDYRVMuHfAu8ZstFDDewkbShRHYwN-PCB4WJg8snA1GPtoDYoNW6taOjLkNjiGl2S3rcaxosr7FeR1rSNRROuB9TeVAeBvE/s600/3s.png" /></a>
+</div>
+
+C.4 
+
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjInSksZimfFxT3mJ9EHg-ExlRZVC6Bz6k8FlLr_vISewR64sWIdWXmL28wUCVEk14juLkoNYUpJ-gMcvW_nb-Z0KhsCazM6b2-I-VPt937C70a8-Mv7Vbueg4vScdLiVT_5va8VFcL8mMV_V3l-uEqN7s1D9WFaMxU5tsxHFi0GvD-_Tix5zA8f7m3b4ej/s496/4q.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600"
+            data-original-height="291" data-original-width="496"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjInSksZimfFxT3mJ9EHg-ExlRZVC6Bz6k8FlLr_vISewR64sWIdWXmL28wUCVEk14juLkoNYUpJ-gMcvW_nb-Z0KhsCazM6b2-I-VPt937C70a8-Mv7Vbueg4vScdLiVT_5va8VFcL8mMV_V3l-uEqN7s1D9WFaMxU5tsxHFi0GvD-_Tix5zA8f7m3b4ej/s600/4q.png" /></a>
+</div>
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi6y12cPznPgCv0bOQU5o1R73wy0enmX_ej_P5x5U6kCJFRB2nwHjsy2APuJtL3Vmv8Lh71iW0DKmyfWnvWAcFGoV277cC2Na-brczWQvlAfKH6sZgLFA1dKzGQL7jeVeuYzVGqG8-Vh10uD823a-a5GniSD0h11z-cmn11Bg4wrmU45ReRZiYuN_kriKCK/s488/4s.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600"
+            data-original-height="413" data-original-width="488"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi6y12cPznPgCv0bOQU5o1R73wy0enmX_ej_P5x5U6kCJFRB2nwHjsy2APuJtL3Vmv8Lh71iW0DKmyfWnvWAcFGoV277cC2Na-brczWQvlAfKH6sZgLFA1dKzGQL7jeVeuYzVGqG8-Vh10uD823a-a5GniSD0h11z-cmn11Bg4wrmU45ReRZiYuN_kriKCK/s600/4s.png" /></a>
+</div>
+
+C.5 
+
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhv3_32D51-2yHahW8nZcLRozYzxEhNak5Ed-GwQ6Ua85RmFmikeDDKyG-Xtw1Hpjo-gMGARjThOKOBKfB1Y5OUl801olkT2moVhncoHsmD7Ou7cAt6vKZ0-HKAUOd0RSYNODNb9n3vmVpyCrRDZT4rAEBmgyz6NX6hwzSAa758eKhDgtetqM5HnFyVkIms/s493/5q.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600"
+            data-original-height="440" data-original-width="493"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhv3_32D51-2yHahW8nZcLRozYzxEhNak5Ed-GwQ6Ua85RmFmikeDDKyG-Xtw1Hpjo-gMGARjThOKOBKfB1Y5OUl801olkT2moVhncoHsmD7Ou7cAt6vKZ0-HKAUOd0RSYNODNb9n3vmVpyCrRDZT4rAEBmgyz6NX6hwzSAa758eKhDgtetqM5HnFyVkIms/s600/5q.png" /></a>
+</div>
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgjVfwLjgThEyF7LQ8cD5gmTwu9ElbQ6-DBAfJOjQJ7KeFFKNdrrGWYbasQjV82tbFwJGrfdu6E94c_skALHyMp0Fh0EC_JoARr0SWOOlzfB2yQvr2WEP1nIjZhE_9Rtiiy87YjgLrdB3VKPyP_z4Cc2_HFQ7hLewWIRvPg9TF9cGbDQOd6LuHVBqc2Wz-w/s493/5s.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600"
+            data-original-height="440" data-original-width="493"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgjVfwLjgThEyF7LQ8cD5gmTwu9ElbQ6-DBAfJOjQJ7KeFFKNdrrGWYbasQjV82tbFwJGrfdu6E94c_skALHyMp0Fh0EC_JoARr0SWOOlzfB2yQvr2WEP1nIjZhE_9Rtiiy87YjgLrdB3VKPyP_z4Cc2_HFQ7hLewWIRvPg9TF9cGbDQOd6LuHVBqc2Wz-w/s600/5s.png" /></a>
+</div>
+
+C.6 
+
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiHCxbQl9gkSr9mikaPJgopHVefzmC0GZ9uOgIYHvD8wP3lJ0b5wsdKPOz9fhCvWFZJ0sNI_N8w57w0UEzc2LY6CI1TeWGaCtjGQO_c7N9X7DTITwT0O3xtvuZ9Irq3Un3xdFYvTrrgrbUrnTLfrrsm8r_mX5KitJBDJdj-RHL-x657QKPvlPj90Zq0ASzv/s499/6q.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600"
+            data-original-height="395" data-original-width="499"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiHCxbQl9gkSr9mikaPJgopHVefzmC0GZ9uOgIYHvD8wP3lJ0b5wsdKPOz9fhCvWFZJ0sNI_N8w57w0UEzc2LY6CI1TeWGaCtjGQO_c7N9X7DTITwT0O3xtvuZ9Irq3Un3xdFYvTrrgrbUrnTLfrrsm8r_mX5KitJBDJdj-RHL-x657QKPvlPj90Zq0ASzv/s600/6q.png" /></a>
+</div>
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj7gn_pGzFfluqiiBPrHQYNttEB4cOonAjDyOja_cVyU_ouyCm6MghjeqihC-6tsT685ftYyy1N7K0t0sE-aNsuoexC2AmvXr0g4IaeYgHMWXanGEUaVhNezzZUIiHZlloLWHXBOXTruqu78BwduYFrIl5TTpzPy3Hiqv40giJKtEzWNTGIKvP1w5uMDQST/s507/6s.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600"
+            data-original-height="424" data-original-width="507"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj7gn_pGzFfluqiiBPrHQYNttEB4cOonAjDyOja_cVyU_ouyCm6MghjeqihC-6tsT685ftYyy1N7K0t0sE-aNsuoexC2AmvXr0g4IaeYgHMWXanGEUaVhNezzZUIiHZlloLWHXBOXTruqu78BwduYFrIl5TTpzPy3Hiqv40giJKtEzWNTGIKvP1w5uMDQST/s600/6s.png" /></a>
+</div>
+
+C.7 
+
+<div class="separator" style="clear: both;"><a
+        href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiPzr5abftyzhrF3KVx9jG8ld8FGsLsDGlr1sIn1jwWKURmhEdlPMcNslCaLPIGONlq1HxHqHAIl9IpW8eYqd4oAO45-Jku9YUOGow2RsjP5lng9VWr00NwIDtTjJk4qKiXwwhp6khn8r1gK8DJcrgfuodt5S67EtUD7wymjpb1CVp1GPdaoBODp6oCkIBi/s513/7q.png"
+        style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600"
+            data-original-height="412" data-original-width="513"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiPzr5abftyzhrF3KVx9jG8ld8FGsLsDGlr1sIn1jwWKURmhEdlPMcNslCaLPIGONlq1HxHqHAIl9IpW8eYqd4oAO45-Jku9YUOGow2RsjP5lng9VWr00NwIDtTjJk4qKiXwwhp6khn8r1gK8DJcrgfuodt5S67EtUD7wymjpb1CVp1GPdaoBODp6oCkIBi/s600/7q.png" /></a>
+</div>
+</pre>
+<span style="display: none;">Tags: Mathematical Foundations for Data Science,</span>
